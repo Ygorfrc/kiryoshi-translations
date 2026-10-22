@@ -17,3 +17,21 @@ export function parseSiteUrl(value) {
   }
   return url.origin;
 }
+
+export function parseBasePath(value) {
+  const base = value?.trim() || '/';
+  const normalized = base.endsWith('/') ? base : `${base}/`;
+  if (!/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(normalized))
+    throw new Error(
+      'PUBLIC_BASE_PATH deve ser / ou um caminho como /repositorio/.',
+    );
+  return normalized;
+}
+
+/** Prefix only site-local paths, preserving anchors and external URLs. */
+export function prefixPath(value, base = '/') {
+  if (!value.startsWith('/') || value.startsWith('//')) return value;
+  const normalized = parseBasePath(base);
+  if (normalized === '/' || value.startsWith(normalized)) return value;
+  return `${normalized.slice(0, -1)}${value}`;
+}

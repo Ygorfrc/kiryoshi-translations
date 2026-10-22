@@ -3,6 +3,7 @@
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": [
     "dist",
+    "dist-pages",
     "node_modules",
     ".qa",
     "playwright-report",

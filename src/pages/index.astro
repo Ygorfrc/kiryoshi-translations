@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import { getCollection } from 'astro:content';
 import {
   ArrowRight,
@@ -44,7 +45,7 @@ const jsonLd = {
   name: site.name,
   description: site.description,
   inLanguage: 'pt-BR',
-  url: Astro.site?.href,
+  url: Astro.site ? new URL(withBase('/'), Astro.site).href : undefined,
 };
 ---
 
@@ -75,7 +76,7 @@ const jsonLd = {
         </p>
         <nav class="journey-menu rpg-frame" aria-label="Comece sua jornada">
           <span class="frame-label">ESCOLHA SEU CAMINHO</span>
-          <a class="journey-choice selected" href="/traducoes/">
+          <a class="journey-choice selected" href={withBase('/traducoes/')}>
             <span class="choice-cursor" aria-hidden="true">
               ▸
             </span>
@@ -83,7 +84,7 @@ const jsonLd = {
             Explorar traduções
             <ArrowRight class="choice-arrow" size={17} />
           </a>
-          <a class="journey-choice" href="/sobre/">
+          <a class="journey-choice" href={withBase('/sobre/')}>
             <span class="choice-cursor" aria-hidden="true">
               ▸
             </span>
@@ -104,7 +105,7 @@ const jsonLd = {
       <span class="motto-stars" aria-hidden="true">
         ✦ · ✧ · ✦
       </span>
-      <a href={featured ? '#primeira-aventura' : '/traducoes/'}>
+      <a href={withBase(featured ? '#primeira-aventura' : '/traducoes/')}>
         O próximo capítulo <span aria-hidden="true">↓</span>
       </a>
     </div>
@@ -191,7 +192,7 @@ const jsonLd = {
           </div>
           <a
             class="home-button home-button-dark"
-            href={`/traducoes/${featured.id}/`}
+            href={withBase(`/traducoes/${featured.id}/`)}
           >
             <span aria-hidden="true">▸</span>Acompanhar tradução
             <ArrowUpRight size={17} />
@@ -221,7 +222,7 @@ const jsonLd = {
           </h2>
           <p>Algumas histórias que gostaríamos de explorar no futuro.</p>
         </div>
-        <a class="home-inline-link" href="/traducoes/">
+        <a class="home-inline-link" href={withBase('/traducoes/')}>
           Abrir catálogo
           <ArrowUpRight size={17} />
         </a>
@@ -231,7 +232,7 @@ const jsonLd = {
           <article class="shelf-game">
             <a
               class="shelf-cover"
-              href={`/traducoes/${project.id}/`}
+              href={withBase(`/traducoes/${project.id}/`)}
               tabindex="-1"
               aria-hidden="true"
             >
@@ -240,7 +241,7 @@ const jsonLd = {
             <div class="shelf-game-info">
               <span class="shelf-platform">{project.data.platform}</span>
               <h3>
-                <a href={`/traducoes/${project.id}/`}>
+                <a href={withBase(`/traducoes/${project.id}/`)}>
                   {project.data.shortTitle}
                 </a>
               </h3>
@@ -273,7 +274,7 @@ const jsonLd = {
           Palavras, descobertas e pequenos bastidores de quem está traduzindo.
         </p>
       </div>
-      <a class="home-inline-link" href="/devlog/">
+      <a class="home-inline-link" href={withBase('/devlog/')}>
         Ler o devlog
         <ArrowUpRight size={17} />
       </a>
@@ -287,7 +288,7 @@ const jsonLd = {
             <Feather size={19} aria-hidden="true" />
           </div>
           <h3>
-            <a href={`/devlog/${post.id}/`}>{post.data.title}</a>
+            <a href={withBase(`/devlog/${post.id}/`)}>{post.data.title}</a>
           </h3>
           <p>{post.data.description}</p>
           <div class="note-bottom">
@@ -297,7 +298,7 @@ const jsonLd = {
                 : formatDate(post.data.published)}
             </span>
             <a
-              href={`/devlog/${post.id}/`}
+              href={withBase(`/devlog/${post.id}/`)}
               aria-label={`Ler artigo: ${post.data.title}`}
             >
               <ArrowUpRight size={19} />
@@ -338,7 +339,7 @@ const jsonLd = {
           Queremos que mais gente possa viver tudo isso em português. Com tempo,
           cuidado e uma comunidade que compartilha a mesma paixão.
         </p>
-        <a class="home-button home-button-gold" href="/contato/">
+        <a class="home-button home-button-gold" href={withBase('/contato/')}>
           Encontrar a comunidade
           <ArrowUpRight size={17} />
         </a>
@@ -379,7 +380,7 @@ const jsonLd = {
           serão adicionados quando houver material publicado.
         </p>
       )}
-      <a class="home-inline-link" href="/devlog/">
+      <a class="home-inline-link" href={withBase('/devlog/')}>
         Enquanto isso, acompanhe o diário
         <ArrowRight size={16} />
       </a>
@@ -397,7 +398,7 @@ const jsonLd = {
         Compartilhar o projeto já ajuda uma nova história a encontrar seu
         jogador. As traduções serão sempre gratuitas.
       </p>
-      <a class="home-inline-link" href="/apoie/">
+      <a class="home-inline-link" href={withBase('/apoie/')}>
         Conheça formas de apoiar
         <ArrowRight size={16} />
       </a>

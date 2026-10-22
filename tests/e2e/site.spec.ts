@@ -41,6 +41,15 @@ test('catálogo busca, combina filtros, ordena e restaura a seleção da URL', a
   );
   await expect(page.getByLabel('Ordenar por')).toHaveValue('updated');
   await expect(page.locator('#catalog-grid article:visible')).toHaveCount(4);
+  await page
+    .getByRole('button', { name: 'Limpar filtros', exact: true })
+    .click();
+  await page.getByLabel('Buscar tradução').fill('soul');
+  await page
+    .locator('#catalog-grid')
+    .getByRole('link', { name: 'Soul Hackers', exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/traducoes\/soul-hackers\/$/);
 });
 
 test('navegação principal por teclado e menu móvel', async ({

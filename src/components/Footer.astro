@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import Brand from './Brand.astro';
 import { site } from '../config/site';
 ---
@@ -16,27 +17,27 @@ import { site } from '../config/site';
     </div>
     <div>
       <h2>Explore</h2>
-      <a href="/traducoes/">Traduções</a>
-      <a href="/devlog/">Diário de desenvolvimento</a>
-      <a href="/sobre/">Sobre o projeto</a>
-      <a href="/apoie/">Apoie</a>
+      <a href={withBase('/traducoes/')}>Traduções</a>
+      <a href={withBase('/devlog/')}>Diário de desenvolvimento</a>
+      <a href={withBase('/sobre/')}>Sobre o projeto</a>
+      <a href={withBase('/apoie/')}>Apoie</a>
     </div>
     <div>
       <h2>Vamos conversar</h2>
-      <a href="/contato/">Contato e comunidade</a>
+      <a href={withBase('/contato/')}>Contato e comunidade</a>
       {site.channels.map((channel) => (
         <a href={channel.url} target="_blank" rel="noopener noreferrer">
           {channel.label} ↗
         </a>
       ))}
-      {Astro.site && <a href="/rss.xml">Feed RSS</a>}
+      {Astro.site && <a href={withBase('/rss.xml')}>Feed RSS</a>}
     </div>
   </div>
   <div class="container footer-bottom">
     <span>© {new Date().getUTCFullYear()} Kiryoshi Translations</span>
     <div>
-      <a href="/privacidade/">Privacidade</a>
-      <a href="/aviso-legal/">Aviso legal</a>
+      <a href={withBase('/privacidade/')}>Privacidade</a>
+      <a href={withBase('/aviso-legal/')}>Aviso legal</a>
     </div>
   </div>
   <p class="container legal-note">

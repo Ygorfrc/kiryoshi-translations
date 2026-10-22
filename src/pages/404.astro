@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { ArrowLeft, ArrowUpRight } from '@lucide/astro';
 ---
@@ -19,11 +20,11 @@ import { ArrowLeft, ArrowUpRight } from '@lucide/astro';
       <br />A jornada continua em outros caminhos.
     </p>
     <div class="button-row">
-      <a class="button button-primary" href="/">
+      <a class="button button-primary" href={withBase('/')}>
         <ArrowLeft size={17} />
         Voltar ao início
       </a>
-      <a class="button button-outline" href="/traducoes/">
+      <a class="button button-outline" href={withBase('/traducoes/')}>
         Explorar traduções <ArrowUpRight size={17} />
       </a>
     </div>

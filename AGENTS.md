@@ -39,6 +39,9 @@
 - Canais, apoio, contato e vídeos em `src/config/site.ts`; vazios são estados válidos.
 - Não adicionar tracking, cookies, pagamentos ou serviços externos sem escopo autorizado. Atualize privacidade e CSP antes de integrar terceiros.
 - `_headers` deve acompanhar serviços efetivamente usados. Não alegar proteção validada em produção quando só houve teste local.
+- GitHub Pages está apenas preparado. O plano da conta recusou Pages no repositório privado, e o usuário escolheu manter tudo privado. Preserve o workflow `pages.yml` exclusivamente manual; não altere visibilidade nem dispare deploy sem nova autorização.
+- Use `withBase` para links e imagens locais; `PUBLIC_BASE_PATH` controla o subdiretório. O plugin nativo Sätteri cuida de URLs do Markdown/MDX. Preserve o padrão `/` do Cloudflare e não reescreva URLs externas ou âncoras.
+- `PUBLIC_NOINDEX=true` mantém uma prévia sem indexação com URL real. `PUBLIC_HOSTING=github-pages` seleciona a privacidade correspondente. A CSP via meta deriva de `_headers`, sem `frame-ancestors`, que exige HTTP. Não alegue que o Pages aplica `_headers`.
 - Preserve `script-src 'self'` e `script-src-attr 'none'`, sem `unsafe-inline`/`unsafe-eval` em scripts. O build usa `vite.build.assetsInlineLimit: 0` para gerar arquivos JS locais; o bootstrap síncrono do menu fica em `public/scripts/menu-init.js`. JSON-LD é metadado inerte, não motivo para liberar scripts inline. Estilos têm uma permissão separada para atributos do Markdown/MDX.
 
 ## Comandos e entrega
@@ -48,6 +51,7 @@
 - `npm run format`, `npm run lint`, `npm run check`, `npm test`, `npm run build`, `npm run test:links`, `npm run test:security`, `npm run test:seo`, `npm run test:e2e`.
 - `npm run validate` executa a sequência completa. Playwright usa Edge por padrão; `PLAYWRIGHT_CHANNEL=chromium` usa Chromium instalado pelo Playwright.
 - E2E inicia o Wrangler local em `127.0.0.1:8787` para aplicar `_headers`; não reutilize Astro preview nem libere a CSP para fazer testes passarem. A porta precisa estar livre. Testes não fazem login ou publicação.
+- `npm run test:pages` integra `validate` e gera `.qa/pages/` com origem reservada; usa preview na porta 4322 para testar subdiretório e CSP meta sem headers Cloudflare. Nunca publicar `.qa/`. O workflow Pages gera e publica somente `dist-pages/` com URL/base reais lidas do GitHub.
 - Após mudanças relevantes, rode as verificações correspondentes; no encerramento, execute os checks necessários e corrija falhas conhecidas. Não afirme resultados não medidos.
 - `.qa/seo/` usa origem reservada somente para teste. Nunca publicar esse diretório. O deploy usa exclusivamente `dist/`.
 - Atualize README e `docs/validation.md` quando comandos, arquitetura ou resultados mudarem.

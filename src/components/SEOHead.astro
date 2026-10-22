@@ -1,6 +1,9 @@
 ---
 import { site } from '../config/site';
 import { serializeJsonLd } from '../lib/format';
+import { withBase } from '../lib/paths';
+import { previewOnly } from '../config/publication';
+import { metaCsp } from '../config/security';
 interface Props {
   title: string;
   description: string;
@@ -20,10 +23,15 @@ const {
 const canonical = Astro.site
   ? new URL(Astro.url.pathname, Astro.site).href
   : undefined;
-const imageUrl = Astro.site ? new URL(image, Astro.site).href : undefined;
+const imageUrl = Astro.site
+  ? new URL(withBase(image), Astro.site).href
+  : undefined;
 ---
 
 <meta charset="UTF-8" />
+{import.meta.env.PROD && (
+  <meta http-equiv="Content-Security-Policy" content={metaCsp} />
+)}
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="#0a0b12" />
 <meta name="color-scheme" content="dark" />
@@ -31,10 +39,14 @@ const imageUrl = Astro.site ? new URL(image, Astro.site).href : undefined;
 <meta name="description" content={description} />
 <meta
   name="robots"
-  content={!Astro.site || noindex ? 'noindex, nofollow' : 'index, follow'}
+  content={
+    !Astro.site || previewOnly || noindex
+      ? 'noindex, nofollow'
+      : 'index, follow'
+  }
 />
 {canonical && <link rel="canonical" href={canonical} />}
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
 <meta property="og:locale" content="pt_BR" />
 <meta property="og:site_name" content={site.name} />
 <meta property="og:title" content={title} />
@@ -59,7 +71,7 @@ const imageUrl = Astro.site ? new URL(image, Astro.site).href : undefined;
     rel="alternate"
     type="application/rss+xml"
     title="Kiryoshi Translations — Devlog"
-    href="/rss.xml"
+    href={withBase('/rss.xml')}
   />
 )}
 {Astro.site && jsonLd && (

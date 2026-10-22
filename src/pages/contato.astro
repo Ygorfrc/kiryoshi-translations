@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
 import { site } from '../config/site';
@@ -67,8 +68,9 @@ import { Mail, MessagesSquare, ArrowUpRight } from '@lucide/astro';
     </p>
     <p>
       Para consultar o andamento, visite o{' '}
-      <a href="/traducoes/">catálogo de traduções</a>. Informações sobre
-      direitos e não afiliação estão no <a href="/aviso-legal/">aviso legal</a>.
+      <a href={withBase('/traducoes/')}>catálogo de traduções</a>. Informações
+      sobre direitos e não afiliação estão no{' '}
+      <a href={withBase('/aviso-legal/')}>aviso legal</a>.
     </p>
   </div>
 </BaseLayout>

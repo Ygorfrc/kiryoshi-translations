@@ -159,8 +159,14 @@ const items = projects.map((project) => ({
     update(false);
     panel.hidden = false;
     form.addEventListener('submit', (event) => event.preventDefault());
-    form.addEventListener('input', () => update());
-    form.addEventListener('change', () => update());
+    form.addEventListener('input', (event) => {
+      if (event.target === search) update();
+    });
+    // A text input's change event fires on blur. Reordering cards then could
+    // interrupt the click on a search result before navigation starts.
+    form.addEventListener('change', (event) => {
+      if (event.target instanceof HTMLSelectElement) update();
+    });
     document.querySelector('#reset-filters')?.addEventListener('click', reset);
     document.querySelector('#empty-reset')?.addEventListener('click', reset);
     window.addEventListener('popstate', () => {

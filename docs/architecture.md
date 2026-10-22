@@ -39,3 +39,15 @@ Playwright usa o emulador Wrangler local em `127.0.0.1:8787`, aplicando os heade
 Não há sessão, endpoint de envio, banco ou cookies de aplicação. A hospedagem pode processar dados técnicos de requisição; a política registra a necessidade de confirmar a configuração efetiva no lançamento. Apoio e canais são links opcionais, sem scripts de terceiros ou checkout.
 
 CI executa qualidade sem publicar. Credenciais e domínios são responsabilidade da conta do usuário; nenhuma conta ou conexão é presumida. Build SEO isolado usa `.test`, nunca `dist/` e nunca produção.
+
+## Compatibilidade com GitHub Pages
+
+`PUBLIC_BASE_PATH` adiciona suporte a subdiretórios sem mudar o padrão raiz do Cloudflare. `withBase` centraliza links dos componentes e imagens públicas; o plugin nativo Sätteri `scripts/markdown-base.mjs` aplica a mesma regra aos links e imagens do conteúdo. Assets processados pelo Astro seguem o `base` nativo. URLs externas, caminhos já prefixados e âncoras são preservados.
+
+`PUBLIC_NOINDEX=true` desativa indexação, sitemap e itens RSS mesmo com origem real configurada, permitindo uma prévia temporária. `PUBLIC_HOSTING` controla a descrição factual da hospedagem na política de privacidade. Nenhum domínio futuro é presumido no build padrão.
+
+O workflow Pages é manual e não habilita o serviço automaticamente. Valida antes de produzir `dist-pages/` com a origem/base fornecidas pelo `configure-pages`. Não publica `dist/` do Cloudflare ou qualquer saída de QA. O responsável escolheu manter o repositório privado após a API recusar Pages no plano atual; nenhum deploy ou alteração de visibilidade está autorizado nesta etapa.
+
+A CSP HTTP permanece no Cloudflare. A CSP via meta, presente em todos os HTML de produção, mantém as restrições de scripts no Pages sem depender de `_headers`, que esse serviço não interpreta. A diretiva `frame-ancestors` só existe no header HTTP; não é inserida na meta. A verificação de segurança exige as duas representações apropriadas. Não há Worker, proxy ou backend adicional para simular headers no Pages.
+
+`test:pages` usa `.qa/pages/`, origem `.test` e uma suíte própria contra o Astro preview na porta 4322. Isso testa o funcionamento sem headers Cloudflare, incluindo bloqueio de um script inline pela meta. A suíte principal continua usando o emulador Wrangler para verificar os headers do destino principal.

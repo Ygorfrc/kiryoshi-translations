@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import '../styles/global.css';
 import '../styles/home.css';
 import '@fontsource-variable/space-grotesk';
@@ -40,7 +41,7 @@ const { bodyClass, ...headProps } = Astro.props;
       crossorigin="anonymous"
     />
     <!-- Synchronous and tiny: set the menu class before the body is painted. -->
-    <script is:inline src="/scripts/menu-init.js"></script>
+    <script is:inline src={withBase('/scripts/menu-init.js')}></script>
   </head>
   <body class:list={['club-theme', bodyClass]}>
     <a href="#conteudo" class="skip-link">

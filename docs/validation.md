@@ -4,20 +4,21 @@ Resultados obtidos após aplicar a identidade aprovada, as cinco capas fornecida
 
 ## Ambiente e comandos executados
 
-Windows, Node 24.13.0, npm 11.6.2, Astro 7.4.2. A validação mais recente, após restringir a CSP, utilizou os assets estáticos no emulador Wrangler local em `127.0.0.1:8787`, com os cabeçalhos de `public/_headers` aplicados. O Astro preview em `4321` foi usado nas medições Lighthouse anteriores.
+Windows, Node 24.13.0, npm 11.6.2, Astro 7.4.2. A validação mais recente, após preparar o GitHub Pages, utilizou os assets estáticos no emulador Wrangler local em `127.0.0.1:8787`, com os cabeçalhos de `public/_headers` aplicados, e uma suíte adicional em `4322` para testar subdiretório e CSP meta. O Astro preview em `4321` foi usado nas medições Lighthouse anteriores.
 
 `npm run validate` concluiu com código 0:
 
-| Verificação                         | Resultado                                                                                  |
-| ----------------------------------- | ------------------------------------------------------------------------------------------ |
-| Prettier (`npm run lint`)           | Aprovado                                                                                   |
-| Astro/TypeScript (`npm run check`)  | 59 arquivos; zero erros, avisos ou hints                                                   |
-| Vitest (`npm test`)                 | 21 testes aprovados, em três arquivos                                                      |
-| Build (`npm run build`)             | 23 páginas HTML geradas                                                                    |
-| Links (`npm run test:links`)        | 715 referências internas, assets e âncoras válidas                                         |
-| Segurança (`npm run test:security`) | 23 páginas e 51 referências a scripts externos locais; nenhum JavaScript executável inline |
-| SEO (`npm run test:seo`)            | Metadados, canonicals, JSON-LD, sitemap e RSS verificados                                  |
-| Playwright (`npm run test:e2e`)     | 41 aprovados, um ignorado, zero falhas; 29,4s                                              |
+| Verificação                         | Resultado                                                                                          |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Prettier (`npm run lint`)           | Aprovado                                                                                           |
+| Astro/TypeScript (`npm run check`)  | 67 arquivos; zero erros, avisos ou hints                                                           |
+| Vitest (`npm test`)                 | 24 testes aprovados, em quatro arquivos                                                            |
+| Build (`npm run build`)             | 23 páginas HTML geradas                                                                            |
+| Links (`npm run test:links`)        | 715 referências internas, assets e âncoras válidas                                                 |
+| Segurança (`npm run test:security`) | 23 páginas e 51 referências a scripts externos locais; nenhum JavaScript executável inline         |
+| SEO (`npm run test:seo`)            | Metadados, canonicals, JSON-LD, sitemap e RSS verificados                                          |
+| Pages (`npm run test:pages`)        | Build isolado de 23 páginas; 761 referências válidas; quatro testes de navegador aprovados em 6,7s |
+| Playwright (`npm run test:e2e`)     | 41 aprovados, um ignorado, zero falhas; 45,6s                                                      |
 
 O teste ignorado evita repetir, no projeto mobile, a varredura de telas maiores já executada pelo projeto desktop. Foram verificados Home, catálogo e página Soul Hackers em 320, 580, 768, 1024, 1440, 1920 e 2560px, além de navegação em páginas representativas, filtros combinados e persistência na URL, ordem editorial, teclado, FAQ, menu, 404 e funcionamento sem JavaScript. O carrossel foi testado com controles manuais, rotação, pausa e movimento reduzido. O axe verificou regras WCAG A/AA nas rotas representativas.
 
@@ -25,7 +26,7 @@ O navegador local dos testes foi o Microsoft Edge em modo headless. O Chromium b
 
 O teste de SEO gera uma saída isolada em `.qa/seo/`, usando a origem reservada `https://kiryoshi.validation.test`. Verificou títulos e descrições únicos, canonicals e metadados absolutos, JSON-LD válido e exclusão de conteúdo demonstrativo do RSS e sitemap. Esse diretório não é publicado; `dist/` mantém a configuração segura sem domínio público.
 
-`npm run deploy:check` concluiu o dry-run atualizado do Wrangler com 106 assets e sem bindings. A primeira tentativa não pôde gravar logs globais por restrição do sandbox; a execução com permissão para esses logs concluiu com código 0. Nenhum deploy foi realizado. A auditoria `npm audit --json` executada nesta revisão de segurança retornou zero vulnerabilidades, incluindo desenvolvimento. Nenhuma dependência foi alterada ao restringir a CSP. A instalação reproduzível com `npm ci` também foi executada durante a implementação.
+`npm run deploy:check` concluiu o dry-run atualizado do Wrangler, sem bindings. Uma tentativa anterior não pôde gravar logs globais por restrição do sandbox; a execução com permissão para esses logs concluiu com código 0. Nenhum deploy foi realizado. A auditoria `npm audit --json` da revisão de segurança retornou zero vulnerabilidades, incluindo desenvolvimento. O processador Sätteri existente foi declarado como dependência direta na mesma versão 0.4.5 para configurar o plugin nativo de caminhos; a instalação também retornou zero vulnerabilidades, sem novos pacotes. A instalação reproduzível com `npm ci` foi executada durante a implementação.
 
 ## CSP e testes de segurança
 
@@ -60,3 +61,13 @@ Relatórios locais HTML/JSON estão em `.qa/lighthouse/*-final.report.*`; screen
 ## Versionamento no GitHub
 
 O usuário autorizou o primeiro commit e envio do projeto em 22/10/2026. O destino é o repositório privado [Ygorfrc/kiryoshi-translations](https://github.com/Ygorfrc/kiryoshi-translations), na branch `main`. Arquivos `.env`, dependências, builds, logs e relatórios locais ficam fora do Git. O workflow de qualidade executa as verificações sem publicar o site ou acessar credenciais de deploy.
+
+## Preparação do GitHub Pages
+
+A tentativa de habilitar Pages pela API retornou HTTP 422: o plano atual não suporta Pages neste repositório privado. O usuário escolheu manter tudo privado e somente preparar o commit. Nenhuma visibilidade foi alterada, repositório público criado, plano contratado ou workflow de deploy executado. Não existe URL publicada confirmada.
+
+Foram preparados `PUBLIC_BASE_PATH`, links de componentes e de conteúdo Markdown/MDX, metadados e imagens para o subdiretório. O build isolado `.qa/pages/` usa uma origem reservada e `noindex`, e nunca é publicado. O workflow Pages é somente manual, valida antes de gerar `dist-pages/` com URL/base reais lidas do GitHub e não faz deploy em pushes.
+
+Os quatro testes adicionais passaram em desktop e mobile: navegação, carrossel, busca, imagem carregada, link Markdown, metadados com base, privacidade e feeds de prévia, além do bloqueio de JavaScript inline pela CSP meta sem header HTTP. A suíte principal continua validando os headers reais no emulador Cloudflare. O teste da busca detectou um problema no evento `change` ao perder foco, que podia interromper cliques em resultados; ele foi corrigido e recebeu cobertura nas duas suítes.
+
+O Pages não aplica o arquivo `_headers`. A CSP meta deriva dele, excetuando `frame-ancestors`, que exige header HTTP; não foi alegada equivalência com todos os headers do Cloudflare. A política de privacidade do build Pages identifica o GitHub como hospedagem. O workflow de publicação depende da habilitação futura do serviço e de nova autorização do responsável.

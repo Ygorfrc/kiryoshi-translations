@@ -1,6 +1,8 @@
 import { readdir, readFile, access } from 'node:fs/promises';
 import path from 'node:path';
-const root = path.resolve('dist');
+import { parseBasePath, prefixPath } from '../src/config/url.mjs';
+const root = path.resolve(process.argv[2] ?? 'dist');
+const base = parseBasePath(process.argv[3]);
 const files = [];
 async function walk(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
@@ -26,8 +28,20 @@ for (const [file, html] of htmlByPath) {
       .relative(root, file)
       .replaceAll('\\', '/')
       .replace(/index\.html$/, '');
-    const url = new URL(decoded, `https://internal.invalid/${current}`);
-    const target = path.join(root, decodeURIComponent(url.pathname));
+    const url = new URL(
+      decoded,
+      `https://internal.invalid${prefixPath(`/${current}`, base)}`,
+    );
+    if (!url.pathname.startsWith(base)) {
+      errors.push(
+        `${path.relative(root, file)} → caminho fora da base: ${raw}`,
+      );
+      continue;
+    }
+    const target = path.join(
+      root,
+      decodeURIComponent(url.pathname.slice(base.length - 1)),
+    );
     const candidates = [
       target,
       path.join(target, 'index.html'),

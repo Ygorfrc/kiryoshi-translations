@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 interface Props {
   small?: boolean;
 }
@@ -7,7 +8,7 @@ const { small = false } = Astro.props;
 
 <a
   class:list={['brand', { small }]}
-  href="/"
+  href={withBase('/')}
   aria-label="Kiryoshi Translations — início"
 >
   <svg

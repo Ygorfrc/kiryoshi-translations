@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import { ChevronRight } from '@lucide/astro';
 import { serializeJsonLd } from '../lib/format';
 interface Props {
@@ -13,7 +14,7 @@ const jsonLd = {
     position: i + 1,
     name: item.label,
     item: Astro.site
-      ? new URL(item.href ?? Astro.url.pathname, Astro.site).href
+      ? new URL(withBase(item.href ?? Astro.url.pathname), Astro.site).href
       : undefined,
   })),
 };
@@ -25,7 +26,7 @@ const jsonLd = {
       <li>
         {i > 0 && <ChevronRight size={13} />}
         {item.href ? (
-          <a href={item.href}>{item.label}</a>
+          <a href={withBase(item.href)}>{item.label}</a>
         ) : (
           <span aria-current="page">{item.label}</span>
         )}

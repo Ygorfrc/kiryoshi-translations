@@ -1,0 +1,66 @@
+name: GitHub Pages (manual)
+
+# Intentionally manual. No publication is triggered by a push or pull request.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: read
+    env:
+      PLAYWRIGHT_CHANNEL: chromium
+      ASTRO_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run validate
+      - name: Ler configuração existente do Pages
+        id: pages
+        uses: actions/configure-pages@v5
+      - name: Gerar prévia pública sem indexação
+        run: node scripts/astro.mjs build --outDir dist-pages
+        env:
+          PUBLIC_SITE_URL: ${{ steps.pages.outputs.origin }}
+          PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          PUBLIC_NOINDEX: 'true'
+          PUBLIC_HOSTING: github-pages
+      - name: Validar pacote do Pages
+        run: |
+          node scripts/check-links.mjs dist-pages "$PAGES_BASE"
+          node scripts/check-security.mjs dist-pages
+        env:
+          PAGES_BASE: ${{ steps.pages.outputs.base_path }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist-pages
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

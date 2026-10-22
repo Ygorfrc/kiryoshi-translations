@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import { Heart, ArrowUpRight } from '@lucide/astro';
 ---
 
@@ -15,7 +16,7 @@ import { Heart, ArrowUpRight } from '@lucide/astro';
     </h2>
     <p>Apoiar é uma escolha. Jogar em português será sempre para todos.</p>
   </div>
-  <a class="button button-outline" href="/apoie/">
+  <a class="button button-outline" href={withBase('/apoie/')}>
     Conheça formas de apoiar <ArrowUpRight size={17} />
   </a>
 </section>

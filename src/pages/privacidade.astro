@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../lib/paths';
+import { hosting } from '../config/publication';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
 ---
@@ -36,14 +38,28 @@ import PageIntro from '../components/PageIntro.astro';
       após o clique.
     </p>
     <h2>Hospedagem</h2>
-    <p>
-      O projeto está preparado para Cloudflare Workers Static Assets. Quando
-      publicado nesse serviço, requisições poderão ser processadas pela
-      Cloudflare para entrega de arquivos, segurança e operação da
-      infraestrutura, incluindo informações técnicas como endereço IP e agente
-      do navegador. A configuração da conta e a retenção desses registros devem
-      ser confirmadas pelo responsável antes da publicação.
-    </p>
+    {hosting === 'github-pages' ? (
+      <p>
+        Esta prévia é hospedada no GitHub Pages. O GitHub registra e armazena
+        endereços IP dos visitantes para fins de segurança. Consulte a{' '}
+        <a
+          href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+          rel="noopener noreferrer"
+        >
+          política de privacidade do GitHub
+        </a>{' '}
+        para conhecer o tratamento de dados pela hospedagem.
+      </p>
+    ) : (
+      <p>
+        O projeto está preparado para Cloudflare Workers Static Assets. Quando
+        publicado nesse serviço, requisições poderão ser processadas pela
+        Cloudflare para entrega de arquivos, segurança e operação da
+        infraestrutura, incluindo informações técnicas como endereço IP e agente
+        do navegador. A configuração da conta e a retenção desses registros
+        devem ser confirmadas pelo responsável antes da publicação.
+      </p>
+    )}
     <h2>Links externos e compartilhamento</h2>
     <p>
       Ao acessar outro serviço, aplicam-se suas próprias práticas de
@@ -53,10 +69,10 @@ import PageIntro from '../components/PageIntro.astro';
     <h2>Contato e futuras integrações</h2>
     <p>
       Não há canal de contato confirmado nesta versão. A{' '}
-      <a href="/contato/">página de contato</a> será atualizada com os dados
-      públicos fornecidos pelo responsável. Caso serviços de apoio, formulários
-      ou métricas sejam adicionados, esta política deve ser revisada antes de
-      ativá-los.
+      <a href={withBase('/contato/')}>página de contato</a> será atualizada com
+      os dados públicos fornecidos pelo responsável. Caso serviços de apoio,
+      formulários ou métricas sejam adicionados, esta política deve ser revisada
+      antes de ativá-los.
     </p>
   </div>
 </BaseLayout>

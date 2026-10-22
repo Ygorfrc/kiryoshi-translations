@@ -27,6 +27,17 @@ async function walk(dir) {
     else if (item.name.endsWith('.html')) {
       pages++;
       const html = await readFile(file, 'utf8');
+      const meta = html.match(
+        /<meta http-equiv="Content-Security-Policy" content="([^"]+)"/i,
+      )?.[1];
+      assert.ok(
+        meta?.includes("script-src 'self';"),
+        `CSP meta ausente em ${file}`,
+      );
+      assert.ok(
+        !meta.includes('frame-ancestors'),
+        `frame-ancestors não funciona via meta: ${file}`,
+      );
       for (const [, attributes, body] of html.matchAll(
         /<script\b([^>]*)>([\s\S]*?)<\/script>/gi,
       )) {

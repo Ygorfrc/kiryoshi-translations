@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
 import { site } from '../config/site';
@@ -51,8 +52,8 @@ import { Heart } from '@lucide/astro';
         história a encontrar seu público.
       </p>
       <p>
-        <a href="/traducoes/">Conheça as traduções</a> e siga acompanhando os
-        próximos capítulos.
+        <a href={withBase('/traducoes/')}>Conheça as traduções</a> e siga
+        acompanhando os próximos capítulos.
       </p>
     </div>
     <aside class="editorial-aside">

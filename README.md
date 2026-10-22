@@ -44,6 +44,7 @@ Abra o endereço impresso, normalmente `http://127.0.0.1:4321`. A primeira insta
 | `npm run test:links`    | Valida links, assets, âncoras, h1, idioma e rotas em `dist/`                        |
 | `npm run test:seo`      | Build isolado em `.qa/seo/` para validar metadados com domínio reservado de teste   |
 | `npm run test:security` | Verifica a CSP e ausência de JavaScript inline no build                             |
+| `npm run test:pages`    | Testa build isolado, links, imagens e CSP no subdiretório do GitHub Pages           |
 | `npm run test:e2e`      | Navegação, filtros, teclado, responsividade, axe e CSP no emulador Cloudflare local |
 | `npm run lint`          | Convenções de formatação de todos os arquivos com Prettier                          |
 | `npm run format`        | Aplica a formatação                                                                 |
@@ -84,6 +85,8 @@ docs/                   Decisões e relatório de verificação
 3. Faça novo build. Canonicals, OG URLs, sitemap, RSS e JSON-LD usam a mesma origem.
 
 Sem essa variável, o site funciona em prévia: **todas as páginas recebem `noindex, nofollow`**, robots bloqueia indexação, sitemap é vazio e o RSS fica inativo, sem itens. A origem local não é apresentada como endereço público.
+
+`PUBLIC_BASE_PATH` controla o caminho de instalação: `/` por padrão, ou `/kiryoshi-translations/` no Pages. Links de componentes e de Markdown/MDX, imagens públicas e URLs de metadados respeitam essa base. `PUBLIC_NOINDEX=true` mantém uma prévia fora dos buscadores mesmo com URL pública real. `PUBLIC_HOSTING=github-pages` seleciona o texto de privacidade do GitHub; o padrão continua sendo `cloudflare`. Todas são variáveis públicas de build, nunca locais para guardar segredos.
 
 Artigos `demo: true` e projetos `example: true` continuam com `noindex` e fora do sitemap mesmo após configurar o domínio. Retire essas flags somente depois de revisão editorial dos respectivos dados. Exemplos nunca entram no RSS.
 
@@ -244,6 +247,8 @@ Testes cobrem filtros combinados, ordenação, persistência na URL, desconhecid
 
 `test:seo` usa a origem reservada `kiryoshi.validation.test` **apenas** em `.qa/seo/`, ignorado pelo Git. Esse build nunca é o diretório de deploy. Verifica metadados com origem absoluta, títulos/descrições únicos, JSON-LD válido e exclusão de exemplos do RSS/sitemap, preservando `dist/`.
 
+`test:pages` gera outra saída isolada, `.qa/pages/`, com origem reservada, base `/kiryoshi-translations/` e indexação desativada. Verifica os caminhos estáticos e executa Playwright em `127.0.0.1:4322`. Os testes cobrem menu, carrossel, busca, links Markdown, imagens, metadados, feeds e bloqueio de JavaScript inline pela CSP via meta. O servidor de QA é encerrado automaticamente. Nenhuma saída em `.qa/` deve ser publicada.
+
 Screenshots e traces ficam em `test-results/`; o relatório navegável fica em `playwright-report/`. Não entram no Git. Resultados e limitações reais estão em `docs/validation.md`. Testes automáticos não substituem revisão manual com teclado, leitor de tela e dispositivos reais.
 
 ## Cloudflare Workers e domínio
@@ -275,6 +280,25 @@ Para obter uma cópia do projeto, use `git clone https://github.com/Ygorfrc/kiry
 Essa conexão pode ativar deploys por push: habilite-a somente quando desejar esse comportamento. Alternativamente, adicione um workflow manual de deploy após autorização, com token e account ID em GitHub Secrets, ambiente protegido e dependência do workflow de qualidade. Não use tokens no código nem publique ambientes de preview com conteúdo indexável por acidente.
 
 ## Atualizar o site
+
+### GitHub Pages preparado, sem publicação
+
+Em 22/10/2026, a API do GitHub informou que o plano atual não permite Pages neste repositório privado. O responsável escolheu manter os fontes privados e somente preparar o commit. Nenhum repositório público foi criado, nenhuma visibilidade foi alterada e o workflow de publicação não foi disparado.
+
+O workflow `.github/workflows/pages.yml` é **exclusivamente manual**, via `workflow_dispatch`, e executa apenas na branch `main`. Um push dispara somente qualidade, sem deploy. Quando a conta permitir Pages privado e houver autorização para publicar:
+
+1. Em **Settings → Pages**, habilite a origem **GitHub Actions**; não mude a visibilidade do repositório sem decisão explícita do responsável.
+2. Em **Actions → GitHub Pages (manual)**, selecione `main` e execute **Run workflow**.
+3. O workflow valida a aplicação, lê a URL/base real da configuração do Pages, gera `dist-pages/` com `noindex`, valida links e segurança e envia somente esse diretório ao serviço.
+4. Confirme a URL retornada pela etapa de deploy. Um site Pages pode ser público mesmo com fontes privados; `noindex` não é controle de acesso.
+
+O workflow usa as ações oficiais `configure-pages@v5`, `upload-pages-artifact@v3` e `deploy-pages@v5`, com Node 24. As permissões de publicar e emitir o token OIDC ficam restritas ao job `deploy`. Não exige PAT, secrets de deploy ou conexão com Cloudflare.
+
+O Pages não interpreta `_headers`. Por isso, o HTML de produção também carrega a CSP compatível via `<meta>`, derivada do mesmo arquivo: scripts continuam restritos a arquivos locais. `frame-ancestors` não funciona via meta; os headers personalizados de anti-frame, permissões, referrer e cache do Cloudflare não são impostos por esse arquivo no Pages. Não trate a hospedagem temporária como equivalente à configuração completa do Cloudflare. A política de privacidade acompanha a hospedagem selecionada.
+
+Referências: [Astro no Pages](https://docs.astro.build/en/guides/deploy/github/), [disponibilidade e privacidade do Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages), [CSP via meta](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP). O processador Sätteri que já acompanha o Astro foi declarado como dependência direta na mesma versão para configurar o plugin nativo de caminhos; não houve troca de processador.
+
+### Alterações rotineiras
 
 1. Crie ou edite os arquivos de conteúdo, configuração ou componentes.
 2. Visualize localmente e revise fatos, permissões e licenças.

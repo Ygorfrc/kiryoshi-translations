@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import { Play, ArrowUpRight } from '@lucide/astro';
 import { site } from '../config/site';
 ---
@@ -23,7 +24,7 @@ import { site } from '../config/site';
         >
           {video.thumbnail ? (
             <img
-              src={video.thumbnail.src}
+              src={withBase(video.thumbnail.src)}
               alt={video.thumbnail.alt}
               width={video.thumbnail.width}
               height={video.thumbnail.height}

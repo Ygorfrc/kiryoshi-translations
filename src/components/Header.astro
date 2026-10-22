@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import { ArrowUpRight, Menu, X } from '@lucide/astro';
 import Brand from './Brand.astro';
 const links = [
@@ -24,15 +25,17 @@ const links = [
     <nav id="main-nav" aria-label="Navegação principal">
       {links.map((link) => (
         <a
-          href={link.href}
+          href={withBase(link.href)}
           aria-current={
-            Astro.url.pathname.startsWith(link.href) ? 'page' : undefined
+            Astro.url.pathname.startsWith(withBase(link.href))
+              ? 'page'
+              : undefined
           }
         >
           {link.label}
         </a>
       ))}
-      <a class="header-support" href="/apoie/">
+      <a class="header-support" href={withBase('/apoie/')}>
         Apoie o projeto <ArrowUpRight size={15} />
       </a>
     </nav>

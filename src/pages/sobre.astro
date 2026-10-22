@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
 import { site } from '../config/site';
@@ -65,8 +66,8 @@ import { site } from '../config/site';
         configuráveis, sem compromisso de cronograma.
       </p>
       <p>
-        <a href="/traducoes/">Explore os projetos</a> ou conheça os{' '}
-        <a href="/devlog/">bastidores no devlog</a>.
+        <a href={withBase('/traducoes/')}>Explore os projetos</a> ou conheça os{' '}
+        <a href={withBase('/devlog/')}>bastidores no devlog</a>.
       </p>
     </div>
     <aside class="editorial-aside">

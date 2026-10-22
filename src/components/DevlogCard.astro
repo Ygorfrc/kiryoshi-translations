@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import type { CollectionEntry } from 'astro:content';
 import { ArrowUpRight } from '@lucide/astro';
 import { formatDate } from '../lib/format';
@@ -13,7 +14,7 @@ const { post, index = 0 } = Astro.props;
   {post.data.cover ? (
     <img
       class="devlog-cover"
-      src={post.data.cover.src}
+      src={withBase(post.data.cover.src)}
       alt={post.data.cover.alt}
       width={post.data.cover.width}
       height={post.data.cover.height}
@@ -38,10 +39,10 @@ const { post, index = 0 } = Astro.props;
     )}
   </div>
   <h3>
-    <a href={`/devlog/${post.id}/`}>{post.data.title}</a>
+    <a href={withBase(`/devlog/${post.id}/`)}>{post.data.title}</a>
   </h3>
   <p>{post.data.description}</p>
-  <a class="text-link" href={`/devlog/${post.id}/`}>
+  <a class="text-link" href={withBase(`/devlog/${post.id}/`)}>
     Ler artigo <ArrowUpRight size={16} />
     <span class="sr-only">: {post.data.title}</span>
   </a>

@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
 ---
@@ -55,9 +56,10 @@ import PageIntro from '../components/PageIntro.astro';
     <h2>Correções e solicitações</h2>
     <p>
       Canais públicos serão informados na{' '}
-      <a href="/contato/">página de contato</a> assim que confirmados.
-      Informações incorretas ou solicitações relacionadas a materiais devem ser
-      encaminhadas ao responsável por esses canais, quando disponíveis.
+      <a href={withBase('/contato/')}>página de contato</a> assim que
+      confirmados. Informações incorretas ou solicitações relacionadas a
+      materiais devem ser encaminhadas ao responsável por esses canais, quando
+      disponíveis.
     </p>
   </div>
 </BaseLayout>

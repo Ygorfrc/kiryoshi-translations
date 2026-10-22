@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import type { CollectionEntry } from 'astro:content';
 import {
   ArrowLeft,
@@ -38,7 +39,7 @@ const { projects, completedOnly } = selectShowcase(Astro.props.projects);
       <div class="showcase-empty">
         <h2>Novas jornadas virão.</h2>
         <p>Ainda não há projetos cadastrados.</p>
-        <a href="/traducoes/">Conhecer o catálogo →</a>
+        <a href={withBase('/traducoes/')}>Conhecer o catálogo →</a>
       </div>
     )}
     {projects.map((project, index) => (
@@ -81,7 +82,7 @@ const { projects, completedOnly } = selectShowcase(Astro.props.projects);
             {project.data.platform}
           </span>
           <h2>{project.data.shortTitle}</h2>
-          <a href={`/traducoes/${project.id}/`} class="showcase-link">
+          <a href={withBase(`/traducoes/${project.id}/`)} class="showcase-link">
             {project.data.status === 'Disponível'
               ? 'Conhecer a tradução'
               : 'Acompanhar projeto'}
@@ -139,7 +140,9 @@ const { projects, completedOnly } = selectShowcase(Astro.props.projects);
   ></span>
   <noscript>
     <p class="showcase-no-js">
-      <a href="/traducoes/">Explore todos os projetos no catálogo →</a>
+      <a href={withBase('/traducoes/')}>
+        Explore todos os projetos no catálogo →
+      </a>
     </p>
   </noscript>
 </section>

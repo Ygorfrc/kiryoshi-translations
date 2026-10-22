@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import type { CollectionEntry } from 'astro:content';
 import DevlogCard from './DevlogCard.astro';
 import { categories } from '../lib/schemas';
@@ -12,12 +13,15 @@ const { posts, category } = Astro.props;
 
 <section class="container" aria-label="Publicações do devlog">
   <nav class="category-tabs" aria-label="Categorias do devlog">
-    <a href="/devlog/" aria-current={!category ? 'page' : undefined}>
+    <a
+      href={withBase('/devlog/')}
+      aria-current={!category ? 'page' : undefined}
+    >
       Todas
     </a>
     {categories.map((c) => (
       <a
-        href={`/devlog/categoria/${categorySlug(c)}/`}
+        href={withBase(`/devlog/categoria/${categorySlug(c)}/`)}
         aria-current={c === category ? 'page' : undefined}
       >
         {c}
@@ -40,7 +44,7 @@ const { posts, category } = Astro.props;
     <div class="empty-state">
       <h2>Novos registros virão.</h2>
       <p>Ainda não há publicações nesta categoria.</p>
-      <a class="button button-outline" href="/devlog/">
+      <a class="button button-outline" href={withBase('/devlog/')}>
         Ver todas as publicações
       </a>
     </div>

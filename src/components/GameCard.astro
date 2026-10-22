@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import type { CollectionEntry } from 'astro:content';
 import { ArrowUpRight } from '@lucide/astro';
 import GameCover from './GameCover.astro';
@@ -12,7 +13,7 @@ const { project } = Astro.props;
 <article class="game-card" data-project-id={project.id}>
   <a
     class="cover-link"
-    href={`/traducoes/${project.id}/`}
+    href={withBase(`/traducoes/${project.id}/`)}
     tabindex="-1"
     aria-hidden="true"
   >
@@ -23,7 +24,9 @@ const { project } = Astro.props;
     <ArrowUpRight size={17} aria-hidden="true" />
   </div>
   <h3>
-    <a href={`/traducoes/${project.id}/`}>{project.data.shortTitle}</a>
+    <a href={withBase(`/traducoes/${project.id}/`)}>
+      {project.data.shortTitle}
+    </a>
   </h3>
   <ProjectStatus status={project.data.status} />
 </article>

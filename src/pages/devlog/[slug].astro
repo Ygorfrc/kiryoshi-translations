@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../../lib/paths';
 import { render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -65,7 +66,7 @@ const jsonLd = !data.demo
       <div class="article-meta">
         <a
           class="eyebrow purple"
-          href={`/devlog/categoria/${categorySlug(data.category)}/`}
+          href={withBase(`/devlog/categoria/${categorySlug(data.category)}/`)}
         >
           {data.category}
         </a>
@@ -92,7 +93,7 @@ const jsonLd = !data.demo
       {data.cover && (
         <figure>
           <img
-            src={data.cover.src}
+            src={withBase(data.cover.src)}
             alt={data.cover.alt}
             width={data.cover.width}
             height={data.cover.height}
@@ -108,7 +109,7 @@ const jsonLd = !data.demo
     <nav class="article-pagination" aria-label="Outras publicações">
       <div>
         {previous && (
-          <a href={`/devlog/${previous.id}/`}>
+          <a href={withBase(`/devlog/${previous.id}/`)}>
             <small>← PUBLICAÇÃO ANTERIOR</small>
             {previous.data.title}
           </a>
@@ -116,7 +117,7 @@ const jsonLd = !data.demo
       </div>
       <div>
         {next && (
-          <a href={`/devlog/${next.id}/`}>
+          <a href={withBase(`/devlog/${next.id}/`)}>
             <small>PRÓXIMA PUBLICAÇÃO →</small>
             {next.data.title}
           </a>
