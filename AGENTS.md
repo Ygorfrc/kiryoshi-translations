@@ -21,7 +21,7 @@
 ## Design e acessibilidade
 
 - A identidade aprovada é um clube de fãs acolhedor com azul noturno, creme e coral, Header pixelado e UI inspirada em JRPGs. Em 22/10/2026, o usuário aprovou a nova paleta e sua publicação no GitHub Pages. Preserve `.club-theme` de `src/styles/home.css` e o carrossel. Consulte `docs/home-art-direction.md`. Não retorne às paletas anteriores sem solicitação.
-- O cursor JRPG é SVG local via CSS, escuro com contorno claro e halo azul, hotspot 10×7 e halo coral `#FF7864` sobre links/controles, apenas em dispositivos com mouse e fora de forced colors. Preserve cursores nativos para edição de texto, campos desabilitados e fallback; não adicionar overlay, rastreamento do mouse ou animações de cursor.
+- O cursor JRPG é SVG local via CSS, escuro com contorno claro e halo azul, hotspot 10×7 e contorno e halo coral `#FF7864` sobre links/controles, apenas em dispositivos com mouse e fora de forced colors. Preserve cursores nativos para edição de texto, campos desabilitados e fallback; não adicionar overlay, rastreamento do mouse ou animações de cursor.
 
 - Estrutura e tokens base em `src/styles/global.css`; identidade atual e composições em `src/styles/home.css`; carrossel em `src/styles/showcase.css`. Preserve composição editorial, contraste e marca original.
 - O carrossel prioriza projetos `Disponível`, confirmados (`example: false`) e com patch autorizado. Enquanto não houver concluídos, mostre os projetos atuais com seus status reais, conforme autorizado pelo usuário. Nunca rotule planejados como concluídos. Preserve pausa, teclado, reduced motion e pausa fora da viewport.

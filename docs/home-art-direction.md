@@ -10,7 +10,7 @@ Foram preservados layout, tipografia, capas e interações. Tokens principais es
 
 ## Cursor personalizado
 
-Conforme a referência fornecida pelo usuário, a setinha original de 32×32 usa preenchimento escuro, contorno claro e halo azul suave. Links e controles clicáveis recebem um halo esfumaçado em coral `#FF7864`, conforme o ajuste solicitado pelo usuário, sem animação. Os SVGs em `src/assets/cursors/` são processados pelo Vite para respeitar o subdiretório do Pages. A aplicação usa somente CSS, com hotspot em 10×7 e fallback nativo; não há elemento seguindo o mouse, animação ou código adicional no cliente. Touch e modos de cores forçadas preservam o comportamento nativo; inputs de texto e controles desabilitados mantêm cursores próprios.
+Conforme a referência fornecida pelo usuário, a setinha original de 32×32 usa preenchimento escuro, contorno claro e halo azul suave. Links e controles clicáveis recebem contorno e halo esfumaçado em coral `#FF7864`, conforme o ajuste solicitado pelo usuário, sem animação. Os SVGs em `src/assets/cursors/` são processados pelo Vite para respeitar o subdiretório do Pages. A aplicação usa somente CSS, com hotspot em 10×7 e fallback nativo; não há elemento seguindo o mouse, animação ou código adicional no cliente. Touch e modos de cores forçadas preservam o comportamento nativo; inputs de texto e controles desabilitados mantêm cursores próprios.
 
 ## Interface
 

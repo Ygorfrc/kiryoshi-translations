@@ -10,6 +10,8 @@ O navegador da prévia local confirmou os cursores normal e clicável com hotspo
 
 No ajuste posterior solicitado pelo usuário, o halo do cursor sobre links e controles passou de azul para coral `#FF7864`. Foram repetidos build, formatação, links e segurança. A inspeção do DOM local não encontrou um overlay de cursor do site; as únicas setas de seleção presentes no conteúdo são as duas do menu de caminhos. O cursor CSS usa o mecanismo nativo do navegador e permanece nas coordenadas da tela durante o scroll com o mouse parado. A captura enviada pelo usuário não permite verificar movimento do mouse ou diagnosticar um eventual cursor preso no navegador interno.
 
+No refinamento seguinte, o contorno branco da variante clicável também passou para `#FF7864`, mantendo o centro escuro. Build de 23 páginas, formatação e `git diff --check` aprovados; o SVG rasterizado foi inspecionado, e foi confirmada sua referência no CSS de produção. A alteração é exclusivamente visual; não foram criados novos testes para essa troca de cor. O workflow de publicação repete a validação completa antes de publicar.
+
 ## Teste inicial de azul noturno, creme e coral
 
 Após a troca experimental de paleta, foram executados novamente `npm run lint` (aprovado), `npm run check` (67 arquivos, zero erros, avisos ou hints), `npm run build` (23 páginas) e `npm run test:e2e` (41 aprovados, um ignorado, zero falhas; 32,8s). O teste ignorado evita duplicar a varredura de telas maiores no projeto mobile. O axe não apontou violações WCAG A/AA nas 11 rotas verificadas em desktop e mobile; a suíte também cobriu navegação, filtros, carrossel, CSP e ausência de overflow entre 320 e 2560px. Isso não equivale a uma auditoria manual completa de acessibilidade.
