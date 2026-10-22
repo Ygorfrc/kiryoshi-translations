@@ -11,7 +11,7 @@ export default defineConfig({
   },
   webServer: {
     command:
-      'node scripts/astro.mjs preview --outDir .qa/pages --host 127.0.0.1 --port 4322',
+      'node scripts/astro.mjs preview --outDir .qa/pages --host 127.0.0.1 --port 4322 --ignore-lock',
     url: 'http://127.0.0.1:4322/kiryoshi-translations/',
     reuseExistingServer: false,
     timeout: 60000,

@@ -273,7 +273,7 @@ Publicação **não executada pelo agente**. Quando autorizada:
 
 ### GitHub e CI/CD
 
-O repositório privado do projeto é [Ygorfrc/kiryoshi-translations](https://github.com/Ygorfrc/kiryoshi-translations), com branch principal `main`. O workflow `quality.yml` valida push/PR e pode ser disparado manualmente. Não possui etapa de deploy nem precisa de segredos. Consulte os resultados remotos na aba **Actions**; os resultados de validação local estão em `docs/validation.md`.
+O repositório do projeto é [Ygorfrc/kiryoshi-translations](https://github.com/Ygorfrc/kiryoshi-translations), com branch principal `main`. O workflow `quality.yml` valida push/PR e pode ser disparado manualmente. Não possui etapa de deploy nem precisa de segredos. Consulte os resultados remotos na aba **Actions**; os resultados de validação local estão em `docs/validation.md`.
 
 Para obter uma cópia do projeto, use `git clone https://github.com/Ygorfrc/kiryoshi-translations.git` com uma conta autorizada e siga a instalação acima. Para Cloudflare Workers Builds, conecte o repositório autorizado na conta Cloudflare, configure build `npm ci && npm run build`, deploy `npx wrangler deploy` e a variável de build `PUBLIC_SITE_URL`. Configure Node 24 e restrinja a branch de produção.
 
@@ -281,11 +281,11 @@ Essa conexão pode ativar deploys por push: habilite-a somente quando desejar es
 
 ## Atualizar o site
 
-### GitHub Pages preparado, sem publicação
+### GitHub Pages temporário
 
-Em 22/10/2026, a API do GitHub informou que o plano atual não permite Pages neste repositório privado. O responsável escolheu manter os fontes privados e somente preparar o commit. Nenhum repositório público foi criado, nenhuma visibilidade foi alterada e o workflow de publicação não foi disparado.
+Em 22/10/2026, após o GitHub informar que o plano não permitia Pages privado, o responsável autorizou explicitamente tornar [Ygorfrc/kiryoshi-translations](https://github.com/Ygorfrc/kiryoshi-translations) público e publicar o site. O endereço esperado, após concluir a publicação, é `https://ygorfrc.github.io/kiryoshi-translations/`. A existência de um workflow ou deste endereço na documentação não confirma um deploy: consulte o resultado da execução e o ambiente `github-pages`.
 
-O workflow `.github/workflows/pages.yml` é **exclusivamente manual**, via `workflow_dispatch`, e executa apenas na branch `main`. Um push dispara somente qualidade, sem deploy. Quando a conta permitir Pages privado e houver autorização para publicar:
+O workflow `.github/workflows/pages.yml` é **exclusivamente manual**, via `workflow_dispatch`, e executa apenas na branch `main`. Um push dispara somente qualidade, sem deploy. Para atualizar a publicação autorizada:
 
 1. Em **Settings → Pages**, habilite a origem **GitHub Actions**; não mude a visibilidade do repositório sem decisão explícita do responsável.
 2. Em **Actions → GitHub Pages (manual)**, selecione `main` e execute **Run workflow**.

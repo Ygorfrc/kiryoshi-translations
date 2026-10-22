@@ -8,7 +8,7 @@ displayOrder: 3
 example: true
 accent: cyan
 cover:
-  asset: DeSu2.jpeg
+  asset: Desu2.jpg
   alt: 'Arte de Devil Survivor 2 Record Breaker, com os personagens e o título do jogo.'
   credit: 'Imagem fornecida e autorizada para uso no site pelo responsável pelo projeto. Arte do jogo: respectivos titulares.'
   permission: authorized

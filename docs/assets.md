@@ -15,11 +15,13 @@ As capas abaixo foram fornecidas pelo usuário na pasta `images/`, com autoriza�
 | ------------------------------- | ------------------------------------- | --------- |
 | Soul Hackers                    | `images/SoulHackerscapa.jpeg`         | 500×500   |
 | Devil Survivor Overclocked      | `images/DeSu1.jpg`                    | 1402×1406 |
-| Devil Survivor 2 Record Breaker | `images/DeSu2.jpeg`                   | 554×554   |
+| Devil Survivor 2 Record Breaker | `images/Desu2.jpg`                    | 1334×1334 |
 | SMT IV: Apocalypse              | `images/boxart_smt_iv_apocalypse.jpg` | 638×640   |
 | Strange Journey Redux           | `images/Strange-Journey-boxart.jpg`   | 959×960   |
 
 `SoulHackerscapa.jpeg` é a imagem escolhida explicitamente pelo usuário para a missão atual. `images/Soul Hackers.webp` (1600×800) e `images/SoulHackersUS.jpg` (256×229) são variantes fornecidas e preservadas, sem substituir a escolha solicitada.
+
+Em 22/10/2026, o usuário substituiu a capa anterior `DeSu2.jpeg` por `Desu2.jpg` e autorizou explicitamente a atualização. O novo original foi conferido e preservado sem edição; o site gera suas variantes WebP com Astro Image.
 
 O componente GameCover resolve `cover.asset` a partir dessa pasta, gera WebP responsivo e preserva a proporção. Os originais não foram editados. Projetos sem capa continuam com o fallback tipográfico identificado; ele não é usado nos cinco projetos atuais.
 

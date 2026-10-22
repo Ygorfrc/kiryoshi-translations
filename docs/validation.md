@@ -17,8 +17,8 @@ Windows, Node 24.13.0, npm 11.6.2, Astro 7.4.2. A validação mais recente, apó
 | Links (`npm run test:links`)        | 715 referências internas, assets e âncoras válidas                                                 |
 | Segurança (`npm run test:security`) | 23 páginas e 51 referências a scripts externos locais; nenhum JavaScript executável inline         |
 | SEO (`npm run test:seo`)            | Metadados, canonicals, JSON-LD, sitemap e RSS verificados                                          |
-| Pages (`npm run test:pages`)        | Build isolado de 23 páginas; 761 referências válidas; quatro testes de navegador aprovados em 6,7s |
-| Playwright (`npm run test:e2e`)     | 41 aprovados, um ignorado, zero falhas; 45,6s                                                      |
+| Pages (`npm run test:pages`)        | Build isolado de 23 páginas; 761 referências válidas; quatro testes de navegador aprovados em 7,9s |
+| Playwright (`npm run test:e2e`)     | 41 aprovados, um ignorado, zero falhas; 30,4s                                                      |
 
 O teste ignorado evita repetir, no projeto mobile, a varredura de telas maiores já executada pelo projeto desktop. Foram verificados Home, catálogo e página Soul Hackers em 320, 580, 768, 1024, 1440, 1920 e 2560px, além de navegação em páginas representativas, filtros combinados e persistência na URL, ordem editorial, teclado, FAQ, menu, 404 e funcionamento sem JavaScript. O carrossel foi testado com controles manuais, rotação, pausa e movimento reduzido. O axe verificou regras WCAG A/AA nas rotas representativas.
 
@@ -26,7 +26,7 @@ O navegador local dos testes foi o Microsoft Edge em modo headless. O Chromium b
 
 O teste de SEO gera uma saída isolada em `.qa/seo/`, usando a origem reservada `https://kiryoshi.validation.test`. Verificou títulos e descrições únicos, canonicals e metadados absolutos, JSON-LD válido e exclusão de conteúdo demonstrativo do RSS e sitemap. Esse diretório não é publicado; `dist/` mantém a configuração segura sem domínio público.
 
-`npm run deploy:check` concluiu o dry-run atualizado do Wrangler, sem bindings. Uma tentativa anterior não pôde gravar logs globais por restrição do sandbox; a execução com permissão para esses logs concluiu com código 0. Nenhum deploy foi realizado. A auditoria `npm audit --json` da revisão de segurança retornou zero vulnerabilidades, incluindo desenvolvimento. O processador Sätteri existente foi declarado como dependência direta na mesma versão 0.4.5 para configurar o plugin nativo de caminhos; a instalação também retornou zero vulnerabilidades, sem novos pacotes. A instalação reproduzível com `npm ci` foi executada durante a implementação.
+`npm run deploy:check` concluiu o dry-run atualizado do Wrangler, sem bindings. Uma tentativa anterior não pôde gravar logs globais por restrição do sandbox; a execução com permissão para esses logs concluiu com código 0. Nenhum deploy na Cloudflare foi realizado. A auditoria `npm audit --json` da revisão de segurança retornou zero vulnerabilidades, incluindo desenvolvimento. O processador Sätteri existente foi declarado como dependência direta na mesma versão 0.4.5 para configurar o plugin nativo de caminhos; a instalação também retornou zero vulnerabilidades, sem novos pacotes. A instalação reproduzível com `npm ci` foi executada durante a implementação.
 
 ## CSP e testes de segurança
 
@@ -52,7 +52,7 @@ Relatórios locais HTML/JSON estão em `.qa/lighthouse/*-final.report.*`; screen
 
 ## Limites e pendências reais
 
-- Nenhum deploy do site foi realizado. HTTPS, headers, cache, redirects e status 404 precisam ser conferidos na hospedagem efetiva. Os resultados acima são de validação local; execuções do CI remoto são consultadas na aba Actions do repositório.
+- A publicação no Pages é uma prévia temporária autorizada. HTTPS, recursos, navegação, CSP e status 404 precisam ser conferidos no endereço retornado pelo deploy. Os headers específicos do Cloudflare não são aplicados pelo Pages. Os resultados acima são de validação local; execuções do CI remoto são consultadas na aba Actions do repositório.
 - Faltam domínio público, canais de contato/redes, vídeos publicados, dados confirmados de progresso e eventuais patches autorizados. Não existem pagamentos integrados.
 - Os cinco projetos são configurações iniciais identificadas como exemplos; os três devlogs são exemplos editoriais sem datas de publicação inventadas.
 - As capas fornecidas estão registradas em `docs/assets.md`; não há screenshots de traduções ou arquivos de jogos distribuídos.
@@ -60,14 +60,18 @@ Relatórios locais HTML/JSON estão em `.qa/lighthouse/*-final.report.*`; screen
 
 ## Versionamento no GitHub
 
-O usuário autorizou o primeiro commit e envio do projeto em 22/10/2026. O destino é o repositório privado [Ygorfrc/kiryoshi-translations](https://github.com/Ygorfrc/kiryoshi-translations), na branch `main`. Arquivos `.env`, dependências, builds, logs e relatórios locais ficam fora do Git. O workflow de qualidade executa as verificações sem publicar o site ou acessar credenciais de deploy.
+O usuário autorizou o primeiro commit e envio do projeto em 22/10/2026. O destino inicial foi o repositório privado [Ygorfrc/kiryoshi-translations](https://github.com/Ygorfrc/kiryoshi-translations), na branch `main`. Arquivos `.env`, dependências, builds, logs e relatórios locais ficam fora do Git. O workflow de qualidade executa as verificações sem publicar o site ou acessar credenciais de deploy.
 
 ## Preparação do GitHub Pages
 
-A tentativa de habilitar Pages pela API retornou HTTP 422: o plano atual não suporta Pages neste repositório privado. O usuário escolheu manter tudo privado e somente preparar o commit. Nenhuma visibilidade foi alterada, repositório público criado, plano contratado ou workflow de deploy executado. Não existe URL publicada confirmada.
+A tentativa inicial de habilitar Pages no repositório privado retornou HTTP 422. Após a preparação do workflow manual, o usuário autorizou explicitamente tornar o repositório público e publicar o site em 22/10/2026. O resultado da publicação e sua URL são confirmados pela execução GitHub Pages (manual) e pelo ambiente github-pages no GitHub. A publicação permanece manual, sem deploys por push.
 
 Foram preparados `PUBLIC_BASE_PATH`, links de componentes e de conteúdo Markdown/MDX, metadados e imagens para o subdiretório. O build isolado `.qa/pages/` usa uma origem reservada e `noindex`, e nunca é publicado. O workflow Pages é somente manual, valida antes de gerar `dist-pages/` com URL/base reais lidas do GitHub e não faz deploy em pushes.
 
 Os quatro testes adicionais passaram em desktop e mobile: navegação, carrossel, busca, imagem carregada, link Markdown, metadados com base, privacidade e feeds de prévia, além do bloqueio de JavaScript inline pela CSP meta sem header HTTP. A suíte principal continua validando os headers reais no emulador Cloudflare. O teste da busca detectou um problema no evento `change` ao perder foco, que podia interromper cliques em resultados; ele foi corrigido e recebeu cobertura nas duas suítes.
 
-O Pages não aplica o arquivo `_headers`. A CSP meta deriva dele, excetuando `frame-ancestors`, que exige header HTTP; não foi alegada equivalência com todos os headers do Cloudflare. A política de privacidade do build Pages identifica o GitHub como hospedagem. O workflow de publicação depende da habilitação futura do serviço e de nova autorização do responsável.
+O Pages não aplica o arquivo `_headers`. A CSP meta deriva dele, excetuando `frame-ancestors`, que exige header HTTP; não foi alegada equivalência com todos os headers do Cloudflare. A política de privacidade do build Pages identifica o GitHub como hospedagem. A autorização explícita para habilitar o serviço, tornar o repositório público e publicar foi recebida; futuras alterações de automação continuam fora desse escopo.
+
+## Atualização da capa e publicação autorizada
+
+Em 22/10/2026, `images/Desu2.jpg` (1334×1334) substituiu a capa anterior por solicitação do usuário. A autorização também incluiu tornar público todo o repositório e publicar no GitHub Pages. A validação completa foi repetida com a nova imagem: 67 arquivos sem erros de tipos, 24 testes unitários, quatro testes de Pages e 41 testes da aplicação aprovados, com uma repetição de viewport ignorada conforme documentado. O primeiro teste do Pages encontrou o lock da prévia local aberta; a suíte passou a usar uma instância isolada com `--ignore-lock`, sem parar a prévia da pessoa usuária. A execução completa posterior terminou com código 0. Nenhum segredo foi identificado nos arquivos revisados; `.env`, caches, builds e relatórios continuam ignorados. O estado e a URL efetiva do deploy devem ser conferidos na execução manual do GitHub, sem alegar publicação com base apenas no commit.

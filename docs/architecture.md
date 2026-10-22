@@ -46,7 +46,7 @@ CI executa qualidade sem publicar. Credenciais e domínios são responsabilidade
 
 `PUBLIC_NOINDEX=true` desativa indexação, sitemap e itens RSS mesmo com origem real configurada, permitindo uma prévia temporária. `PUBLIC_HOSTING` controla a descrição factual da hospedagem na política de privacidade. Nenhum domínio futuro é presumido no build padrão.
 
-O workflow Pages é manual e não habilita o serviço automaticamente. Valida antes de produzir `dist-pages/` com a origem/base fornecidas pelo `configure-pages`. Não publica `dist/` do Cloudflare ou qualquer saída de QA. O responsável escolheu manter o repositório privado após a API recusar Pages no plano atual; nenhum deploy ou alteração de visibilidade está autorizado nesta etapa.
+O workflow Pages é manual e não habilita o serviço automaticamente. Valida antes de produzir `dist-pages/` com a origem/base fornecidas pelo `configure-pages`. Não publica `dist/` do Cloudflare ou qualquer saída de QA. Após a recusa inicial de Pages no repositório privado, o responsável autorizou explicitamente tornar o repositório público e publicar no Pages em 22/10/2026. Isso não autoriza adicionar deploys automáticos por push ou publicar na Cloudflare.
 
 A CSP HTTP permanece no Cloudflare. A CSP via meta, presente em todos os HTML de produção, mantém as restrições de scripts no Pages sem depender de `_headers`, que esse serviço não interpreta. A diretiva `frame-ancestors` só existe no header HTTP; não é inserida na meta. A verificação de segurança exige as duas representações apropriadas. Não há Worker, proxy ou backend adicional para simular headers no Pages.
 
