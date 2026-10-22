@@ -4,6 +4,6 @@
       <feGaussianBlur stdDeviation="2.6"/>
     </filter>
   </defs>
-  <path d="m10 7 15 6-7 5-4 8-4-19Z" fill="#a6d8ff" stroke="#80bfff" stroke-width="5" stroke-linejoin="round" opacity=".95" filter="url(#glow)"/>
+  <path d="m10 7 15 6-7 5-4 8-4-19Z" fill="#ff7864" stroke="#ff7864" stroke-width="5" stroke-linejoin="round" opacity=".95" filter="url(#glow)"/>
   <path d="m10 7 15 6-7 5-4 8-4-19Z" fill="#080f1e" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
 </svg>
