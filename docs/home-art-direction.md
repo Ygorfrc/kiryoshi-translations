@@ -17,6 +17,8 @@ Conforme a referência fornecida pelo usuário, a setinha original de 32×32 usa
 - Silkscreen auto-hospedada no Header; fontes locais, sem chamadas ao Google Fonts.
 - Tipografia editorial em Georgia para títulos da Home, com texto de corpo em fonte de sistema.
 - Menu de caminhos com cursor triangular e links reais.
+- Rótulo “MISSÃO ATUAL” ampliado para 0,72rem, com ícone de 18px. A legenda do banner exibe somente o crédito da arte, conforme solicitado.
+- `PlatformText.astro` destaca somente o numeral 3 de 3DS em vermelho: `#B51F2E` sobre fundos claros e `#FF7070` sobre escuros. Aplica-se aos rótulos da Home, carrossel, catálogo e páginas individuais, além das menções em Sobre e requisitos. Opções nativas dos filtros e metadados continuam em texto simples.
 - Janelas com borda dupla, cursores de seleção, recortes diagonais e tipografia expressiva no carrossel.
 - Diário de missões para Soul Hackers e estante para os títulos de interesse futuro.
 - Fogueira vetorial original como ponto de encontro da comunidade.
@@ -32,7 +34,7 @@ Não há projetos concluídos confirmados no conteúdo inicial. O usuário autor
 
 Rotação a cada 6,5 segundos, controles anterior/próximo e seleção direta, pausa explícita, navegação por setas e respeito a reduced motion. Pausa também ao receber foco, hover, sair da viewport ou ocultar a aba. Sem JavaScript, o primeiro destaque e o link ao catálogo continuam acessíveis.
 
-As capas são os arquivos fornecidos pelo usuário em `images/`. A missão atual usa `src/assets/soul-hackers-banner-edited.png`, derivada do banner fornecido `Soulhckers-banner.webp` para remover a chamada “COMING APRIL 16, 2013”, conforme solicitado. O usuário também pediu ampliar a arte até as bordas da área marcada: o banner preenche o painel com recorte de enquadramento à direita, sem rotação ou distorção, entre o rótulo e a legenda. No mobile, a área usa proporção 4:3. O original continua preservado, e a legenda identifica o crédito e a edição visual com IA. `SoulHackerscapa.jpeg` permanece no catálogo, carrossel e página individual. Astro Image gera WebP responsivo; `GameCover.astro` continua responsável pelas capas, sem cortes.
+As capas são os arquivos fornecidos pelo usuário em `images/`. A missão atual usa `src/assets/soul-hackers-banner-edited.png`, derivada do banner fornecido `Soulhckers-banner.webp` para remover a chamada “COMING APRIL 16, 2013”, conforme solicitado. O usuário também pediu ampliar a arte até as bordas da área marcada: o banner preenche o painel com recorte de enquadramento à direita, sem rotação ou distorção, entre o rótulo e a legenda. No mobile, a área usa proporção 4:3. O original continua preservado, e a legenda exibe o crédito da arte, conforme o pedido posterior de retirar a expressão “edição visual com IA”. A procedência da edição permanece registrada em `docs/assets.md`. `SoulHackerscapa.jpeg` permanece no catálogo, carrossel e página individual. Astro Image gera WebP responsivo; `GameCover.astro` continua responsável pelas capas, sem cortes.
 
 ## Ilustração
 

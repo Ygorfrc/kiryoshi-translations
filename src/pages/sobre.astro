@@ -2,6 +2,7 @@
 import { withBase } from '../lib/paths';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
+import PlatformText from '../components/PlatformText.astro';
 import { site } from '../config/site';
 ---
 
@@ -22,7 +23,7 @@ import { site } from '../config/site';
         Kiryoshi é o nome público do criador deste projeto. Fã de JRPGs, começou
         com a tradução de{' '}
         <strong>Shin Megami Tensei: Devil Summoner – Soul Hackers</strong>, para
-        Nintendo 3DS.
+        <PlatformText text="Nintendo 3DS" />.
       </p>
       <p>
         A motivação é tornar jogos clássicos mais acessíveis ao público
@@ -68,9 +69,10 @@ import { site } from '../config/site';
       </p>
       <h2>Os próximos capítulos</h2>
       <p>
-        Há interesse em explorar outros JRPGs de Nintendo DS, 3DS, PSP, PS2 e
-        demais plataformas. Os títulos do catálogo são cadastros iniciais
-        configuráveis, sem compromisso de cronograma.
+        Há interesse em explorar outros JRPGs de Nintendo DS,{' '}
+        <PlatformText text="3DS" />, PSP, PS2 e demais plataformas. Os títulos
+        do catálogo são cadastros iniciais configuráveis, sem compromisso de
+        cronograma.
       </p>
       <p>
         <a href={withBase('/traducoes/')}>Explore os projetos</a> ou conheça os{' '}

@@ -19,6 +19,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Campfire from '../components/Campfire.astro';
 import ProjectShowcase from '../components/ProjectShowcase.astro';
 import GameCover from '../components/GameCover.astro';
+import PlatformText from '../components/PlatformText.astro';
 import ProjectStatus from '../components/ProjectStatus.astro';
 import { getPosts } from '../lib/content';
 import { formatDate } from '../lib/format';
@@ -165,7 +166,7 @@ const jsonLd = {
           class:list={['quest-cover', { 'quest-cover-banner': featuredBanner }]}
         >
           <span class="quest-bookmark">
-            <Sparkles size={14} />
+            <Sparkles size={18} />
             MISSÃO ATUAL
           </span>
           {featuredBanner ? (
@@ -188,7 +189,7 @@ const jsonLd = {
           )}
           <span class="quest-cover-note">
             {featuredBanner
-              ? 'Arte: Index Corp. / ATLUS · edição visual com IA'
+              ? 'Arte: Index Corp. / ATLUS'
               : featured.data.cover
                 ? 'Arte do jogo · imagem fornecida pelo projeto'
                 : 'Capa ilustrativa · arte oficial não fornecida'}
@@ -197,8 +198,8 @@ const jsonLd = {
         <div class="quest-copy">
           <div class="quest-platform">
             <Gamepad2 size={15} />
-            {featured.data.platform}
-            <span>PT-BR</span>
+            <PlatformText text={featured.data.platform} />
+            <span class="quest-locale">PT-BR</span>
           </div>
           <p class="quest-series">Shin Megami Tensei: Devil Summoner</p>
           <h3>{featured.data.shortTitle}</h3>
@@ -264,7 +265,9 @@ const jsonLd = {
               <GameCover project={project} />
             </a>
             <div class="shelf-game-info">
-              <span class="shelf-platform">{project.data.platform}</span>
+              <span class="shelf-platform">
+                <PlatformText text={project.data.platform} />
+              </span>
               <h3>
                 <a href={withBase(`/traducoes/${project.id}/`)}>
                   {project.data.shortTitle}

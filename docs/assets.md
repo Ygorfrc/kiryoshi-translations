@@ -31,7 +31,7 @@ O componente GameCover resolve `cover.asset` a partir dessa pasta, gera WebP res
 
 Em 22/10/2026, o usuário pediu ampliar o banner até as bordas do painel e remover “COMING APRIL 16, 2013”. A ferramenta integrada **ImageGen**, em modo de edição, gerou `src/assets/soul-hackers-banner-edited.png` (1672×941) a partir de `images/Soulhckers-banner.webp`. O original de 1280×720 foi preservado. A cópia mantém a composição promocional e os créditos no topo; não é uma screenshot da tradução. Os direitos da arte continuam com os respectivos titulares (Index Corp. / ATLUS, conforme os créditos da imagem), sem licença aberta presumida.
 
-O painel usa enquadramento com `object-fit: cover` e foco à direita para atender à área marcada pelo usuário, sem distorcer a imagem. Parte das laterais fica fora do enquadramento; a cópia completa continua preservada. A legenda identifica o crédito e a edição visual com IA. Astro Image gera somente as variantes WebP necessárias para exibição.
+O painel usa enquadramento com `object-fit: cover` e foco à direita para atender à área marcada pelo usuário, sem distorcer a imagem. Parte das laterais fica fora do enquadramento; a cópia completa continua preservada. A legenda exibe o crédito da arte; o usuário pediu retirar a expressão “edição visual com IA”. A edição permanece registrada nesta documentação. Astro Image gera somente as variantes WebP necessárias para exibição.
 
 Prompt utilizado na ferramenta integrada, sem CLI ou API key:
 

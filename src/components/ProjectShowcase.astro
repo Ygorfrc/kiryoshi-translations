@@ -10,6 +10,7 @@ import {
   Gamepad2,
 } from '@lucide/astro';
 import GameCover from './GameCover.astro';
+import PlatformText from './PlatformText.astro';
 import { selectShowcase } from '../lib/showcase';
 import '../styles/showcase.css';
 interface Props {
@@ -79,7 +80,7 @@ const { projects, completedOnly } = selectShowcase(Astro.props.projects);
         <div class="showcase-content">
           <span class="showcase-platform">
             <Gamepad2 size={14} />
-            {project.data.platform}
+            <PlatformText text={project.data.platform} onDark />
           </span>
           <h2>{project.data.shortTitle}</h2>
           <a href={withBase(`/traducoes/${project.id}/`)} class="showcase-link">

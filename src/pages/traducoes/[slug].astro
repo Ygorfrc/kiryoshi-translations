@@ -6,6 +6,7 @@ import { Download, ArrowUpRight, Info } from '@lucide/astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import GameCover from '../../components/GameCover.astro';
+import PlatformText from '../../components/PlatformText.astro';
 import ProjectStatus from '../../components/ProjectStatus.astro';
 import ProgressIndicator from '../../components/ProgressIndicator.astro';
 import DevlogCard from '../../components/DevlogCard.astro';
@@ -75,7 +76,9 @@ const jsonLd = {
         <dl class="project-facts">
           <div>
             <dt>Plataforma</dt>
-            <dd>{data.platform}</dd>
+            <dd>
+              <PlatformText text={data.platform} />
+            </dd>
           </div>
           <div>
             <dt>Desenvolvedora</dt>
@@ -232,7 +235,9 @@ const jsonLd = {
                   'Região, versão, ferramentas e instruções específicas ainda não foram informadas.',
                 ]
             ).map((item) => (
-              <li>{item}</li>
+              <li>
+                <PlatformText text={item} />
+              </li>
             ))}
           </ul>
           <p>

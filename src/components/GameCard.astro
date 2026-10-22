@@ -3,6 +3,7 @@ import { withBase } from '../lib/paths';
 import type { CollectionEntry } from 'astro:content';
 import { ArrowUpRight } from '@lucide/astro';
 import GameCover from './GameCover.astro';
+import PlatformText from './PlatformText.astro';
 import ProjectStatus from './ProjectStatus.astro';
 interface Props {
   project: CollectionEntry<'translations'>;
@@ -20,7 +21,9 @@ const { project } = Astro.props;
     <GameCover project={project} />
   </a>
   <div class="game-card-meta">
-    <span class="eyebrow">{project.data.platform}</span>
+    <span class="eyebrow">
+      <PlatformText text={project.data.platform} />
+    </span>
     <ArrowUpRight size={17} aria-hidden="true" />
   </div>
   <h3>

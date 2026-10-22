@@ -1,5 +1,17 @@
 # Validação local — 22/10/2026
 
+## Validação completa para publicar os rótulos
+
+Após autorização para enviar os ajustes ao GitHub, `npm run validate` concluiu com código 0: formatação e tipos aprovados (68 arquivos); 24 testes unitários; build de 23 páginas; 728 referências internas válidas; segurança e SEO aprovados; quatro testes de Pages em 6,6s; 41 E2E em 31,4s, com um ignorado por duplicar a varredura desktop. O build isolado do Pages validou 774 referências. Log local: `.qa/validation-labels-release.log`.
+
+O envio reúne a legenda apenas com o crédito da arte, o rótulo “MISSÃO ATUAL” ampliado e o numeral 3 de 3DS vermelho nos textos visuais da interface. O workflow de publicação permanece manual e repete as verificações antes do deploy.
+
+## Legenda, missão atual e numeral vermelho de 3DS
+
+A pedido do usuário, a legenda do banner passou a exibir somente “Arte: Index Corp. / ATLUS”; a procedência da edição continua documentada em `docs/assets.md`. “MISSÃO ATUAL” aumentou de 0,49rem para 0,72rem, com ícone de 18px. O novo componente Astro `PlatformText` destaca o 3 de 3DS em vermelho nos rótulos visuais e menções relevantes, com variantes para fundos claros/escuros. Dados, metadados e opções nativas dos filtros mantêm texto simples. Os avisos sobre auxílio de IA na tradução e revisão humana foram preservados.
+
+Validação local: Astro/TypeScript com 68 arquivos e zero erros, avisos ou hints; build de 23 páginas; 728 referências internas válidas; formatação e `git diff --check` aprovados. A suíte existente de rotas, axe e larguras responsivas aprovou 23 testes em 22,8s; um foi ignorado por duplicar a varredura desktop. Não foi repetida a suíte completa. A inspeção do navegador confirmou o rótulo em 11,52px, a legenda atualizada e os vermelhos calculados em fundos claros e escuros. Nenhum commit, push ou deploy desta alteração. Log: `.qa/validation-platform-labels.log`.
+
 ## Validação completa para envio ao GitHub
 
 Após o usuário autorizar enviar a atualização, `npm run validate` foi executado integralmente e concluiu com código 0: formatação e tipos aprovados, 24 testes unitários, build de 23 páginas, 720 referências internas válidas, segurança e SEO aprovados, quatro testes de Pages em 7,6s e 41 E2E em 42,0s. Um teste foi ignorado por duplicar a varredura desktop no projeto mobile. A saída isolada do Pages validou 766 referências com o subdiretório configurado. Log local: `.qa/validation-github-banner-release.log`.

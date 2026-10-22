@@ -3,6 +3,7 @@ import { withBase } from '../lib/paths';
 import type { CollectionEntry } from 'astro:content';
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
+import PlatformText from './PlatformText.astro';
 interface Props {
   project: CollectionEntry<'translations'>;
   eager?: boolean;
@@ -55,7 +56,10 @@ if (cover && 'asset' in cover && !localImage)
     aria-label={`Capa ilustrativa de ${shortTitle}; arte oficial não fornecida`}
   >
     <div class="cover-platform">
-      NINTENDO <b>3DS</b>
+      NINTENDO{' '}
+      <b>
+        <PlatformText text="3DS" />
+      </b>
     </div>
     <span class="cover-series">SHIN MEGAMI TENSEI</span>
     <svg

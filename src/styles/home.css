@@ -679,7 +679,8 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  font-size: 0.49rem;
+  font-size: 0.72rem;
+  line-height: 1.5;
 }
 .quest-cover .game-cover,
 .quest-cover .game-cover-image {
@@ -754,7 +755,7 @@
   color: #434c61;
   font-size: 0.55rem;
 }
-.quest-platform > span {
+.quest-platform > .quest-locale {
   padding: 0.2rem 0.45rem;
   background: #e6e3de;
   border: 1px solid #cccfd4;

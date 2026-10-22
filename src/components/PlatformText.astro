@@ -1,0 +1,33 @@
+---
+interface Props {
+  text: string;
+  onDark?: boolean;
+}
+const { text, onDark = false } = Astro.props;
+const parts = text.split(/(3DS\b)/gi);
+---
+
+<span class:list={['platform-text', { 'platform-on-dark': onDark }]}>
+  {parts.map((part) =>
+    /^3DS$/i.test(part) ? (
+      <span class="platform-name">
+        <span class="platform-digit">3</span>
+        {part.slice(1)}
+      </span>
+    ) : (
+      part
+    ),
+  )}
+</span>
+
+<style>
+  .platform-name {
+    white-space: nowrap;
+  }
+  .platform-digit {
+    color: #b51f2e;
+  }
+  .platform-on-dark .platform-digit {
+    color: #ff7070;
+  }
+</style>
