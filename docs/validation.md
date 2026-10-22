@@ -1,5 +1,19 @@
 # Validação local — 22/10/2026
 
+## Paleta aprovada e cursor da referência
+
+O usuário aprovou azul noturno, creme e coral, autorizou publicar a versão no GitHub Pages e forneceu a referência do cursor: preenchimento escuro, borda clara e halo azul. O cursor foi implementado com dois SVGs locais de 32×32 e CSS, sem JavaScript adicional. A imagem social SVG/PNG e o favicon acompanham a paleta aprovada.
+
+Após o ajuste final do cursor, `npm run validate` concluiu com código 0: formatação aprovada; Astro/TypeScript com 67 arquivos e zero erros, avisos ou hints; 24 testes unitários; build de 23 páginas; 715 referências internas válidas; verificações de segurança e SEO aprovadas; quatro testes de Pages em 7,9s; 41 E2E aprovados e um ignorado em 31,8s. O teste ignorado continua sendo a varredura duplicada de telas maiores no projeto mobile.
+
+O navegador da prévia local confirmou os cursores normal e clicável com hotspot 10×7, usando URLs locais em `/_astro/`. O SVG final respondeu HTTP 200 com `image/svg+xml`, e sua rasterização foi inspecionada visualmente. Touch e forced colors ficam fora da regra do cursor personalizado. Houve inspeção da Home, do PNG social e das capturas desktop/mobile. Não houve nova medição Lighthouse; os números históricos abaixo não descrevem uma nova auditoria. Log completo local: `.qa/validation-final-cursor.log`, ignorado pelo Git. A publicação remota usa o workflow manual existente e seus próprios checks.
+
+## Teste inicial de azul noturno, creme e coral
+
+Após a troca experimental de paleta, foram executados novamente `npm run lint` (aprovado), `npm run check` (67 arquivos, zero erros, avisos ou hints), `npm run build` (23 páginas) e `npm run test:e2e` (41 aprovados, um ignorado, zero falhas; 32,8s). O teste ignorado evita duplicar a varredura de telas maiores no projeto mobile. O axe não apontou violações WCAG A/AA nas 11 rotas verificadas em desktop e mobile; a suíte também cobriu navegação, filtros, carrossel, CSP e ausência de overflow entre 320 e 2560px. Isso não equivale a uma auditoria manual completa de acessibilidade.
+
+A execução inicial do E2E não iniciou o servidor por restrição de escrita nos logs e registro globais do Wrangler. A repetição com acesso a esses diretórios concluiu com sucesso. Houve inspeção visual da Home local e captura mobile gerada pelo Playwright. O preview em `127.0.0.1:4321` foi atualizado com o novo build. Não houve nova medição Lighthouse, commit, push ou deploy dessa paleta. Os resultados abaixo descrevem as validações anteriores e não foram apresentados como novas medições.
+
 Resultados obtidos após aplicar a identidade aprovada, as cinco capas fornecidas e a ordem editorial: Soul Hackers, Devil Survivor Overclocked, Devil Survivor 2 Record Breaker, Strange Journey Redux e SMT IV: Apocalypse.
 
 ## Ambiente e comandos executados

@@ -18,7 +18,7 @@ Validação de URL, hash e flag de autorização não prova titularidade nem con
 
 ## Visual e orçamento
 
-Tokens CSS e Tailwind 4 compartilham a estrutura. A identidade aprovada usa verde petróleo, creme e âmbar em todas as páginas; Silkscreen no Header, Georgia em títulos editoriais e Space Grotesk nos componentes. Capas fornecidas pelo usuário são referenciadas por `cover.asset` e processadas por Astro Image, sem alterar os originais. O tema fica no escopo `.club-theme`. Breakpoints principais: 640, 800 e 1088px, com ajustes a 580 e 1100px e largura máxima 1248px. O objetivo é preservar leitura e composição entre 320 e 2560px.
+Tokens CSS e Tailwind 4 compartilham a estrutura. A identidade aprovada usa azul noturno, creme e coral em todas as páginas; Silkscreen no Header, Georgia em títulos editoriais e Space Grotesk nos componentes. Capas fornecidas pelo usuário são referenciadas por `cover.asset` e processadas por Astro Image, sem alterar os originais. O tema fica no escopo `.club-theme`. Breakpoints principais: 640, 800 e 1088px, com ajustes a 580 e 1100px e largura máxima 1248px. O objetivo é preservar leitura e composição entre 320 e 2560px.
 
 Controles têm foco visível. Animações se limitam a transições curtas e respeitam reduced motion. Operações síncronas não exibem carregamentos artificiais. Busca vazia, coleções vazias, vídeos ausentes, patches ausentes, 404 e falha de compartilhamento têm estados explícitos.
 

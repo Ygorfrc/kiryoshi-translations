@@ -12,7 +12,7 @@ O MVP funciona inteiramente como site estático. Não há autenticação, banco 
 - Tailwind CSS **4**, com plugin oficial de Vite e tokens CSS centralizados.
 - Astro Content Collections com schemas Zod; Markdown e MDX para publicações.
 - Lucide para ícones; Space Grotesk variável auto-hospedada, com `font-display: swap` e subsets Unicode.
-- Identidade de clube de fãs: verde petróleo, creme e âmbar; Header pixelado com Silkscreen local e elementos de UI inspirados abstratamente em JRPGs.
+- Identidade de clube de fãs: azul noturno, creme e coral; Header pixelado com Silkscreen local e elementos de UI inspirados abstratamente em JRPGs. Cursores SVG originais via CSS em dispositivos com mouse, sem JavaScript adicional.
 - TypeScript no cliente apenas para menu, filtros, carrossel acessível e compartilhamento. React não foi instalado porque nenhuma interação precisa de hidratação de framework.
 - Vitest, Playwright com Edge/Chromium e axe para validação proporcional ao projeto.
 - Cloudflare Workers **Static Assets** com Wrangler. Sem adaptador Cloudflare, SSR ou Worker JavaScript próprio.

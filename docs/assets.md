@@ -29,6 +29,7 @@ O componente GameCover resolve `cover.asset` a partir dessa pasta, gera WebP res
 
 - `src/assets/fan-room-original.png`: ilustração original produzida pela ferramenta ImageGen integrada, sem personagens ou screenshot de jogos existentes. Foi substituída pelo carrossel a pedido do usuário e está preservada para uso futuro, sem ser carregada pela Home. O prompt está em `docs/home-art-direction.md`.
 - `src/components/Campfire.astro`: ícone de fogueira em SVG original sobre grade de pixels.
+- `src/assets/cursors/jrpg-arrow.svg` e `jrpg-pointer.svg`: setinhas vetoriais originais de 32×32, criadas para a interface, sem assets de franquias.
 - Silkscreen: pacote `@fontsource/silkscreen`, licença OFL incluída no pacote, fonte local do Header em todas as rotas.
 
 Ao adicionar um asset, registre aqui seu caminho, titular, URL de origem, licença ou evidência verificável da autorização, restrições e crédito exibido. A propriedade `permission: authorized` é um controle editorial, não uma licença automática.

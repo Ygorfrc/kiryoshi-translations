@@ -1,6 +1,16 @@
 # Home — clube de fãs de JRPG
 
-Direção aprovada pelo usuário: **verde petróleo, creme e âmbar**, com Header pixelado e elementos de interface de JRPG. Após aprovar a Home, o usuário pediu manter o plano completo nessa identidade; a paleta e o Header agora se aplicam a todas as rotas.
+Direção aprovada pelo usuário: **azul noturno, creme e coral**, com Header pixelado e elementos de interface de JRPG. A paleta e o Header se aplicam a todas as rotas. Essa direção substitui a versão anterior em verde petróleo, creme e âmbar.
+
+## Paleta aprovada — 22/10/2026
+
+A paleta usa **azul noturno `#111B34`, creme `#F2EEE4` e coral `#FF7864`**. O azul estrutura Header, hero, janelas e comunidade; o creme mantém as áreas de leitura acolhedoras; o coral marca cursores, destaques e ações. Textos de destaque sobre superfícies claras usam coral escuro `#A63E35` para preservar contraste. Cores auxiliares do carrossel usam coral suave, azul claro e areia.
+
+Foram preservados layout, tipografia, capas e interações. Tokens principais estão no início de `home.css`; os nomes antigos `--forest`, `--forest-deep` e `--honey` são aliases da nova paleta, para manter as composições existentes. O favicon, a imagem social e a cor da interface do navegador acompanham a identidade. Após o teste local, o usuário aprovou a paleta e autorizou atualizar o GitHub Pages.
+
+## Cursor personalizado
+
+Conforme a referência fornecida pelo usuário, a setinha original de 32×32 usa preenchimento escuro, contorno claro e halo azul suave. Links e controles clicáveis recebem uma variante com halo mais intenso, sem animação. Os SVGs em `src/assets/cursors/` são processados pelo Vite para respeitar o subdiretório do Pages. A aplicação usa somente CSS, com hotspot em 10×7 e fallback nativo; não há elemento seguindo o mouse, animação ou código adicional no cliente. Touch e modos de cores forçadas preservam o comportamento nativo; inputs de texto e controles desabilitados mantêm cursores próprios.
 
 ## Interface
 

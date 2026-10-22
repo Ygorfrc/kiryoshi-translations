@@ -1,50 +1,50 @@
 .project-showcase {
-  color: #f5ead1;
+  color: #ede6d9;
   min-width: 0;
   width: 100%;
-  border: 1px solid #b2b28a66;
+  border: 1px solid #ee664e66;
   border-radius: 5px;
-  background: #10332f;
+  background: #0f172a;
   padding: 0.65rem;
-  box-shadow: 7px 8px 0 #0b2a2860;
+  box-shadow: 7px 8px 0 #0c122160;
 }
 .showcase-topline {
   font: 0.48rem/1.6 var(--font-pixel);
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  color: #d6c69f;
+  color: #f39382;
   padding: 0.3rem 0.5rem 0.7rem;
 }
 .showcase-stage {
   position: relative;
   aspect-ratio: 1.16;
   min-height: 360px;
-  background: #1c423b;
+  background: #182138;
   overflow: hidden;
 }
 .showcase-slide {
-  --slide-color: #e8b974;
+  --slide-color: #ff7864;
   position: absolute;
   inset: 0;
   overflow: hidden;
   isolation: isolate;
-  background: #153b35;
+  background: #121c32;
 }
 .showcase-slide.is-active {
   animation: showcase-arrival 0.45s ease-out both;
 }
 .showcase-orange {
-  --slide-color: #dba477;
+  --slide-color: #ff9988;
 }
 .showcase-cyan {
-  --slide-color: #98bead;
+  --slide-color: #a4b6e3;
 }
 .showcase-red {
-  --slide-color: #d8a18a;
+  --slide-color: #eeb4aa;
 }
 .showcase-green {
-  --slide-color: #bac392;
+  --slide-color: #d6c9b6;
 }
 .showcase-cuts {
   position: absolute;
@@ -65,7 +65,7 @@
   bottom: 0;
   left: 13%;
   width: 2px;
-  background: #133b3566;
+  background: #111b3166;
 }
 .cut-edge {
   position: absolute;
@@ -73,14 +73,14 @@
   height: 32px;
   left: -10%;
   top: 33%;
-  background: #102d28;
+  background: #0e1526;
   transform: rotate(-16deg);
-  box-shadow: 0 6px 0 #f7efd755;
+  box-shadow: 0 6px 0 #f0eade55;
 }
 .cut-grid {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(#0c2b2738 0.8px, transparent 1px);
+  background-image: radial-gradient(#0c132338 0.8px, transparent 1px);
   background-size: 7px 7px;
   mix-blend-mode: multiply;
 }
@@ -88,7 +88,7 @@
   position: absolute;
   left: 0.8rem;
   top: 2.4rem;
-  color: #f5edda33;
+  color: #efeae033;
   font: 700 clamp(6rem, 13vw, 12rem)/1 var(--font-display);
   letter-spacing: -0.1em;
   transform: rotate(-8deg);
@@ -97,7 +97,7 @@
   position: absolute;
   bottom: 16%;
   left: -3%;
-  color: #0d2c273d;
+  color: #0d14243d;
   font: 700 4rem/0.85 var(--font-display);
   width: 140%;
   text-transform: uppercase;
@@ -108,22 +108,22 @@
   position: absolute;
   top: 1rem;
   left: 1rem;
-  color: #244233;
-  background: #f3e8d0;
-  border: 1px solid #f3e8d0;
+  color: #1f2638;
+  background: #ebe5d8;
+  border: 1px solid #ebe5d8;
   padding: 0.5rem 0.7rem;
   font: 0.49rem/1.5 var(--font-pixel);
   transform: rotate(-3deg);
   z-index: 3;
-  box-shadow: 3px 3px 0 #13372f44;
+  box-shadow: 3px 3px 0 #10192f44;
 }
 .showcase-status > span {
   font-size: 0.55rem;
-  color: #8d652e;
+  color: #8a3e31;
   margin-right: 0.5rem;
 }
 .showcase-status.ready {
-  background: #d6e4c7;
+  background: #cfd3dc;
 }
 .showcase-cover {
   position: absolute;
@@ -131,8 +131,8 @@
   top: 13%;
   right: 8%;
   transform: rotate(10deg);
-  box-shadow: 8px 9px 0 #123a3480;
-  border: 3px solid #f7e9ca;
+  box-shadow: 8px 9px 0 #111a3080;
+  border: 3px solid #ede5d4;
   border-radius: 3px;
 }
 .showcase-cover .game-cover,
@@ -140,14 +140,14 @@
   border-radius: 0;
 }
 .showcase-cover .game-cover {
-  background: radial-gradient(ellipse at 60% 20%, #395047, #19312e);
-  --accent: #dac28a;
+  background: radial-gradient(ellipse at 60% 20%, #303645, #151b2a);
+  --accent: #f18673;
 }
 .showcase-cover .game-cover strong {
-  color: #f6edd7;
+  color: #efe9de;
 }
 .showcase-cover .cover-platform {
-  background: #f0e6d1;
+  background: #e9e3d8;
 }
 .showcase-content {
   position: absolute;
@@ -161,10 +161,10 @@
   position: absolute;
   inset: -1.7rem -2rem -2rem;
   z-index: -1;
-  background: linear-gradient(0deg, #102d29 10%, #102d29f2 42%, #102d2900 100%);
+  background: linear-gradient(0deg, #0e1526 10%, #0e1526f2 42%, #0e152600 100%);
 }
 .showcase-platform {
-  color: #e7d3aa;
+  color: #f5a99c;
   font: 0.52rem/1.5 var(--font-pixel);
   display: inline-flex;
   gap: 0.6rem;
@@ -177,24 +177,24 @@
   text-transform: uppercase;
   max-width: 93%;
   margin: 0.3rem 0 1.2rem;
-  color: #f8ecd1;
-  text-shadow: 3px 3px 0 #12372e;
+  color: #efe8da;
+  text-shadow: 3px 3px 0 #10192e;
 }
 .showcase-link {
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
   padding: 0.55rem 0.8rem;
-  border: 1px solid #d7c290;
-  color: #f4e3bc;
-  background: #173e35;
+  border: 1px solid #f18876;
+  color: #e7ddc9;
+  background: #141d35;
   border-radius: 2px;
   font-size: 0.72rem;
   min-height: 42px;
 }
 .showcase-link:hover {
-  background: #2b5342;
-  color: #fff3ce;
+  background: #252f47;
+  color: #f4ebd9;
 }
 .showcase-controls {
   display: flex;
@@ -213,13 +213,13 @@
   place-items: center;
   width: 40px;
   min-height: 40px;
-  background: #1b4136;
-  color: #f0d7a9;
-  border: 1px solid #c5b38570;
+  background: #172137;
+  color: #f6b0a3;
+  border: 1px solid #ef715b70;
   border-radius: 2px;
 }
 .showcase-arrows button:hover {
-  background: #355744;
+  background: #2d364a;
 }
 .showcase-dots {
   display: flex;
@@ -238,11 +238,11 @@
   display: block;
   width: 6px;
   height: 6px;
-  background: #799783;
+  background: #697797;
   transform: rotate(45deg);
 }
 .showcase-dots button[aria-pressed='true'] > span {
-  background: #efbf79;
+  background: #f28976;
   width: 9px;
   height: 9px;
 }
@@ -255,13 +255,13 @@
   min-height: 40px;
   padding: 0.4rem 0.5rem;
   background: transparent;
-  border: 1px solid #94ac8f66;
-  color: #d8d8bc;
+  border: 1px solid #818ca766;
+  color: #f5ac9f;
   border-radius: 2px;
   min-width: 85px;
 }
 .showcase-pause:hover {
-  background: #355744;
+  background: #2d364a;
 }
 .showcase-pause .play-symbol {
   display: none;
@@ -274,24 +274,24 @@
 }
 .showcase-caption,
 .showcase-no-js {
-  color: #b8c9b4;
+  color: #babdc3;
   font-size: 0.6rem;
   line-height: 1.65;
   padding: 0.2rem 0.4rem 0;
   margin: 0.7rem 0 0.1rem;
 }
 .showcase-no-js a {
-  color: #e5c58f;
+  color: #f39281;
   text-decoration: underline;
 }
 .showcase-empty {
   padding: 3rem 2rem;
 }
 .showcase-empty h2 {
-  color: #f5e6c8;
+  color: #ebe3d2;
 }
 .showcase-empty p {
-  color: #c6d1bd;
+  color: #c3c5cc;
 }
 @keyframes showcase-arrival {
   from {
@@ -349,7 +349,7 @@
 @media (max-width: 580px) {
   .project-showcase {
     padding: 0.45rem;
-    box-shadow: 4px 5px 0 #0b2a2860;
+    box-shadow: 4px 5px 0 #0c122160;
   }
   .showcase-topline {
     font-size: 0.36rem;
