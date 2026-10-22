@@ -1,0 +1,19 @@
+---
+interface Props {
+  status: string;
+}
+const { status } = Astro.props;
+---
+
+<span
+  class:list={[
+    'status',
+    {
+      active: status === 'Em desenvolvimento',
+      available: status === 'Disponível',
+    },
+  ]}
+>
+  <span class="status-dot" aria-hidden="true"></span>
+  {status}
+</span>

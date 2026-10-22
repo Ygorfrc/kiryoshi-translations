@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ArrowLeft, ArrowUpRight } from '@lucide/astro';
+---
+
+<BaseLayout
+  title="Página não encontrada"
+  description="Esta rota não foi encontrada. Volte ao início ou explore o catálogo de traduções de Kiryoshi Translations."
+  noindex
+>
+  <section class="container error-page">
+    <span class="eyebrow cyan">CONEXÃO INTERROMPIDA</span>
+    <div class="error-code" aria-hidden="true">
+      404
+    </div>
+    <h1>Este mundo ainda não foi encontrado.</h1>
+    <p>
+      O endereço pode ter mudado ou esta página não existe.
+      <br />A jornada continua em outros caminhos.
+    </p>
+    <div class="button-row">
+      <a class="button button-primary" href="/">
+        <ArrowLeft size={17} />
+        Voltar ao início
+      </a>
+      <a class="button button-outline" href="/traducoes/">
+        Explorar traduções <ArrowUpRight size={17} />
+      </a>
+    </div>
+  </section>
+</BaseLayout>

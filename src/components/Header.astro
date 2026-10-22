@@ -1,0 +1,74 @@
+---
+import { ArrowUpRight, Menu, X } from '@lucide/astro';
+import Brand from './Brand.astro';
+const links = [
+  { href: '/traducoes/', label: 'Traduções' },
+  { href: '/devlog/', label: 'Devlog' },
+  { href: '/sobre/', label: 'Sobre' },
+  { href: '/contato/', label: 'Contato' },
+];
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <Brand />
+    <button
+      class="menu-toggle"
+      aria-expanded="false"
+      aria-controls="main-nav"
+      aria-label="Abrir menu"
+    >
+      <Menu size={24} />
+      <X class="close-icon" size={24} />
+    </button>
+    <nav id="main-nav" aria-label="Navegação principal">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          aria-current={
+            Astro.url.pathname.startsWith(link.href) ? 'page' : undefined
+          }
+        >
+          {link.label}
+        </a>
+      ))}
+      <a class="header-support" href="/apoie/">
+        Apoie o projeto <ArrowUpRight size={15} />
+      </a>
+    </nav>
+  </div>
+</header>
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const nav = document.querySelector<HTMLElement>('#main-nav');
+  const setOpen = (open: boolean) => {
+    toggle?.setAttribute('aria-expanded', String(open));
+    toggle?.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    nav?.classList.toggle('is-open', open);
+  };
+  if (toggle && nav) {
+    toggle.addEventListener('click', () =>
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true'),
+    );
+    document.addEventListener('keydown', (event) => {
+      if (
+        event.key === 'Escape' &&
+        toggle.getAttribute('aria-expanded') === 'true'
+      ) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    document.addEventListener('click', (event) => {
+      if (
+        event.target instanceof Node &&
+        !nav.contains(event.target) &&
+        !toggle.contains(event.target)
+      )
+        setOpen(false);
+    });
+    window
+      .matchMedia('(min-width: 800px)')
+      .addEventListener('change', () => setOpen(false));
+  }
+</script>

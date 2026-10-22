@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { site } from '../config/site';
+import { Heart } from '@lucide/astro';
+---
+
+<BaseLayout
+  title="Apoie — contribuições sempre voluntárias"
+  description="Entenda como apoiar Kiryoshi Translations. As traduções são gratuitas e nenhuma contribuição é necessária para acessar os patches."
+>
+  <PageIntro
+    title="Faça parte do próximo capítulo"
+    eyebrow="APOIO VOLUNTÁRIO"
+    description="O objetivo é compartilhar histórias com mais jogadores brasileiros. Apoiar é uma escolha; o acesso às traduções será sempre gratuito."
+    breadcrumb="Apoie"
+  />
+  <div class="container editorial-layout">
+    <div class="prose">
+      <h2>Um projeto feito por paixão</h2>
+      <p>
+        Kiryoshi Translations não tem o lucro como objetivo principal. A
+        proposta é tornar JRPGs clássicos mais acessíveis em português
+        brasileiro e manter um espaço transparente para acompanhar esse
+        trabalho.
+      </p>
+      <h2>Como um apoio pode ajudar</h2>
+      <p>
+        Eventuais contribuições poderão ajudar com manutenção do domínio,
+        recursos necessários ao desenvolvimento e continuidade da documentação.
+        Não há campanha, meta financeira ou prestação de contas de arrecadação
+        ativa cadastrada neste site.
+      </p>
+      <h2>Você também pode apoiar sem dinheiro</h2>
+      <ul>
+        <li>Compartilhe as páginas dos projetos com outros jogadores.</li>
+        <li>Acompanhe os registros de desenvolvimento.</li>
+        <li>
+          Quando houver canais públicos, envie comentários construtivos e
+          relatos claros de problemas.
+        </li>
+        <li>
+          Respeite o tempo de desenvolvimento e os direitos dos titulares dos
+          jogos.
+        </li>
+      </ul>
+      <h2>Obrigado por estar aqui</h2>
+      <p>
+        Interesse, paciência e troca de conhecimento também sustentam uma
+        comunidade. Cada pessoa que conhece o projeto pode ajudar uma nova
+        história a encontrar seu público.
+      </p>
+      <p>
+        <a href="/traducoes/">Conheça as traduções</a> e siga acompanhando os
+        próximos capítulos.
+      </p>
+    </div>
+    <aside class="editorial-aside">
+      <Heart size={34} class="purple mb-6" />
+      <h2>Gratuito. Sempre.</h2>
+      <p>
+        Nenhum patch será exclusivo de apoiadores. Não haverá acesso
+        condicionado a pagamentos.
+      </p>
+      {site.support.length ? (
+        site.support.map((option) => (
+          <div class="mt-6">
+            <h3>{option.label}</h3>
+            <p>{option.description}</p>
+            <a
+              class="button button-outline"
+              href={option.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Conhecer plataforma ↗
+            </a>
+          </div>
+        ))
+      ) : (
+        <div class="notice mt-6">
+          <strong>Apoio financeiro ainda não configurado.</strong>
+          <p class="mt-2">
+            Não há chave Pix, cobrança ou link de pagamento ativo. Canais
+            poderão ser incluídos após avaliação das regras aplicáveis.
+          </p>
+        </div>
+      )}
+    </aside>
+  </div>
+</BaseLayout>

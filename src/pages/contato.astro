@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { site } from '../config/site';
+import { Mail, MessagesSquare, ArrowUpRight } from '@lucide/astro';
+---
+
+<BaseLayout
+  title="Contato e comunidade"
+  description="Encontre os canais públicos de Kiryoshi Translations para conversar, colaborar e acompanhar as traduções de JRPGs."
+>
+  <PageIntro
+    title="Toda conexão começa com uma conversa"
+    eyebrow="CONTATO E COMUNIDADE"
+    description="Ideias, relatos de problemas e vontade de colaborar são bem-vindos. Os canais aparecerão aqui quando forem confirmados."
+    breadcrumb="Contato"
+  />
+  <div class="container contact-grid">
+    <section class="contact-card">
+      <Mail size={28} />
+      <h2>Fale com Kiryoshi</h2>
+      {site.contactEmail ? (
+        <a class="button button-outline" href={`mailto:${site.contactEmail}`}>
+          {site.contactEmail}
+        </a>
+      ) : (
+        <p>
+          <strong>E-mail ainda não informado.</strong> O endereço de contato
+          será incluído quando houver um canal público confirmado.
+        </p>
+      )}
+      <p class="fine-print mt-5">
+        Este site não possui formulário nem recebe mensagens diretamente.
+      </p>
+    </section>
+    <section class="contact-card">
+      <MessagesSquare size={28} />
+      <h2>Encontre a comunidade</h2>
+      {site.channels.length ? (
+        site.channels.map((channel) => (
+          <p>
+            <a
+              class="text-link"
+              href={channel.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {channel.label} <ArrowUpRight size={16} />
+            </a>
+          </p>
+        ))
+      ) : (
+        <p>
+          <strong>Canais ainda não configurados.</strong> Os links oficiais de
+          GitHub, YouTube e redes sociais serão adicionados aqui. Nenhum convite
+          de Discord foi fornecido.
+        </p>
+      )}
+    </section>
+  </div>
+  <div class="container prose">
+    <h2>Para um bom relato de problema</h2>
+    <p>
+      Quando o contato estiver disponível, informe o jogo, a versão do patch, o
+      contexto e os passos para reproduzir o problema. Não envie ROMs, arquivos
+      proprietários, dados pessoais desnecessários ou credenciais.
+    </p>
+    <p>
+      Para consultar o andamento, visite o{' '}
+      <a href="/traducoes/">catálogo de traduções</a>. Informações sobre
+      direitos e não afiliação estão no <a href="/aviso-legal/">aviso legal</a>.
+    </p>
+  </div>
+</BaseLayout>

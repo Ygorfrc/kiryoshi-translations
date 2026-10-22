@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { ArrowUpRight } from '@lucide/astro';
+import GameCover from './GameCover.astro';
+import ProjectStatus from './ProjectStatus.astro';
+interface Props {
+  project: CollectionEntry<'translations'>;
+}
+const { project } = Astro.props;
+---
+
+<article class="game-card" data-project-id={project.id}>
+  <a
+    class="cover-link"
+    href={`/traducoes/${project.id}/`}
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    <GameCover project={project} />
+  </a>
+  <div class="game-card-meta">
+    <span class="eyebrow">{project.data.platform}</span>
+    <ArrowUpRight size={17} aria-hidden="true" />
+  </div>
+  <h3>
+    <a href={`/traducoes/${project.id}/`}>{project.data.shortTitle}</a>
+  </h3>
+  <ProjectStatus status={project.data.status} />
+</article>

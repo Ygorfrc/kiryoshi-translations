@@ -1,0 +1,141 @@
+---
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import DevlogCard from '../../components/DevlogCard.astro';
+import ShareButton from '../../components/ShareButton.astro';
+import { getPosts } from '../../lib/content';
+import { formatDate } from '../../lib/format';
+import { categorySlug } from '../../lib/categories';
+export async function getStaticPaths() {
+  return (await getPosts()).map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+interface Props {
+  post: CollectionEntry<'devlogs'>;
+}
+const { post } = Astro.props;
+const { data } = post;
+const { Content } = await render(post);
+const posts = await getPosts();
+const index = posts.findIndex((p) => p.id === post.id);
+const previous = posts[index + 1];
+const next = posts[index - 1];
+const related = posts
+  .filter((p) => p.id !== post.id)
+  .sort(
+    (a, b) =>
+      Number(b.data.category === data.category) -
+      Number(a.data.category === data.category),
+  )
+  .slice(0, 2);
+const jsonLd = !data.demo
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: data.title,
+      description: data.description,
+      datePublished: data.published?.toISOString(),
+      dateModified: (data.updated ?? data.published)?.toISOString(),
+      inLanguage: 'pt-BR',
+      author: { '@type': 'Person', name: 'Kiryoshi' },
+      mainEntityOfPage: Astro.site
+        ? new URL(Astro.url.pathname, Astro.site).href
+        : undefined,
+    }
+  : undefined;
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  type="article"
+  noindex={data.demo}
+  image={data.cover?.src}
+  jsonLd={jsonLd}
+>
+  <article class="article-container">
+    <header class="article-head">
+      <Breadcrumbs
+        items={[{ label: 'Devlog', href: '/devlog/' }, { label: data.title }]}
+      />
+      <div class="article-meta">
+        <a
+          class="eyebrow purple"
+          href={`/devlog/categoria/${categorySlug(data.category)}/`}
+        >
+          {data.category}
+        </a>
+        {data.demo ? (
+          <span>Exemplo editorial · sem data de publicação real</span>
+        ) : (
+          data.published && (
+            <time datetime={data.published.toISOString()}>
+              {formatDate(data.published)}
+            </time>
+          )
+        )}
+      </div>
+      <h1>{data.title}</h1>
+      <p class="lead">{data.description}</p>
+      {data.updated && (
+        <p class="fine-print">
+          Atualizado em{' '}
+          <time datetime={data.updated.toISOString()}>
+            {formatDate(data.updated)}
+          </time>
+        </p>
+      )}
+      {data.cover && (
+        <figure>
+          <img
+            src={data.cover.src}
+            alt={data.cover.alt}
+            width={data.cover.width}
+            height={data.cover.height}
+          />
+          <figcaption class="fine-print">{data.cover.credit}</figcaption>
+        </figure>
+      )}
+    </header>
+    <div class="prose article-body">
+      <Content />
+    </div>
+    <ShareButton />
+    <nav class="article-pagination" aria-label="Outras publicações">
+      <div>
+        {previous && (
+          <a href={`/devlog/${previous.id}/`}>
+            <small>← PUBLICAÇÃO ANTERIOR</small>
+            {previous.data.title}
+          </a>
+        )}
+      </div>
+      <div>
+        {next && (
+          <a href={`/devlog/${next.id}/`}>
+            <small>PRÓXIMA PUBLICAÇÃO →</small>
+            {next.data.title}
+          </a>
+        )}
+      </div>
+    </nav>
+  </article>
+  {related.length > 0 && (
+    <section class="container section" aria-labelledby="related-title">
+      <div class="section-heading">
+        <h2 id="related-title">
+          Continue a jornada<span class="purple">.</span>
+        </h2>
+      </div>
+      <div class="devlog-grid">
+        {related.map((p, i) => (
+          <DevlogCard post={p} index={i} />
+        ))}
+      </div>
+    </section>
+  )}
+</BaseLayout>

@@ -1,0 +1,38 @@
+---
+import { ChevronRight } from '@lucide/astro';
+import { serializeJsonLd } from '../lib/format';
+interface Props {
+  items: { label: string; href?: string }[];
+}
+const items = [{ label: 'Início', href: '/' }, ...Astro.props.items];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.label,
+    item: Astro.site
+      ? new URL(item.href ?? Astro.url.pathname, Astro.site).href
+      : undefined,
+  })),
+};
+---
+
+<nav class="breadcrumbs" aria-label="Caminho da página">
+  <ol>
+    {items.map((item, i) => (
+      <li>
+        {i > 0 && <ChevronRight size={13} />}
+        {item.href ? (
+          <a href={item.href}>{item.label}</a>
+        ) : (
+          <span aria-current="page">{item.label}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+{Astro.site && (
+  <script type="application/ld+json" set:html={serializeJsonLd(jsonLd)} />
+)}

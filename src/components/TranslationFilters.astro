@@ -1,0 +1,171 @@
+---
+import { Search } from '@lucide/astro';
+import type { CollectionEntry } from 'astro:content';
+import { statuses } from '../lib/schemas';
+interface Props {
+  projects: CollectionEntry<'translations'>[];
+}
+const { projects } = Astro.props;
+const platforms = [...new Set(projects.map((p) => p.data.platform))].sort();
+const items = projects.map((project) => ({
+  id: project.id,
+  title: project.data.title,
+  platform: project.data.platform,
+  status: project.data.status,
+  updated: project.data.updated?.toISOString(),
+  order: project.data.displayOrder,
+}));
+---
+
+<div
+  id="catalog-filters"
+  class="filters-panel"
+  hidden
+  data-items={JSON.stringify(items)}
+>
+  <form class="filters-form" role="search" aria-label="Filtrar traduções">
+    <div class="field search-field">
+      <label for="project-search">Buscar tradução</label>
+      <Search size={16} aria-hidden="true" />
+      <input
+        id="project-search"
+        name="q"
+        type="search"
+        placeholder="Qual história você procura?"
+        autocomplete="off"
+        maxlength="120"
+      />
+    </div>
+    <div class="field">
+      <label for="platform-filter">Plataforma</label>
+      <select id="platform-filter" name="platform">
+        <option value="">Todas as plataformas</option>
+        {platforms.map((p) => (
+          <option value={p}>{p}</option>
+        ))}
+      </select>
+    </div>
+    <div class="field">
+      <label for="status-filter">Status</label>
+      <select id="status-filter" name="status">
+        <option value="">Todos os status</option>
+        {statuses.map((status) => (
+          <option value={status}>{status}</option>
+        ))}
+      </select>
+    </div>
+    <div class="field">
+      <label for="sort-filter">Ordenar por</label>
+      <select id="sort-filter" name="sort">
+        <option value="order">Ordem dos projetos</option>
+        <option value="name">Nome (A–Z)</option>
+        <option value="updated">Última atualização</option>
+      </select>
+    </div>
+  </form>
+  <div class="filter-footer">
+    <span id="result-count" role="status" aria-live="polite" aria-atomic="true">
+      {projects.length} traduções encontradas
+    </span>
+    <button class="reset-button" id="reset-filters" type="button">
+      Limpar filtros
+    </button>
+  </div>
+</div>
+<noscript>
+  <p class="notice">
+    O catálogo completo está disponível abaixo. Ative o JavaScript para buscar,
+    filtrar e ordenar.
+  </p>
+</noscript>
+<script>
+  import {
+    defaultFilters,
+    filterTranslations,
+    type CatalogItem,
+    type Filters,
+  } from '../lib/catalog';
+  const panel = document.querySelector<HTMLElement>('#catalog-filters');
+  const form = panel?.querySelector<HTMLFormElement>('form');
+  const grid = document.querySelector<HTMLElement>('#catalog-grid');
+  const count = document.querySelector('#result-count');
+  const empty = document.querySelector<HTMLElement>('#catalog-empty');
+  if (panel && form && grid && count && empty) {
+    const items: CatalogItem[] = JSON.parse(panel.dataset.items ?? '[]');
+    const cards = new Map(
+      Array.from(grid.querySelectorAll<HTMLElement>('[data-project-id]')).map(
+        (card) => [card.dataset.projectId, card],
+      ),
+    );
+    const search = form.elements.namedItem('q') as HTMLInputElement;
+    const platform = form.elements.namedItem('platform') as HTMLSelectElement;
+    const status = form.elements.namedItem('status') as HTMLSelectElement;
+    const sort = form.elements.namedItem('sort') as HTMLSelectElement;
+    function readUrl() {
+      const params = new URLSearchParams(window.location.search);
+      search.value = (params.get('q') ?? '').slice(0, 120);
+      for (const field of [platform, status, sort]) {
+        const value = params.get(field.name);
+        field.value =
+          value && Array.from(field.options).some((o) => o.value === value)
+            ? value
+            : field.name === 'sort'
+              ? defaultFilters.sort
+              : '';
+      }
+    }
+    function update(syncUrl = true) {
+      const filters: Filters = {
+        query: search.value,
+        platform: platform.value,
+        status: status.value,
+        sort: sort.value,
+      };
+      const results = filterTranslations(items, filters);
+      cards.forEach((card) => {
+        card.hidden = true;
+      });
+      for (const item of results) {
+        const card = cards.get(item.id);
+        if (card) {
+          card.hidden = false;
+          grid!.append(card);
+        }
+      }
+      count!.textContent = `${results.length} ${results.length === 1 ? 'tradução encontrada' : 'traduções encontradas'}`;
+      empty!.hidden = results.length !== 0;
+      grid!.hidden = results.length === 0;
+      if (syncUrl) {
+        const params = new URLSearchParams();
+        if (filters.query) params.set('q', filters.query);
+        if (filters.platform) params.set('platform', filters.platform);
+        if (filters.status) params.set('status', filters.status);
+        if (filters.sort !== defaultFilters.sort)
+          params.set('sort', filters.sort);
+        const query = params.toString();
+        window.history.replaceState(
+          null,
+          '',
+          `${location.pathname}${query ? `?${query}` : ''}${location.hash}`,
+        );
+      }
+    }
+    const reset = () => {
+      form.reset();
+      update();
+      search.focus();
+    };
+    readUrl();
+    update(false);
+    panel.hidden = false;
+    form.addEventListener('submit', (event) => event.preventDefault());
+    form.addEventListener('input', () => update());
+    form.addEventListener('change', () => update());
+    document.querySelector('#reset-filters')?.addEventListener('click', reset);
+    document.querySelector('#empty-reset')?.addEventListener('click', reset);
+    window.addEventListener('popstate', () => {
+      readUrl();
+      update(false);
+    });
+  }
+</script>

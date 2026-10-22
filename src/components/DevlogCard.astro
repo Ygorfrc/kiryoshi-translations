@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { ArrowUpRight } from '@lucide/astro';
+import { formatDate } from '../lib/format';
+interface Props {
+  post: CollectionEntry<'devlogs'>;
+  index?: number;
+}
+const { post, index = 0 } = Astro.props;
+---
+
+<article class="devlog-card">
+  {post.data.cover ? (
+    <img
+      class="devlog-cover"
+      src={post.data.cover.src}
+      alt={post.data.cover.alt}
+      width={post.data.cover.width}
+      height={post.data.cover.height}
+      loading="lazy"
+    />
+  ) : (
+    <div class:list={['devlog-art', `art-${index % 3}`]} aria-hidden="true">
+      <span>{['記録', '言葉', '旅路'][index % 3]}</span>
+      <span class="mono">KIRYOSHI / FIELD NOTES</span>
+    </div>
+  )}
+  <div class="devlog-meta">
+    <span class="eyebrow">{post.data.category}</span>
+    {post.data.demo ? (
+      <span class="demo-label">Exemplo editorial</span>
+    ) : (
+      post.data.published && (
+        <time datetime={post.data.published.toISOString()}>
+          {formatDate(post.data.published)}
+        </time>
+      )
+    )}
+  </div>
+  <h3>
+    <a href={`/devlog/${post.id}/`}>{post.data.title}</a>
+  </h3>
+  <p>{post.data.description}</p>
+  <a class="text-link" href={`/devlog/${post.id}/`}>
+    Ler artigo <ArrowUpRight size={16} />
+    <span class="sr-only">: {post.data.title}</span>
+  </a>
+</article>

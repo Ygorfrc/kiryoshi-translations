@@ -1,0 +1,9 @@
+dist
+node_modules
+.astro
+.wrangler
+package-lock.json
+test-results
+playwright-report
+.npm-cache
+.qa

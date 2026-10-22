@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+---
+
+<BaseLayout
+  title="Política de privacidade"
+  description="Saiba quais recursos estão presentes no site: navegação estática, sem analytics, cookies de rastreamento ou formulário de coleta de dados."
+>
+  <PageIntro
+    title="Sua privacidade"
+    eyebrow="TRANSPARÊNCIA"
+    description="Esta página descreve os recursos efetivamente implementados nesta versão do site."
+    breadcrumb="Privacidade"
+  />
+  <div class="container prose">
+    <h2>Navegação do site</h2>
+    <p>
+      O site é estático. Não possui cadastro, autenticação, banco de dados,
+      comentários, formulário de contato ou pagamentos integrados. Não utiliza
+      analytics, anúncios, pixels ou cookies de rastreamento.
+    </p>
+    <h2>Busca e preferências</h2>
+    <p>
+      A busca e os filtros são processados no seu navegador. Os filtros ficam no
+      endereço da página para permitir compartilhar uma seleção. Não são
+      enviados a uma API de busca nem gravados em armazenamento local. Como
+      parte do endereço, podem constar nas requisições e nos registros técnicos
+      da hospedagem; evite digitar informações pessoais na busca.
+    </p>
+    <h2>Fontes, imagens e vídeos</h2>
+    <p>
+      Fontes e imagens são servidas pelo próprio site. Não há embeds automáticos
+      de YouTube ou conexões a redes sociais ao abrir a página. Vídeos e canais,
+      quando configurados, usam links: a navegação ao serviço externo só ocorre
+      após o clique.
+    </p>
+    <h2>Hospedagem</h2>
+    <p>
+      O projeto está preparado para Cloudflare Workers Static Assets. Quando
+      publicado nesse serviço, requisições poderão ser processadas pela
+      Cloudflare para entrega de arquivos, segurança e operação da
+      infraestrutura, incluindo informações técnicas como endereço IP e agente
+      do navegador. A configuração da conta e a retenção desses registros devem
+      ser confirmadas pelo responsável antes da publicação.
+    </p>
+    <h2>Links externos e compartilhamento</h2>
+    <p>
+      Ao acessar outro serviço, aplicam-se suas próprias práticas de
+      privacidade. O botão de compartilhamento usa os recursos do seu navegador
+      ou copia o endereço; não inclui scripts de redes sociais.
+    </p>
+    <h2>Contato e futuras integrações</h2>
+    <p>
+      Não há canal de contato confirmado nesta versão. A{' '}
+      <a href="/contato/">página de contato</a> será atualizada com os dados
+      públicos fornecidos pelo responsável. Caso serviços de apoio, formulários
+      ou métricas sejam adicionados, esta política deve ser revisada antes de
+      ativá-los.
+    </p>
+  </div>
+</BaseLayout>

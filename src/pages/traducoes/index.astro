@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import GameCard from '../../components/GameCard.astro';
+import TranslationFilters from '../../components/TranslationFilters.astro';
+const projects = (await getCollection('translations')).sort(
+  (a, b) =>
+    a.data.displayOrder - b.data.displayOrder ||
+    a.data.title.localeCompare(b.data.title, 'pt-BR'),
+);
+---
+
+<BaseLayout
+  title="Catálogo de traduções"
+  description="Explore os projetos de tradução de JRPGs para português brasileiro. Busque por jogo e filtre por plataforma ou etapa de desenvolvimento."
+>
+  <PageIntro
+    title="Encontre sua próxima história"
+    eyebrow="CATÁLOGO DE TRADUÇÕES"
+    description="Mundos que queremos aproximar de você. Explore cada projeto e acompanhe o caminho até o português brasileiro."
+    breadcrumb="Traduções"
+  />
+  <section class="container" aria-label="Projetos de tradução">
+    <TranslationFilters projects={projects} />
+    <div id="catalog-grid" class="game-grid">
+      {projects.map((project) => (
+        <GameCard project={project} />
+      ))}
+    </div>
+    <div id="catalog-empty" class="empty-state" hidden>
+      <h2>Nenhuma tradução por aqui.</h2>
+      <p>Tente outro nome, plataforma ou status para continuar a busca.</p>
+      <button id="empty-reset" class="button button-outline" type="button">
+        Limpar filtros e ver todos
+      </button>
+    </div>
+    <p class="catalog-note">
+      Cadastros iniciais de demonstração: os status são configuráveis. Jogos
+      planejados são intenções futuras, sem confirmação de início. Datas de
+      atualização desconhecidas ficam ao final dessa ordenação. Imagens
+      fornecidas pelo responsável pelo projeto; direitos dos respectivos
+      titulares.
+    </p>
+  </section>
+</BaseLayout>

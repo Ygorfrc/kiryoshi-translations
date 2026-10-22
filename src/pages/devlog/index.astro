@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import DevlogListing from '../../components/DevlogListing.astro';
+import { getPosts } from '../../lib/content';
+const posts = await getPosts();
+---
+
+<BaseLayout
+  title="Devlog — bastidores das traduções"
+  description="Acompanhe os bastidores de Kiryoshi Translations: desenvolvimento, tradução, engenharia reversa, ferramentas e comunidade."
+>
+  <PageIntro
+    title="Cada palavra tem uma história"
+    eyebrow="DIÁRIO DE DESENVOLVIMENTO"
+    description="Das primeiras linhas aos últimos testes. Um espaço para compartilhar descobertas, processos e os próximos capítulos."
+    breadcrumb="Devlog"
+  />
+  <DevlogListing posts={posts} />
+</BaseLayout>

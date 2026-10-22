@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { site } from '../config/site';
+---
+
+<BaseLayout
+  title="Sobre Kiryoshi e o projeto"
+  description="Conheça a motivação de Kiryoshi Translations: aproximar brasileiros de JRPGs clássicos com traduções independentes e gratuitas."
+>
+  <PageIntro
+    title="De fã para fã"
+    eyebrow="SOBRE KIRYOSHI TRANSLATIONS"
+    description="Um projeto brasileiro independente para que o idioma deixe de ser uma barreira entre você e uma grande história."
+    breadcrumb="Sobre"
+  />
+  <div class="container editorial-layout">
+    <div class="prose">
+      <h2>Uma vontade de compartilhar mundos</h2>
+      <p>
+        Kiryoshi é o nome público do criador deste projeto. Fã de JRPGs, começou
+        com a tradução de{' '}
+        <strong>Shin Megami Tensei: Devil Summoner – Soul Hackers</strong>, para
+        Nintendo 3DS.
+      </p>
+      <p>
+        A motivação é tornar jogos clássicos mais acessíveis ao público
+        brasileiro, especialmente histórias que não receberam localização
+        oficial em português.
+      </p>
+      <h2>Palavras, código e muito cuidado</h2>
+      <p>
+        O processo de tradução une trabalho com o idioma, Python e engenharia
+        reversa. É preciso compreender os arquivos, extrair o texto, traduzi-lo,
+        revisar, reinserir e testar o resultado em contexto.
+      </p>
+      <ol class="numbered-steps">
+        <li>
+          <strong>Compreender.</strong> Estudar a estrutura de cada jogo e a
+          viabilidade da tradução.
+        </li>
+        <li>
+          <strong>Traduzir e revisar.</strong> Buscar clareza em português
+          brasileiro, respeitando a essência das histórias.
+        </li>
+        <li>
+          <strong>Reinserir e testar.</strong> Verificar acentos, espaço,
+          contexto e funcionamento.
+        </li>
+        <li>
+          <strong>Compartilhar.</strong> Documentar e distribuir somente patches
+          autorizados.
+        </li>
+      </ol>
+      <h2>Gratuito é parte da identidade</h2>
+      <p>
+        Todas as traduções serão gratuitas. Apoios serão voluntários e nenhum
+        patch ficará bloqueado atrás de pagamentos. O projeto não distribui
+        jogos nem se apresenta como afiliado às empresas titulares.
+      </p>
+      <h2>Os próximos capítulos</h2>
+      <p>
+        Há interesse em explorar outros JRPGs de Nintendo DS, 3DS, PSP, PS2 e
+        demais plataformas. Os títulos do catálogo são cadastros iniciais
+        configuráveis, sem compromisso de cronograma.
+      </p>
+      <p>
+        <a href="/traducoes/">Explore os projetos</a> ou conheça os{' '}
+        <a href="/devlog/">bastidores no devlog</a>.
+      </p>
+    </div>
+    <aside class="editorial-aside">
+      <div class="big-k" aria-hidden="true">
+        K<span class="cyan">.</span>
+      </div>
+      <span class="eyebrow cyan">CRIADOR / KIRYOSHI</span>
+      <h2 class="mt-4">
+        Traduzindo mundos.
+        <br />
+        Conectando jogadores.
+      </h2>
+      <p>
+        Histórias de JRPGs em português brasileiro, com distribuição gratuita e
+        transparência em cada etapa.
+      </p>
+      <hr class="border-ink my-6" />
+      <h3>Canais públicos</h3>
+      {site.channels.length ? (
+        site.channels.map((channel) => (
+          <p>
+            <a
+              class="text-link"
+              href={channel.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {channel.label} ↗
+            </a>
+          </p>
+        ))
+      ) : (
+        <p class="fine-print">
+          GitHub, YouTube e redes sociais: links ainda não fornecidos. Esta área
+          será atualizada com os perfis confirmados.
+        </p>
+      )}
+      <p class="fine-print">Biografia adicional: ainda não fornecida.</p>
+    </aside>
+  </div>
+</BaseLayout>

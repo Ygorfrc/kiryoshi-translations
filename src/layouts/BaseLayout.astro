@@ -1,0 +1,55 @@
+---
+import '../styles/global.css';
+import '../styles/home.css';
+import '@fontsource-variable/space-grotesk';
+import '@fontsource/silkscreen/400.css';
+import pixelFont from '@fontsource/silkscreen/files/silkscreen-latin-400-normal.woff2?url';
+import displayFont from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SEOHead from '../components/SEOHead.astro';
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  type?: 'website' | 'article';
+  image?: string;
+  jsonLd?: unknown;
+  bodyClass?: string;
+}
+const { bodyClass, ...headProps } = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <SEOHead {...headProps} />
+    <slot name="head" />
+    <link
+      rel="preload"
+      href={pixelFont}
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href={displayFont}
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <!-- Synchronous and tiny: set the menu class before the body is painted. -->
+    <script is:inline src="/scripts/menu-init.js"></script>
+  </head>
+  <body class:list={['club-theme', bodyClass]}>
+    <a href="#conteudo" class="skip-link">
+      Pular para o conteúdo
+    </a>
+    <Header />
+    <main id="conteudo" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

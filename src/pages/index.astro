@@ -1,0 +1,415 @@
+---
+import { getCollection } from 'astro:content';
+import {
+  ArrowRight,
+  ArrowUpRight,
+  BookOpen,
+  Heart,
+  Gamepad2,
+  Languages,
+  Map,
+  Sparkles,
+  Play,
+  Feather,
+} from '@lucide/astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Campfire from '../components/Campfire.astro';
+import ProjectShowcase from '../components/ProjectShowcase.astro';
+import GameCover from '../components/GameCover.astro';
+import ProjectStatus from '../components/ProjectStatus.astro';
+import { getPosts } from '../lib/content';
+import { formatDate } from '../lib/format';
+import { progressLabels } from '../lib/schemas';
+import { site } from '../config/site';
+
+const projects = await getCollection('translations');
+const featured = projects.find((p) => p.data.featured) ?? projects[0];
+const planned = projects
+  .filter((p) => p.id !== featured?.id)
+  .sort(
+    (a, b) =>
+      a.data.displayOrder - b.data.displayOrder ||
+      a.data.shortTitle.localeCompare(b.data.shortTitle, 'pt-BR'),
+  );
+const posts = (await getPosts()).slice(0, 3);
+const featuredProgress = featured
+  ? Object.entries(progressLabels).flatMap(([key, label]) => {
+      const value = featured.data.progress[key as keyof typeof progressLabels];
+      return value === undefined ? [] : [`${label}: ${value}%`];
+    })
+  : [];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  description: site.description,
+  inLanguage: 'pt-BR',
+  url: Astro.site?.href,
+};
+---
+
+<BaseLayout
+  title="Um lugar para quem ama JRPGs"
+  description={site.description}
+  jsonLd={jsonLd}
+  bodyClass="fan-home"
+>
+  <section class="home-welcome" aria-labelledby="welcome-title">
+    <div class="container welcome-layout">
+      <div class="welcome-copy">
+        <div class="home-kicker">
+          <span class="save-diamond" aria-hidden="true"></span> DE FÃ PARA FÃ.
+          DE CORAÇÃO.
+        </div>
+        <h1 id="welcome-title">
+          Grandes histórias.
+          <br />
+          Novos mundos.
+          <br />
+          <em>No seu idioma.</em>
+        </h1>
+        <p>
+          Sabe aquele JRPG que fica com você muito depois dos créditos? A gente
+          também. Queremos levar essas histórias a mais brasileiros, uma
+          tradução de cada vez.
+        </p>
+        <nav class="journey-menu rpg-frame" aria-label="Comece sua jornada">
+          <span class="frame-label">ESCOLHA SEU CAMINHO</span>
+          <a class="journey-choice selected" href="/traducoes/">
+            <span class="choice-cursor" aria-hidden="true">
+              ▸
+            </span>
+            <BookOpen size={19} />
+            Explorar traduções
+            <ArrowRight class="choice-arrow" size={17} />
+          </a>
+          <a class="journey-choice" href="/sobre/">
+            <span class="choice-cursor" aria-hidden="true">
+              ▸
+            </span>
+            <Campfire size={22} />
+            Conhecer o projeto
+            <ArrowUpRight class="choice-arrow" size={17} />
+          </a>
+        </nav>
+        <p class="welcome-footnote">
+          <Heart size={14} />
+          Traduções gratuitas. Paixão sem fronteiras.
+        </p>
+      </div>
+      <ProjectShowcase projects={projects} />
+    </div>
+    <div class="container home-motto">
+      <span>TRADUZINDO MUNDOS. CONECTANDO JOGADORES.</span>
+      <span class="motto-stars" aria-hidden="true">
+        ✦ · ✧ · ✦
+      </span>
+      <a href={featured ? '#primeira-aventura' : '/traducoes/'}>
+        O próximo capítulo <span aria-hidden="true">↓</span>
+      </a>
+    </div>
+  </section>
+
+  <div class="home-principles">
+    <div class="container">
+      <span>
+        <Gamepad2 size={18} />
+        Feito por quem também joga
+      </span>
+      <span>
+        <Languages size={18} />
+        Português brasileiro
+      </span>
+      <span>
+        <Heart size={18} />
+        Sempre gratuito
+      </span>
+    </div>
+  </div>
+
+  {featured && (
+    <section
+      id="primeira-aventura"
+      class="container home-section"
+      aria-labelledby="featured-title"
+    >
+      <header class="home-section-heading">
+        <div>
+          <span class="home-eyebrow">
+            <Map size={15} />
+            DIÁRIO DE MISSÕES · CAPÍTULO 01
+          </span>
+          <h2 id="featured-title">
+            Toda jornada tem um começo<span>.</span>
+          </h2>
+          <p>
+            A nossa começa com Soul Hackers. E você pode acompanhar cada passo.
+          </p>
+        </div>
+        <span class="chapter-stamp" aria-hidden="true">
+          01
+          <span>
+            EM
+            <br />
+            JORNADA
+          </span>
+        </span>
+      </header>
+      <article class="home-quest rpg-frame">
+        <div class="quest-cover">
+          <span class="quest-bookmark">
+            <Sparkles size={14} />
+            MISSÃO ATUAL
+          </span>
+          <GameCover project={featured} />
+          <span class="quest-cover-note">
+            {featured.data.cover
+              ? 'Arte do jogo · imagem fornecida pelo projeto'
+              : 'Capa ilustrativa · arte oficial não fornecida'}
+          </span>
+        </div>
+        <div class="quest-copy">
+          <div class="quest-platform">
+            <Gamepad2 size={15} />
+            {featured.data.platform}
+            <span>PT-BR</span>
+          </div>
+          <p class="quest-series">Shin Megami Tensei: Devil Summoner</p>
+          <h3>{featured.data.shortTitle}</h3>
+          <p>
+            O primeiro mundo que queremos compartilhar com você. Uma tradução
+            feita com cuidado, para que o idioma deixe de ser uma barreira entre
+            jogadores e grandes histórias.
+          </p>
+          <div class="quest-status">
+            <ProjectStatus status={featured.data.status} />
+            <span class="quest-status-note">
+              {featuredProgress.length
+                ? featuredProgress.join(' · ')
+                : 'Sem percentuais confirmados por enquanto.'}
+            </span>
+          </div>
+          <a
+            class="home-button home-button-dark"
+            href={`/traducoes/${featured.id}/`}
+          >
+            <span aria-hidden="true">▸</span>Acompanhar tradução
+            <ArrowUpRight size={17} />
+          </a>
+        </div>
+        <div class="quest-footer">
+          <span>
+            <Feather size={15} />
+            Tradução independente, feita por Kiryoshi
+          </span>
+          <span>Sem data de lançamento informada</span>
+        </div>
+      </article>
+    </section>
+  )}
+
+  <section class="home-library" aria-labelledby="library-title">
+    <div class="container home-section">
+      <header class="home-section-heading">
+        <div>
+          <span class="home-eyebrow">
+            <BookOpen size={15} />
+            NA NOSSA ESTANTE
+          </span>
+          <h2 id="library-title">
+            Ainda há tantos mundos por aí<span>…</span>
+          </h2>
+          <p>Algumas histórias que gostaríamos de explorar no futuro.</p>
+        </div>
+        <a class="home-inline-link" href="/traducoes/">
+          Abrir catálogo
+          <ArrowUpRight size={17} />
+        </a>
+      </header>
+      <div class="home-shelf">
+        {planned.map((project) => (
+          <article class="shelf-game">
+            <a
+              class="shelf-cover"
+              href={`/traducoes/${project.id}/`}
+              tabindex="-1"
+              aria-hidden="true"
+            >
+              <GameCover project={project} />
+            </a>
+            <div class="shelf-game-info">
+              <span class="shelf-platform">{project.data.platform}</span>
+              <h3>
+                <a href={`/traducoes/${project.id}/`}>
+                  {project.data.shortTitle}
+                </a>
+              </h3>
+              <ProjectStatus status={project.data.status} />
+            </div>
+          </article>
+        ))}
+      </div>
+      <p class="home-editorial-note">
+        <span aria-hidden="true">◇</span> Uma lista de desejos, sem pressa: os
+        títulos planejados são interesses futuros, não anúncios de
+        desenvolvimento.{' '}
+        {planned.some((project) => !project.data.cover) &&
+          'Capas ilustrativas nos projetos sem imagem fornecida.'}
+      </p>
+    </div>
+  </section>
+
+  <section class="container home-section" aria-labelledby="notes-title">
+    <header class="home-section-heading">
+      <div>
+        <span class="home-eyebrow">
+          <Feather size={15} />
+          ANOTAÇÕES DA JORNADA
+        </span>
+        <h2 id="notes-title">
+          Entre um diálogo e outro<span>.</span>
+        </h2>
+        <p>
+          Palavras, descobertas e pequenos bastidores de quem está traduzindo.
+        </p>
+      </div>
+      <a class="home-inline-link" href="/devlog/">
+        Ler o devlog
+        <ArrowUpRight size={17} />
+      </a>
+    </header>
+    <div class="home-notes">
+      {posts.map((post, index) => (
+        <article class="home-note">
+          <div class="note-top">
+            <span class="note-number">0{index + 1}</span>
+            <span class="home-eyebrow">{post.data.category}</span>
+            <Feather size={19} aria-hidden="true" />
+          </div>
+          <h3>
+            <a href={`/devlog/${post.id}/`}>{post.data.title}</a>
+          </h3>
+          <p>{post.data.description}</p>
+          <div class="note-bottom">
+            <span>
+              {post.data.demo
+                ? 'Exemplo editorial'
+                : formatDate(post.data.published)}
+            </span>
+            <a
+              href={`/devlog/${post.id}/`}
+              aria-label={`Ler artigo: ${post.data.title}`}
+            >
+              <ArrowUpRight size={19} />
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="home-camp" aria-labelledby="camp-title">
+    <div class="container camp-layout">
+      <div class="camp-mark">
+        <div class="camp-star star-one" aria-hidden="true">
+          ✦
+        </div>
+        <div class="camp-star star-two" aria-hidden="true">
+          ✧
+        </div>
+        <div class="camp-orbit">
+          <Campfire size={112} />
+        </div>
+        <span class="home-pixel">VOCÊ ESTÁ ENTRE AMIGOS</span>
+      </div>
+      <div class="camp-copy">
+        <span class="home-eyebrow">A MELHOR PARTE É A COMPANHIA</span>
+        <h2 id="camp-title">
+          Quem ama uma boa história
+          <br />
+          sempre tem lugar aqui.
+        </h2>
+        <p>
+          A emoção de uma batalha difícil. A música que dá saudade. Aquele
+          personagem que parece um velho amigo. É por essas coisas que Kiryoshi
+          Translations existe.
+        </p>
+        <p>
+          Queremos que mais gente possa viver tudo isso em português. Com tempo,
+          cuidado e uma comunidade que compartilha a mesma paixão.
+        </p>
+        <a class="home-button home-button-gold" href="/contato/">
+          Encontrar a comunidade
+          <ArrowUpRight size={17} />
+        </a>
+        <span class="camp-contact-note">
+          Os canais públicos serão adicionados quando confirmados.
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="container home-section home-extra"
+    aria-label="Acompanhe e apoie"
+  >
+    <div class="home-video">
+      <div class="extra-icon">
+        <Play size={22} />
+      </div>
+      <span class="home-eyebrow">DO TEXTO À TELA</span>
+      <h2>Tem história para ver também.</h2>
+      {site.videos.length ? (
+        <div>
+          {site.videos.slice(0, 2).map((video) => (
+            <a
+              class="home-inline-link"
+              href={`https://www.youtube.com/watch?v=${video.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {video.title}
+              <ArrowUpRight size={16} />
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p>
+          As demonstrações da tradução vão ganhar seu espaço por aqui. Os vídeos
+          serão adicionados quando houver material publicado.
+        </p>
+      )}
+      <a class="home-inline-link" href="/devlog/">
+        Enquanto isso, acompanhe o diário
+        <ArrowRight size={16} />
+      </a>
+    </div>
+    <div class="home-support">
+      <div class="extra-icon">
+        <Heart size={22} />
+      </div>
+      <span class="home-eyebrow">UM POUQUINHO DE CADA UM</span>
+      <h2>
+        O apoio é opcional.
+        <br />O carinho faz diferença.
+      </h2>
+      <p>
+        Compartilhar o projeto já ajuda uma nova história a encontrar seu
+        jogador. As traduções serão sempre gratuitas.
+      </p>
+      <a class="home-inline-link" href="/apoie/">
+        Conheça formas de apoiar
+        <ArrowRight size={16} />
+      </a>
+    </div>
+  </section>
+  <div class="container home-signoff">
+    <span aria-hidden="true">◆</span>
+    <p>
+      De um fã de JRPGs para todos os outros.
+      <br />
+      <strong>Nos vemos no próximo capítulo.</strong>
+    </p>
+    <span aria-hidden="true">◆</span>
+  </div>
+</BaseLayout>

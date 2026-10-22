@@ -1,0 +1,33 @@
+---
+import { progressLabels } from '../lib/schemas';
+interface Props {
+  progress: Partial<Record<keyof typeof progressLabels, number>>;
+}
+const { progress } = Astro.props;
+---
+
+<div class="progress-list">
+  {Object.entries(progressLabels).map(([key, label]) => {
+    const value = progress[key as keyof typeof progressLabels];
+    return (
+      <div class="progress-item">
+        <div>
+          <span>{label}</span>
+          <span class="mono">
+            {value === undefined ? 'Não informado' : `${value}%`}
+          </span>
+        </div>
+        {value === undefined ? (
+          <div class="progress-unknown" aria-hidden="true"></div>
+        ) : (
+          <progress max="100" value={value} aria-label={label}>
+            {value}%
+          </progress>
+        )}
+      </div>
+    );
+  })}
+</div>
+<p class="fine-print">
+  Cada etapa é independente. Não há um percentual geral estimado.
+</p>

@@ -1,0 +1,59 @@
+---
+import { Play, ArrowUpRight } from '@lucide/astro';
+import { site } from '../config/site';
+---
+
+<section class="container section" aria-labelledby="videos-title">
+  <div class="section-heading">
+    <div>
+      <span class="eyebrow">DO TEXTO À TELA</span>
+      <h2 id="videos-title">
+        A tradução em movimento<span class="purple">.</span>
+      </h2>
+    </div>
+  </div>
+  {site.videos.length ? (
+    <div class="video-grid">
+      {site.videos.map((video) => (
+        <a
+          class="video-card"
+          href={`https://www.youtube.com/watch?v=${video.id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {video.thumbnail ? (
+            <img
+              src={video.thumbnail.src}
+              alt={video.thumbnail.alt}
+              width={video.thumbnail.width}
+              height={video.thumbnail.height}
+              loading="lazy"
+            />
+          ) : (
+            <div class="video-placeholder">
+              <Play size={32} />
+            </div>
+          )}
+          <h3>
+            {video.title} <ArrowUpRight size={16} />
+          </h3>
+          <span class="fine-print">Assistir no YouTube · abre em nova aba</span>
+        </a>
+      ))}
+    </div>
+  ) : (
+    <div class="video-empty">
+      <div class="video-play" aria-hidden="true">
+        <Play size={25} />
+      </div>
+      <div>
+        <h3>O próximo capítulo também será em vídeo.</h3>
+        <p>
+          Demonstrações serão reunidas aqui quando houver vídeos e um canal
+          oficial informado.
+        </p>
+      </div>
+      <span class="eyebrow">EM BREVE</span>
+    </div>
+  )}
+</section>

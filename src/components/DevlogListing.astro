@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import DevlogCard from './DevlogCard.astro';
+import { categories } from '../lib/schemas';
+import { categorySlug } from '../lib/categories';
+interface Props {
+  posts: CollectionEntry<'devlogs'>[];
+  category?: string;
+}
+const { posts, category } = Astro.props;
+---
+
+<section class="container" aria-label="Publicações do devlog">
+  <nav class="category-tabs" aria-label="Categorias do devlog">
+    <a href="/devlog/" aria-current={!category ? 'page' : undefined}>
+      Todas
+    </a>
+    {categories.map((c) => (
+      <a
+        href={`/devlog/categoria/${categorySlug(c)}/`}
+        aria-current={c === category ? 'page' : undefined}
+      >
+        {c}
+      </a>
+    ))}
+  </nav>
+  {posts.some((post) => post.data.demo) && (
+    <div class="notice">
+      Os artigos identificados como “Exemplo editorial” demonstram a publicação
+      em Markdown. Não são relatos de avanços ou notícias confirmadas.
+    </div>
+  )}
+  {posts.length ? (
+    <div class="devlog-grid">
+      {posts.map((post, index) => (
+        <DevlogCard post={post} index={index} />
+      ))}
+    </div>
+  ) : (
+    <div class="empty-state">
+      <h2>Novos registros virão.</h2>
+      <p>Ainda não há publicações nesta categoria.</p>
+      <a class="button button-outline" href="/devlog/">
+        Ver todas as publicações
+      </a>
+    </div>
+  )}
+</section>

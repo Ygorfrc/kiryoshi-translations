@@ -1,0 +1,253 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  Pause,
+  Play,
+  Gamepad2,
+} from '@lucide/astro';
+import GameCover from './GameCover.astro';
+import { selectShowcase } from '../lib/showcase';
+import '../styles/showcase.css';
+interface Props {
+  projects: CollectionEntry<'translations'>[];
+}
+const { projects, completedOnly } = selectShowcase(Astro.props.projects);
+---
+
+<section
+  class="project-showcase"
+  aria-roledescription="carrossel"
+  aria-label={
+    completedOnly
+      ? 'Traduções disponíveis em destaque'
+      : 'Projetos do catálogo em destaque'
+  }
+  data-showcase
+>
+  <div class="showcase-topline">
+    <span>
+      {completedOnly ? 'JORNADAS CONCLUÍDAS' : 'MUNDOS NO NOSSO HORIZONTE'}
+    </span>
+    <span aria-hidden="true">K / PT-BR</span>
+  </div>
+  <div class="showcase-stage">
+    {projects.length === 0 && (
+      <div class="showcase-empty">
+        <h2>Novas jornadas virão.</h2>
+        <p>Ainda não há projetos cadastrados.</p>
+        <a href="/traducoes/">Conhecer o catálogo →</a>
+      </div>
+    )}
+    {projects.map((project, index) => (
+      <div
+        class:list={[
+          'showcase-slide',
+          `showcase-${project.data.accent}`,
+          { 'is-active': index === 0 },
+        ]}
+        hidden={index !== 0}
+        role="group"
+        aria-roledescription="slide"
+        aria-label={`${index + 1} de ${projects.length}: ${project.data.shortTitle}`}
+        data-title={project.data.shortTitle}
+      >
+        <div class="showcase-cuts" aria-hidden="true">
+          <span class="cut-main"></span>
+          <span class="cut-edge"></span>
+          <span class="cut-grid"></span>
+          <span class="showcase-number">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <span class="showcase-ghost">{project.data.shortTitle}</span>
+        </div>
+        <span
+          class:list={[
+            'showcase-status',
+            { ready: project.data.status === 'Disponível' },
+          ]}
+        >
+          <span aria-hidden="true">◆</span>
+          {project.data.status}
+        </span>
+        <div class="showcase-cover">
+          <GameCover project={project} eager={index === 0} />
+        </div>
+        <div class="showcase-content">
+          <span class="showcase-platform">
+            <Gamepad2 size={14} />
+            {project.data.platform}
+          </span>
+          <h2>{project.data.shortTitle}</h2>
+          <a href={`/traducoes/${project.id}/`} class="showcase-link">
+            {project.data.status === 'Disponível'
+              ? 'Conhecer a tradução'
+              : 'Acompanhar projeto'}
+            <ArrowUpRight size={17} />
+          </a>
+        </div>
+      </div>
+    ))}
+  </div>
+  {projects.length > 1 && (
+    <div class="showcase-controls" data-showcase-controls hidden>
+      <div class="showcase-arrows">
+        <button type="button" data-prev aria-label="Projeto anterior">
+          <ArrowLeft size={18} />
+        </button>
+        <button type="button" data-next aria-label="Próximo projeto">
+          <ArrowRight size={18} />
+        </button>
+      </div>
+      <div class="showcase-dots" aria-label="Selecionar projeto">
+        {projects.map((project, index) => (
+          <button
+            type="button"
+            data-slide={index}
+            aria-label={`Mostrar ${project.data.shortTitle}`}
+            aria-pressed={index === 0}
+          >
+            <span></span>
+          </button>
+        ))}
+      </div>
+      <button
+        type="button"
+        class="showcase-pause"
+        data-pause
+        aria-label="Pausar rotação automática"
+      >
+        <Pause size={14} class="pause-symbol" />
+        <Play size={14} class="play-symbol" />
+        <span data-pause-text>Pausar</span>
+      </button>
+    </div>
+  )}
+  <p class="showcase-caption">
+    {completedOnly
+      ? 'Traduções com patches autorizados disponíveis.'
+      : 'Status reais do catálogo · sem projetos concluídos confirmados por enquanto.'}{' '}
+    {!projects.every((p) => p.data.cover) && 'Capas ilustrativas.'}
+  </p>
+  <span
+    class="sr-only"
+    aria-live="polite"
+    aria-atomic="true"
+    data-showcase-announcement
+  ></span>
+  <noscript>
+    <p class="showcase-no-js">
+      <a href="/traducoes/">Explore todos os projetos no catálogo →</a>
+    </p>
+  </noscript>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-showcase]').forEach((root) => {
+    const slides = Array.from(
+      root.querySelectorAll<HTMLElement>('.showcase-slide'),
+    );
+    const controls = root.querySelector<HTMLElement>(
+      '[data-showcase-controls]',
+    );
+    if (slides.length < 2 || !controls) return;
+    const dots = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('[data-slide]'),
+    );
+    const pause = root.querySelector<HTMLButtonElement>('[data-pause]');
+    const pauseText = root.querySelector('[data-pause-text]');
+    const announcement = root.querySelector('[data-showcase-announcement]');
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let current = 0;
+    let paused = motion.matches;
+    let hovered = false;
+    let focused = false;
+    let visible = true;
+    let timer: ReturnType<typeof setInterval> | undefined;
+    function stop() {
+      if (timer !== undefined) clearInterval(timer);
+      timer = undefined;
+    }
+    function schedule() {
+      stop();
+      if (!paused && !hovered && !focused && visible && !document.hidden)
+        timer = setInterval(() => show(current + 1, false), 6500);
+    }
+    function show(index: number, manual: boolean) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => {
+        slide.hidden = i !== current;
+        slide.classList.toggle('is-active', i === current);
+      });
+      dots.forEach((dot, i) =>
+        dot.setAttribute('aria-pressed', String(i === current)),
+      );
+      if (manual && announcement)
+        announcement.textContent = `Projeto ${current + 1} de ${slides.length}: ${slides[current]?.dataset.title}`;
+      if (manual) schedule();
+    }
+    function updatePause() {
+      pause?.setAttribute(
+        'aria-label',
+        paused ? 'Reproduzir rotação automática' : 'Pausar rotação automática',
+      );
+      pause?.setAttribute('aria-pressed', String(paused));
+      root.classList.toggle('showcase-paused', paused);
+      if (pauseText) pauseText.textContent = paused ? 'Reproduzir' : 'Pausar';
+      schedule();
+    }
+    root
+      .querySelector('[data-prev]')
+      ?.addEventListener('click', () => show(current - 1, true));
+    root
+      .querySelector('[data-next]')
+      ?.addEventListener('click', () => show(current + 1, true));
+    dots.forEach((dot, index) =>
+      dot.addEventListener('click', () => show(index, true)),
+    );
+    pause?.addEventListener('click', () => {
+      paused = !paused;
+      updatePause();
+    });
+    root.addEventListener('mouseenter', () => {
+      hovered = true;
+      schedule();
+    });
+    root.addEventListener('mouseleave', () => {
+      hovered = false;
+      schedule();
+    });
+    root.addEventListener('focusin', () => {
+      focused = true;
+      schedule();
+    });
+    root.addEventListener('focusout', (event) => {
+      focused =
+        event.relatedTarget instanceof Node &&
+        root.contains(event.relatedTarget);
+      schedule();
+    });
+    root.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        show(current + (event.key === 'ArrowRight' ? 1 : -1), true);
+      }
+    });
+    motion.addEventListener('change', () => {
+      paused = motion.matches;
+      updatePause();
+    });
+    document.addEventListener('visibilitychange', schedule);
+    new IntersectionObserver(
+      (entries) => {
+        visible = entries[0]?.isIntersecting ?? true;
+        schedule();
+      },
+      { threshold: 0.15 },
+    ).observe(root);
+    controls.hidden = false;
+    updatePause();
+  });
+</script>
