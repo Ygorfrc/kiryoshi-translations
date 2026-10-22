@@ -105,6 +105,10 @@ const jsonLd = {
             <dt>Idioma da tradução</dt>
             <dd>Português brasileiro</dd>
           </div>
+          <div>
+            <dt>Processo de tradução</dt>
+            <dd>Auxílio de IA e revisão humana</dd>
+          </div>
         </dl>
         <a class="button button-outline button-small" href="#downloads">
           {releases.length ? 'Ver downloads' : 'Situação do patch'}{' '}
@@ -283,6 +287,16 @@ const jsonLd = {
               <p>{item.answer}</p>
             </details>
           ))}
+          <details>
+            <summary>As traduções usam inteligência artificial?</summary>
+            <p>
+              Sim. O processo do Kiryoshi Translations combina auxílio de
+              inteligência artificial (IA) e revisão humana dos textos.
+              <a href={withBase('/sobre/#traducao-ia')}>
+                Saiba mais sobre o processo.
+              </a>
+            </p>
+          </details>
         </section>
       </div>
       <aside class="project-sidebar" aria-label="Acompanhamento">

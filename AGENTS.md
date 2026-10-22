@@ -12,6 +12,7 @@
 
 - Projetos são `src/content/translations/*.md`; devlogs e tutoriais são `src/content/devlogs/*.{md,mdx}`. Schemas ficam em `src/lib/schemas.ts`.
 - Não inventar progresso, datas, versões, perfis, vídeos, assets, colaboradores ou links.
+- O usuário confirmou que as traduções são feitas com auxílio de IA e revisadas por humanos. Preserve essa transparência na Home, em Sobre e nas páginas de tradução, sem presumir que a revisão de um projeto já foi concluída ou inventar ferramentas/modelos usados.
 - Valor ausente não equivale a zero. Preserve as cinco etapas de progresso sem percentual geral calculado.
 - `example: true` e `demo: true` indicam conteúdo demonstrativo e impedem indexação individual. Exemplos não entram no RSS. Não remova essas flags sem confirmação editorial.
 - Nunca adicionar ROMs/ISOs/CIAs, arquivos proprietários completos ou patches sem autorização. Downloads exigem metadados reais, autorização e tutorial específico.
@@ -25,7 +26,7 @@
 
 - Estrutura e tokens base em `src/styles/global.css`; identidade atual e composições em `src/styles/home.css`; carrossel em `src/styles/showcase.css`. Preserve composição editorial, contraste e marca original.
 - O carrossel prioriza projetos `Disponível`, confirmados (`example: false`) e com patch autorizado. Enquanto não houver concluídos, mostre os projetos atuais com seus status reais, conforme autorizado pelo usuário. Nunca rotule planejados como concluídos. Preserve pausa, teclado, reduced motion e pausa fora da viewport.
-- Capas fornecidas pelo usuário ficam em `images/`, referenciadas por `cover.asset` no Markdown. Não altere os originais. SoulHackerscapa.jpeg é a imagem solicitada para a missão atual. Astro Image gera variantes responsivas sem cortar as artes.
+- Capas fornecidas pelo usuário ficam em `images/`, referenciadas por `cover.asset` no Markdown. Não altere os originais. A missão atual da Home usa `src/assets/soul-hackers-banner-edited.png`, derivada de `images/Soulhckers-banner.webp` para remover a chamada de lançamento a pedido do usuário. Ele também solicitou preencher o painel: somente esse banner usa `object-fit: cover`, com foco nos personagens. Preserve o crédito e a identificação da edição visual com IA. `SoulHackerscapa.jpeg` continua como capa no catálogo, carrossel e página de Soul Hackers; essas capas continuam integrais.
 - Preserve a ordem editorial por `displayOrder`: Soul Hackers, Devil Survivor Overclocked, Devil Survivor 2 Record Breaker, Strange Journey Redux, SMT IV: Apocalypse. Essa é a ordem inicial do carrossel e do catálogo, que ainda oferece nome e atualização como alternativas.
 - Fonte local Space Grotesk em títulos; corpo usa fonte de sistema. Não carregar Google Fonts ou imagens externas automaticamente.
 - Mobile-first, 320px a ultrawide, foco visível, semântica nativa, teclado, reduced motion e contraste AA.

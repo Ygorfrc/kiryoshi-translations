@@ -1,5 +1,29 @@
 # Validação local — 22/10/2026
 
+## Validação completa para envio ao GitHub
+
+Após o usuário autorizar enviar a atualização, `npm run validate` foi executado integralmente e concluiu com código 0: formatação e tipos aprovados, 24 testes unitários, build de 23 páginas, 720 referências internas válidas, segurança e SEO aprovados, quatro testes de Pages em 7,6s e 41 E2E em 42,0s. Um teste foi ignorado por duplicar a varredura desktop no projeto mobile. A saída isolada do Pages validou 766 referências com o subdiretório configurado. Log local: `.qa/validation-github-banner-release.log`.
+
+O envio inclui os avisos sobre auxílio de IA e revisão humana, o banner preenchendo o painel, sua cópia editada sem a chamada de lançamento e o original fornecido pelo usuário. A publicação usa o workflow manual existente do GitHub Pages, que repete as verificações antes do deploy. Os registros de validação local anteriores abaixo permanecem como histórico.
+
+## Painel preenchido e remoção da chamada de lançamento
+
+O usuário marcou a área desejada e pediu remover “COMING APRIL 16, 2013”. A ferramenta integrada ImageGen produziu uma cópia editada em `src/assets/soul-hackers-banner-edited.png`; o original fornecido permanece intacto. O painel agora usa toda a largura e a altura útil entre rótulo e legenda, com `object-fit: cover` focado nos personagens; no mobile, a área é 4:3. A legenda identifica os titulares indicados na arte e a edição visual com IA. Prompt e procedência estão em `docs/assets.md`.
+
+Validação final: Astro/TypeScript com 67 arquivos e zero erros, avisos ou hints; build de 23 páginas; 720 referências internas válidas; formatação e `git diff --check` aprovados. A suíte focada da Home e de larguras responsivas aprovou três testes em 7,9s; um foi ignorado por duplicar a varredura desktop. Foram inspecionados o resultado de edição, o painel no navegador local e a captura mobile em 320px. Sem nova medição Lighthouse, suíte completa, commit, push ou publicação. Log: `.qa/validation-full-panel-banner-final.log`.
+
+## Banner da missão atual
+
+O usuário forneceu `images/Soulhckers-banner.webp` (1280×720) para a seção “Toda jornada tem um começo” da Home. A arte horizontal é exibida integralmente, com dimensões explícitas, WebP responsivo, lazy loading, alt e identificação como arte promocional. Catálogo, carrossel e página individual continuam usando a capa cadastrada. Foram preservadas as informações de auxílio de IA e revisão humana da alteração anterior.
+
+Validações: Astro/TypeScript com 67 arquivos e zero erros, avisos ou hints; build de 23 páginas; 720 referências internas válidas; formatação e `git diff --check` aprovados. Playwright com o filtro `rota, acessibilidade e largura: /$|layout entre tablet` aprovou três testes em 27,2s; um foi ignorado para não duplicar a varredura desktop. Cobriu acessibilidade da Home em desktop/mobile e larguras de 320 a 2560px nas páginas representativas. A primeira execução de check foi interrompida após ficar sem resposta no terminal; a repetição concluiu com sucesso. Houve inspeção visual da Home local após recarregar o build. Não houve commit, push ou publicação desta alteração. Log: `.qa/validation-soul-banner.log`.
+
+## Transparência sobre auxílio de IA e revisão humana
+
+A pedido do usuário, foram adicionadas informações sobre auxílio de IA e revisão humana na nota da missão atual da Home, em uma seção de Sobre e no resumo e FAQ de todas as páginas de tradução. O texto descreve o processo do projeto, sem alterar status, percentuais ou afirmar que a revisão de um título já terminou. Não foram presumidos modelos ou serviços utilizados.
+
+Validação desta alteração editorial: Astro/TypeScript com 67 arquivos e zero erros, avisos ou hints; build de 23 páginas; 720 links/assets/âncoras válidos; segurança estática aprovada; formatação e `git diff --check` aprovados. A suíte existente foi executada com o filtro `rota, acessibilidade e largura|layout entre tablet`: 23 testes aprovados, um ignorado por duplicar a varredura desktop, em 27,9s. Cobriu as 11 rotas representativas em desktop/mobile com axe e larguras de 320 a 2560px. Não foi executada novamente a suíte completa. Houve inspeção visual local; nenhuma publicação, commit ou push foi feito nesta alteração. Log local: `.qa/validation-ai-transparency.log`.
+
 ## Paleta aprovada e cursor da referência
 
 O usuário aprovou azul noturno, creme e coral, autorizou publicar a versão no GitHub Pages e forneceu a referência do cursor: preenchimento escuro, borda clara e halo azul. O cursor foi implementado com dois SVGs locais de 32×32 e CSS, sem JavaScript adicional. A imagem social SVG/PNG e o favicon acompanham a paleta aprovada.

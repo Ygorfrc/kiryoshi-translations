@@ -32,7 +32,7 @@ Não há projetos concluídos confirmados no conteúdo inicial. O usuário autor
 
 Rotação a cada 6,5 segundos, controles anterior/próximo e seleção direta, pausa explícita, navegação por setas e respeito a reduced motion. Pausa também ao receber foco, hover, sair da viewport ou ocultar a aba. Sem JavaScript, o primeiro destaque e o link ao catálogo continuam acessíveis.
 
-As capas agora são os arquivos fornecidos pelo usuário em `images/`. A missão atual utiliza exatamente `SoulHackerscapa.jpeg`. `GameCover.astro` usa Astro Image para WebP responsivo e preserva a proporção de cada original.
+As capas são os arquivos fornecidos pelo usuário em `images/`. A missão atual usa `src/assets/soul-hackers-banner-edited.png`, derivada do banner fornecido `Soulhckers-banner.webp` para remover a chamada “COMING APRIL 16, 2013”, conforme solicitado. O usuário também pediu ampliar a arte até as bordas da área marcada: o banner preenche o painel com recorte de enquadramento à direita, sem rotação ou distorção, entre o rótulo e a legenda. No mobile, a área usa proporção 4:3. O original continua preservado, e a legenda identifica o crédito e a edição visual com IA. `SoulHackerscapa.jpeg` permanece no catálogo, carrossel e página individual. Astro Image gera WebP responsivo; `GameCover.astro` continua responsável pelas capas, sem cortes.
 
 ## Ilustração
 

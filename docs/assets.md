@@ -19,11 +19,23 @@ As capas abaixo foram fornecidas pelo usuário na pasta `images/`, com autoriza�
 | SMT IV: Apocalypse              | `images/boxart_smt_iv_apocalypse.jpg` | 638×640   |
 | Strange Journey Redux           | `images/Strange-Journey-boxart.jpg`   | 959×960   |
 
-`SoulHackerscapa.jpeg` é a imagem escolhida explicitamente pelo usuário para a missão atual. `images/Soul Hackers.webp` (1600×800) e `images/SoulHackersUS.jpg` (256×229) são variantes fornecidas e preservadas, sem substituir a escolha solicitada.
+`SoulHackerscapa.jpeg` foi a escolha inicial para a missão atual e permanece como capa no catálogo, carrossel e página individual. Posteriormente, o usuário forneceu e autorizou `images/Soulhckers-banner.webp` (1280×720) para substituir somente a imagem da seção “Toda jornada tem um começo” na Home. Trata-se de arte promocional do jogo, não de screenshot da tradução; os direitos continuam com os respectivos titulares. O original foi preservado, incluindo seus créditos, e Astro Image gera variantes responsivas sem cortar a arte.
+
+`images/Soul Hackers.webp` (1600×800) e `images/SoulHackersUS.jpg` (256×229) são outras variantes fornecidas e preservadas.
 
 Em 22/10/2026, o usuário substituiu a capa anterior `DeSu2.jpeg` por `Desu2.jpg` e autorizou explicitamente a atualização. O novo original foi conferido e preservado sem edição; o site gera suas variantes WebP com Astro Image.
 
 O componente GameCover resolve `cover.asset` a partir dessa pasta, gera WebP responsivo e preserva a proporção. Os originais não foram editados. Projetos sem capa continuam com o fallback tipográfico identificado; ele não é usado nos cinco projetos atuais.
+
+## Banner editado da missão atual
+
+Em 22/10/2026, o usuário pediu ampliar o banner até as bordas do painel e remover “COMING APRIL 16, 2013”. A ferramenta integrada **ImageGen**, em modo de edição, gerou `src/assets/soul-hackers-banner-edited.png` (1672×941) a partir de `images/Soulhckers-banner.webp`. O original de 1280×720 foi preservado. A cópia mantém a composição promocional e os créditos no topo; não é uma screenshot da tradução. Os direitos da arte continuam com os respectivos titulares (Index Corp. / ATLUS, conforme os créditos da imagem), sem licença aberta presumida.
+
+O painel usa enquadramento com `object-fit: cover` e foco à direita para atender à área marcada pelo usuário, sem distorcer a imagem. Parte das laterais fica fora do enquadramento; a cópia completa continua preservada. A legenda identifica o crédito e a edição visual com IA. Astro Image gera somente as variantes WebP necessárias para exibição.
+
+Prompt utilizado na ferramenta integrada, sem CLI ou API key:
+
+> Use case: precise-object-edit. Edit target: the supplied 1280x720 promotional artwork. Make exactly one local correction: remove the release-date text 'COMING APRIL 16, 2013' in the lower left, directly below the SOUL HACKERS logo, and reconstruct the surrounding blue halftone/graphic background naturally. Preserve the same 16:9 image framing, all characters and their faces, clothing, proportions and positions, all other artwork, game logos, speech bubbles, all other text, and the small copyright/attribution line along the upper edge. Do not remove the copyright line. Do not crop, recompose, add subjects, restyle or redraw the image. Only remove the date announcement. Return the edited artwork alone, with opaque background.
 
 ## Redesign da Home
 

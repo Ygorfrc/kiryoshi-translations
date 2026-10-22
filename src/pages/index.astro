@@ -1,6 +1,8 @@
 ---
 import { withBase } from '../lib/paths';
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import soulHackersBanner from '../assets/soul-hackers-banner-edited.png';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -25,6 +27,8 @@ import { site } from '../config/site';
 
 const projects = await getCollection('translations');
 const featured = projects.find((p) => p.data.featured) ?? projects[0];
+const featuredBanner =
+  featured?.id === 'soul-hackers' ? soulHackersBanner : undefined;
 const planned = projects
   .filter((p) => p.id !== featured?.id)
   .sort(
@@ -157,16 +161,37 @@ const jsonLd = {
         </span>
       </header>
       <article class="home-quest rpg-frame">
-        <div class="quest-cover">
+        <div
+          class:list={['quest-cover', { 'quest-cover-banner': featuredBanner }]}
+        >
           <span class="quest-bookmark">
             <Sparkles size={14} />
             MISSÃO ATUAL
           </span>
-          <GameCover project={featured} />
+          {featuredBanner ? (
+            <div class="quest-banner-frame">
+              <Image
+                class="quest-banner-image"
+                src={featuredBanner}
+                alt="Elenco de Soul Hackers em arte promocional com fundo azul."
+                widths={[480, 640, 960, 1280]}
+                sizes="(max-width: 580px) 120vw, (max-width: 1100px) 800px, 760px"
+                width={featuredBanner.width}
+                height={featuredBanner.height}
+                format="webp"
+                quality={85}
+                loading="lazy"
+              />
+            </div>
+          ) : (
+            <GameCover project={featured} />
+          )}
           <span class="quest-cover-note">
-            {featured.data.cover
-              ? 'Arte do jogo · imagem fornecida pelo projeto'
-              : 'Capa ilustrativa · arte oficial não fornecida'}
+            {featuredBanner
+              ? 'Arte: Index Corp. / ATLUS · edição visual com IA'
+              : featured.data.cover
+                ? 'Arte do jogo · imagem fornecida pelo projeto'
+                : 'Capa ilustrativa · arte oficial não fornecida'}
           </span>
         </div>
         <div class="quest-copy">
@@ -201,7 +226,7 @@ const jsonLd = {
         <div class="quest-footer">
           <span>
             <Feather size={15} />
-            Tradução independente, feita por Kiryoshi
+            Por Kiryoshi, com auxílio de IA e revisão humana
           </span>
           <span>Sem data de lançamento informada</span>
         </div>
