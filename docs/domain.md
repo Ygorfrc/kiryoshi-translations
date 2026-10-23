@@ -28,7 +28,7 @@ Como o Pages usa GitHub Actions, um arquivo `CNAME` no build não é necessário
 
 `PUBLIC_NOINDEX=true` e as flags editoriais de exemplo continuam preservadas. A compra do domínio não transforma conteúdo demonstrativo em conteúdo aprovado para indexação. O contador GoatCounter permanece na mesma conta e os eventos não dependem do domínio do site; não há necessidade de trocar sua URL de coleta.
 
-## Estado inicial verificado
+## Ativação e verificações
 
 Em 23/10/2026, as consultas DNS por HTTPS retornaram o domínio registrado, com NS do Registro.br, mas sem A/AAAA no domínio raiz e sem CNAME/A em `www`. A consulta DNS nativa do ambiente recusou conexões e não foi usada como evidência de inexistência do domínio. A configuração inicial do Pages ainda estava no endereço `https://ygorfrc.github.io/kiryoshi-translations/`, sem domínio personalizado.
 
@@ -39,5 +39,9 @@ Após o término da transição, os quatro registros A e o CNAME `www` foram sal
 A publicação manual [40011550895](https://github.com/Ygorfrc/kiryoshi-translations/actions/runs/40011550895), commit `fe1f76d403ceb4bd785639385ca17f7c768d7cc0`, terminou com sucesso, incluindo `npm run validate` e a validação do pacote na raiz. O domínio responde no Pages e o endereço github.io redireciona para ele. O primeiro teste de navegador público em HTTP encontrou imagens bloqueadas pela ausência do certificado, pois a CSP preserva `upgrade-insecure-requests`; essa proteção não foi relaxada.
 
 Após vários minutos sem certificado, o responsável autorizou explicitamente remover e cadastrar imediatamente o mesmo domínio no Pages, conforme a orientação de troubleshooting do GitHub. O vínculo foi restabelecido e a checagem oficial passou a confirmar os dois nomes como válidos, servidos pelo Pages e elegíveis para HTTPS. A conclusão do certificado e o redirecionamento seguro permanecem sujeitos à verificação ao vivo.
+
+**Estado final confirmado em 23/10/2026:** certificado `approved` para `kiryoshitranslations.com.br` e `www.kiryoshitranslations.com.br`, com validade informada até 21/01/2027 nesta emissão. Os dois nomes passaram em requisições HTTPS com validação TLS normal, sem ignorar erros. Somente após essa confirmação foi ativado `https_enforced=true` no Pages. A raiz HTTPS retornou 200; HTTP e `www` retornaram 301 para a raiz HTTPS. O endereço antigo github.io redireciona para o domínio próprio; uma resposta em cache ainda apontou para HTTP, que por sua vez redireciona para HTTPS.
+
+O Edge headless validou o site real em HTTPS nas larguras 1440px e 360px: Home, catálogo, Soul Hackers e 404, com imagens, quatro links de download, canonicals, ausência de overflow e de erros de página. A inspeção visual no navegador também confirmou a Home com estilos e imagens carregados. A migração está concluída; os estados de certificado pendente descritos acima registram o histórico de provisionamento. A emissão e renovação são gerenciadas pelo GitHub Pages; não há certificado ou chave privada no repositório.
 
 Referências: [domínio personalizado no GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site) e [verificação de propriedade](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages).
