@@ -4,7 +4,9 @@
 
 O responsável aprovou retirar o excesso de detalhes técnicos da página pública. O texto foi reduzido a navegação, estatísticas de uso, hospedagem e links externos/contato, preservando finalidade das métricas, GoatCounter, informações da conexão, sessões de até oito horas, DNT/GPC e ausência de cookies. O funcionamento dos contadores e a documentação técnica foram preservados.
 
-Prettier, tipos (79 arquivos sem diagnósticos), build de 23 páginas, 759 referências internas e segurança com 79 referências a scripts locais foram aprovados. Os dois E2E existentes da página passaram em desktop e mobile em 7,2s, incluindo acessibilidade e largura. Logs ignorados: `.qa/check-privacy-short.log`, `.qa/build-privacy-short.log` e `.qa/e2e-privacy-short.log`. A publicação é conferida separadamente no workflow manual.
+Prettier, tipos (79 arquivos sem diagnósticos), build de 23 páginas, 759 referências internas e segurança com 79 referências a scripts locais foram aprovados. Os dois E2E existentes da página passaram em desktop e mobile em 7,2s, incluindo acessibilidade e largura. Logs ignorados: `.qa/check-privacy-short.log`, `.qa/build-privacy-short.log` e `.qa/e2e-privacy-short.log`.
+
+O workflow manual [40025894328](https://github.com/Ygorfrc/kiryoshi-translations/actions/runs/40025894328), commit `75d5f46c465e48c929acf8516d497da119360902`, repetiu `npm run validate` no CI e concluiu a publicação com sucesso. No domínio real, Edge em 1440×1000 e 360×800 confirmou as quatro seções resumidas, ausência dos antigos detalhes de desenvolvimento, informações essenciais preservadas, sem overflow ou erros de página. Uma requisição do contador foi interceptada em cada viewport, sem enviar visitas de QA à conta. Capturas ignoradas em `.qa/privacy-short-{1440,360}.png`.
 
 ## Visitas no GoatCounter — 23/10/2026
 
