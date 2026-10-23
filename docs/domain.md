@@ -19,7 +19,7 @@ O CNAME não inclui protocolo, barra ou nome do repositório. Não troque os ser
 ## GitHub Pages e build
 
 1. Em **Settings → Pages → Custom domain**, configure `kiryoshitranslations.com.br` quando o DNS estiver pronto para o corte. O domínio altera o destino do endereço antigo, portanto coordene a mudança com a configuração DNS.
-2. O workflow manual já usa `actions/configure-pages@v5` para obter a origem e a base reais do Pages. Com domínio próprio, a origem será `https://kiryoshitranslations.com.br` e a base será `/`, sem `/kiryoshi-translations/`. Não fixe o subdiretório antigo em links ou imagens.
+2. O workflow manual usa `actions/configure-pages@v5` para obter o host e a base reais do Pages. A origem dos metadados é sempre `https://` mais o host retornado, inclusive enquanto a API informa HTTP durante a emissão inicial do certificado. Isso não ativa HTTPS no serviço nem dispensa a conferência do certificado. Com domínio próprio, a origem será `https://kiryoshitranslations.com.br` e a base será `/`, sem `/kiryoshi-translations/`. Não fixe o subdiretório antigo em links ou imagens.
 3. Execute **GitHub Pages (manual)** na branch `main`. Publique somente `dist-pages/` gerado com essa configuração; não publique `.qa/`.
 4. Confira os registros DNS, a emissão do certificado e **Enforce HTTPS**. Se o certificado ainda estiver em processamento, aguarde e verifique novamente; não desative validação de certificados para simular sucesso.
 5. Confira Home, catálogo, downloads, guias, imagens, canonical, CSP e 404 no domínio novo. Verifique também o redirecionamento do endereço antigo e de `www`.
