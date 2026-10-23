@@ -4,7 +4,11 @@ import {
   devlogSchema,
   releaseSchema,
 } from '../../src/lib/schemas';
-import { serializeJsonLd, formatDate } from '../../src/lib/format';
+import {
+  serializeJsonLd,
+  formatDate,
+  formatPercent,
+} from '../../src/lib/format';
 import { parseSiteUrl } from '../../src/config/url.mjs';
 const project = {
   title: 'Jogo',
@@ -114,5 +118,10 @@ describe('metadados', () => {
   it('trata datas ausentes e usa UTC para datas editoriais', () => {
     expect(formatDate()).toBe('Não informado');
     expect(formatDate(new Date('2026-10-22'))).toContain('22 de outubro');
+  });
+  it('exibe percentuais em pt-BR preservando as casas decimais informadas', () => {
+    expect(formatPercent(79.59)).toBe('79,59%');
+    expect(formatPercent(100)).toBe('100%');
+    expect(formatPercent(0)).toBe('0%');
   });
 });

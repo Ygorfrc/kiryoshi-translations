@@ -7,6 +7,10 @@ developer: Atlus
 publisher: Atlus
 genre: RPG / Dungeon Crawler
 updated: 2026-10-23
+progress:
+  extraction: 100
+  translation: 79.59
+  reinsertion: 79.59
 status: Em desenvolvimento
 displayOrder: 1
 featured: true

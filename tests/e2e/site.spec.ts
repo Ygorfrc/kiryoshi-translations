@@ -87,7 +87,19 @@ test('navegação principal por teclado e menu móvel', async ({
   await expect(page.locator('#downloads')).toContainText('Patch v38 · Azahar');
   await expect(page.locator('#downloads .release-card')).toHaveCount(2);
   await expect(page.locator('#progresso')).toContainText('Não informado');
-  await expect(page.locator('progress')).toHaveCount(0);
+  await expect(page.locator('#progresso progress')).toHaveCount(3);
+  await expect(
+    page.getByRole('progressbar', { name: 'Extração de textos', exact: true }),
+  ).toHaveAttribute('value', '100');
+  for (const name of ['Tradução', 'Reinserção']) {
+    await expect(
+      page.getByRole('progressbar', { name, exact: true }),
+    ).toHaveAttribute('value', '79.59');
+    await expect(
+      page.getByRole('progressbar', { name, exact: true }),
+    ).toHaveAttribute('aria-valuetext', '79,59%');
+  }
+  await expect(page.locator('#progresso .progress-unknown')).toHaveCount(2);
   await page.locator('#perguntas summary').first().click();
   await expect(page.locator('#perguntas details').first()).toHaveAttribute(
     'open',

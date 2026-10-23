@@ -1,5 +1,6 @@
 ---
 import { progressLabels } from '../lib/schemas';
+import { formatPercent } from '../lib/format';
 interface Props {
   progress: Partial<Record<keyof typeof progressLabels, number>>;
 }
@@ -14,14 +15,19 @@ const { progress } = Astro.props;
         <div>
           <span>{label}</span>
           <span class="mono">
-            {value === undefined ? 'Não informado' : `${value}%`}
+            {value === undefined ? 'Não informado' : formatPercent(value)}
           </span>
         </div>
         {value === undefined ? (
           <div class="progress-unknown" aria-hidden="true"></div>
         ) : (
-          <progress max="100" value={value} aria-label={label}>
-            {value}%
+          <progress
+            max="100"
+            value={value}
+            aria-label={label}
+            aria-valuetext={formatPercent(value)}
+          >
+            {formatPercent(value)}
           </progress>
         )}
       </div>

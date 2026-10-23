@@ -22,7 +22,7 @@ import GameCover from '../components/GameCover.astro';
 import PlatformText from '../components/PlatformText.astro';
 import ProjectStatus from '../components/ProjectStatus.astro';
 import { getPosts } from '../lib/content';
-import { formatDate } from '../lib/format';
+import { formatDate, formatPercent } from '../lib/format';
 import { progressLabels } from '../lib/schemas';
 import { site } from '../config/site';
 
@@ -41,7 +41,7 @@ const posts = (await getPosts()).slice(0, 3);
 const featuredProgress = featured
   ? Object.entries(progressLabels).flatMap(([key, label]) => {
       const value = featured.data.progress[key as keyof typeof progressLabels];
-      return value === undefined ? [] : [`${label}: ${value}%`];
+      return value === undefined ? [] : [`${label}: ${formatPercent(value)}`];
     })
   : [];
 const jsonLd = {

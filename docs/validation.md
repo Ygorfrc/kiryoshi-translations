@@ -1,5 +1,11 @@
 # Validação local
 
+## Barras de progresso de Soul Hackers — 23/10/2026
+
+O responsável informou extração 100%, tradução 79,59% e reinserção 79,59%. Os valores foram cadastrados por etapa, mantendo revisão fina e testes completos sem valor informado e sem calcular conclusão geral. Home e barras exibem percentuais em pt-BR; os elementos nativos preservam `79.59` numericamente e oferecem `79,59%` como texto acessível. Os metadados Atlus, gênero e data solicitados anteriormente foram preservados.
+
+`npm run validate` concluiu com código 0: formatação e tipos aprovados em 74 arquivos; 30 testes unitários; build de 23 páginas; 736 referências internas; segurança e SEO aprovados; quatro E2E Pages em 8,6s, com 782 referências no pacote de QA; 51 E2E principais em 54,3s e uma repetição de viewport ignorada. Os testes conferem as três barras, valores decimais e os dois estados desconhecidos, além de navegação, responsividade e acessibilidade. Log: `.qa/validate-progress-release.log`.
+
 ## Metadados de Soul Hackers — 23/10/2026
 
 Por solicitação do responsável, o projeto recebeu desenvolvedora Atlus, publicadora Atlus, gênero “RPG / Dungeon Crawler” e atualização editorial `2026-10-23`. A formatação foi aprovada e o build gerou 23 páginas com sucesso. A inspeção do HTML confirmou os quatro campos, com a data de 23 de outubro de 2026 preservada em UTC. Nenhum percentual, status ou data de lançamento foi alterado. Log: `.qa/build-soul-metadata.log`.

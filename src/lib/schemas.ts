@@ -19,9 +19,9 @@ export const categories = [
 export const progressLabels = {
   extraction: 'Extração de textos',
   translation: 'Tradução',
-  review: 'Revisão',
+  review: 'Revisão fina',
   reinsertion: 'Reinserção',
-  testing: 'Testes',
+  testing: 'Testes completos',
 } as const;
 export const httpsUrl = z
   .url()
