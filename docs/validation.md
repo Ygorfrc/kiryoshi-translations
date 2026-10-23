@@ -6,6 +6,8 @@ O responsável solicitou expressamente retirar o título “Estatísticas de uso
 
 Formatação, build de 23 páginas, 759 referências internas e segurança com 79 referências a scripts locais foram aprovados. Os dois E2E existentes da página passaram em desktop e mobile em 7,1s, incluindo acessibilidade e largura. Logs ignorados: `.qa/build-privacy-remove-stats.log` e `.qa/e2e-privacy-remove-stats.log`.
 
+O workflow manual [40028547747](https://github.com/Ygorfrc/kiryoshi-translations/actions/runs/40028547747), commit `2c85fb861c6841937a2415f50a9b0c369e84fdf9`, aprovou a validação completa no CI e publicou com sucesso. A inspeção do domínio em 1440×1000 e 360×800 confirmou ausência de toda a seção e dos textos removidos, três títulos restantes, contador de visitas ativo, sem overflow ou erros de página. As requisições de QA foram interceptadas, sem registros reais no GoatCounter. Capturas ignoradas: `.qa/privacy-removed-{1440,360}.png`.
+
 ## Privacidade resumida — 23/10/2026
 
 O responsável aprovou retirar o excesso de detalhes técnicos da página pública. O texto foi reduzido a navegação, estatísticas de uso, hospedagem e links externos/contato, preservando finalidade das métricas, GoatCounter, informações da conexão, sessões de até oito horas, DNT/GPC e ausência de cookies. O funcionamento dos contadores e a documentação técnica foram preservados.
