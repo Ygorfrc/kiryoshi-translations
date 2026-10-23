@@ -1,0 +1,39 @@
+# Domínio próprio
+
+Domínio solicitado pelo responsável em 23/10/2026: **kiryoshitranslations.com.br**, como endereço principal sem `www`. O provedor DNS identificado publicamente é Registro.br (`a.auto.dns.br` e `b.auto.dns.br`). A hospedagem continua no GitHub Pages do repositório `Ygorfrc/kiryoshi-translations`.
+
+## Configuração DNS
+
+Na zona DNS do Registro.br, cadastre estes registros. O campo raiz pode aparecer vazio ou como `@`, conforme a interface. Preserve registros de e-mail e outros serviços existentes.
+
+| Tipo  | Nome | Valor             |
+| ----- | ---- | ----------------- |
+| A     | @    | 185.199.108.153   |
+| A     | @    | 185.199.109.153   |
+| A     | @    | 185.199.110.153   |
+| A     | @    | 185.199.111.153   |
+| CNAME | www  | ygorfrc.github.io |
+
+O CNAME não inclui protocolo, barra ou nome do repositório. Não troque os servidores DNS: os registros são inseridos na zona já existente. A propagação e a emissão do certificado são verificações separadas; cadastrar registros não confirma que HTTPS já esteja pronto.
+
+## GitHub Pages e build
+
+1. Em **Settings → Pages → Custom domain**, configure `kiryoshitranslations.com.br` quando o DNS estiver pronto para o corte. O domínio altera o destino do endereço antigo, portanto coordene a mudança com a configuração DNS.
+2. O workflow manual já usa `actions/configure-pages@v5` para obter a origem e a base reais do Pages. Com domínio próprio, a origem será `https://kiryoshitranslations.com.br` e a base será `/`, sem `/kiryoshi-translations/`. Não fixe o subdiretório antigo em links ou imagens.
+3. Execute **GitHub Pages (manual)** na branch `main`. Publique somente `dist-pages/` gerado com essa configuração; não publique `.qa/`.
+4. Confira os registros DNS, a emissão do certificado e **Enforce HTTPS**. Se o certificado ainda estiver em processamento, aguarde e verifique novamente; não desative validação de certificados para simular sucesso.
+5. Confira Home, catálogo, downloads, guias, imagens, canonical, CSP e 404 no domínio novo. Verifique também o redirecionamento do endereço antigo e de `www`.
+
+Como o Pages usa GitHub Actions, um arquivo `CNAME` no build não é necessário e não substitui a configuração do domínio no serviço. A origem do deploy é lida do próprio GitHub, evitando duplicar configurações no workflow. `.env.example` contém os valores do domínio real para builds locais; não altera o serviço por si só.
+
+`PUBLIC_NOINDEX=true` e as flags editoriais de exemplo continuam preservadas. A compra do domínio não transforma conteúdo demonstrativo em conteúdo aprovado para indexação. O contador GoatCounter permanece na mesma conta e os eventos não dependem do domínio do site; não há necessidade de trocar sua URL de coleta.
+
+## Estado inicial verificado
+
+Em 23/10/2026, as consultas DNS por HTTPS retornaram o domínio registrado, com NS do Registro.br, mas sem A/AAAA no domínio raiz e sem CNAME/A em `www`. A consulta DNS nativa do ambiente recusou conexões e não foi usada como evidência de inexistência do domínio. A configuração inicial do Pages ainda estava no endereço `https://ygorfrc.github.io/kiryoshi-translations/`, sem domínio personalizado.
+
+Após autenticação feita pelo próprio responsável, o modo avançado do DNS foi habilitado para permitir os quatro registros A e o CNAME. O Registro.br entrou em transição e bloqueou temporariamente a inclusão dos registros, mostrando “Domínio em transição. Por favor, aguarde alguns minutos e tente novamente”. A zona ainda estava vazia. O painel também informou uma janela de aproximadamente duas horas para delegação de servidores externos; isso não confirma o momento exato em que o editor será liberado. Não foram alterados contatos, dados cadastrais ou servidores manualmente, nem cadastrados registros de outros serviços.
+
+Após o término da transição, os quatro registros A e o CNAME `www` foram salvos no Registro.br e conferidos ao reabrir o editor. A consulta pública DNS por HTTPS confirmou todos os cinco registros. O domínio foi vinculado ao repositório pelo Pages, com `cname=kiryoshitranslations.com.br`. No primeiro retorno, o GitHub ainda não disponibilizava certificado e informava `https_enforced=false`; a exigência de HTTPS só deve ser ativada após confirmação do certificado. O deploy deve usar a origem HTTPS e base raiz. O build do domínio já foi validado localmente; os resultados estão em `docs/validation.md`.
+
+Referências: [domínio personalizado no GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site) e [verificação de propriedade](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages).

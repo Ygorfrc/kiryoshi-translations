@@ -165,7 +165,7 @@ Relatórios locais HTML/JSON estão em `.qa/lighthouse/*-final.report.*`; screen
 ## Limites e pendências reais
 
 - A publicação no Pages é uma prévia temporária autorizada. HTTPS, recursos, navegação, CSP e status 404 precisam ser conferidos no endereço retornado pelo deploy. Os headers específicos do Cloudflare não são aplicados pelo Pages. Os resultados acima são de validação local; execuções do CI remoto são consultadas na aba Actions do repositório.
-- Faltam domínio público, canais de contato/redes, vídeos publicados, dados confirmados de progresso e eventuais patches autorizados. Não existem pagamentos integrados.
+- A ativação do domínio adquirido está documentada em `docs/domain.md`. Canais de contato/redes e vídeos publicados continuam pendentes. Soul Hackers já tem os dados de progresso confirmados e os patches parciais autorizados documentados em `docs/downloads.md`. Não existem pagamentos integrados.
 - Os cinco projetos são configurações iniciais identificadas como exemplos; os três devlogs são exemplos editoriais sem datas de publicação inventadas.
 - As capas fornecidas estão registradas em `docs/assets.md`; não há screenshots de traduções ou arquivos de jogos distribuídos.
 - Testes automatizados e inspeção visual local não substituem testes com leitor de tela, dispositivos físicos e usuários.
@@ -185,5 +185,13 @@ Os quatro testes adicionais passaram em desktop e mobile: navegação, carrossel
 O Pages não aplica o arquivo `_headers`. A CSP meta deriva dele, excetuando `frame-ancestors`, que exige header HTTP; não foi alegada equivalência com todos os headers do Cloudflare. A política de privacidade do build Pages identifica o GitHub como hospedagem. A autorização explícita para habilitar o serviço, tornar o repositório público e publicar foi recebida; futuras alterações de automação continuam fora desse escopo.
 
 ## Atualização da capa e publicação autorizada
+
+### Preparação do domínio próprio — 23/10/2026
+
+O build isolado `.qa/custom-domain/` foi gerado com `PUBLIC_SITE_URL=https://kiryoshitranslations.com.br`, base `/`, `PUBLIC_HOSTING=github-pages` e `PUBLIC_NOINDEX=true`. Foram geradas 23 páginas, com 782 referências internas válidas. A verificação de segurança aprovou as 23 páginas e 56 referências a scripts locais, sem JavaScript executável inline. As asserções de conteúdo confirmaram canonical da Home e de Soul Hackers no domínio novo, ausência do antigo subdiretório nos links internos, preservação do noindex, do endpoint GoatCounter e dos quatro botões reais de download. Isso valida o pacote; a ativação externa de DNS, certificado e publicação é registrada separadamente em `docs/domain.md`. Não houve alteração da aplicação, de dependências ou da automação manual de publicação.
+
+Na prévia local desse pacote, o Edge headless validou Home, catálogo, Soul Hackers e 404 nas larguras de 1440px e 360px. Não foram encontrados erros de página, recursos internos com falha, imagens quebradas ou overflow horizontal nessas rotas. Os canonicals e os quatro links de download também foram conferidos sem enviar eventos reais ao contador. Uma primeira execução do script de QA usou um seletor inexistente; o seletor foi corrigido para o atributo real do componente e a execução completa passou.
+
+### Publicação anterior da capa
 
 Em 22/10/2026, `images/Desu2.jpg` (1334×1334) substituiu a capa anterior por solicitação do usuário. A autorização também incluiu tornar público todo o repositório e publicar no GitHub Pages. A validação completa foi repetida com a nova imagem: 67 arquivos sem erros de tipos, 24 testes unitários, quatro testes de Pages e 41 testes da aplicação aprovados, com uma repetição de viewport ignorada conforme documentado. O primeiro teste do Pages encontrou o lock da prévia local aberta; a suíte passou a usar uma instância isolada com `--ignore-lock`, sem parar a prévia da pessoa usuária. A execução completa posterior terminou com código 0. Nenhum segredo foi identificado nos arquivos revisados; `.env`, caches, builds e relatórios continuam ignorados. O estado e a URL efetiva do deploy devem ser conferidos na execução manual do GitHub, sem alegar publicação com base apenas no commit.

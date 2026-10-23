@@ -289,6 +289,8 @@ Essa conexão pode ativar deploys por push: habilite-a somente quando desejar es
 
 ### GitHub Pages temporário
 
+O domínio próprio solicitado é **kiryoshitranslations.com.br**, com rotas na raiz. A migração depende do apontamento DNS no Registro.br, vínculo no Pages e certificado HTTPS. Consulte [configuração e estado do domínio](docs/domain.md). O workflow já obtém a origem e a base do Pages; não fixe `/kiryoshi-translations/` ao usar o domínio próprio. O estado de ativação deve ser verificado no serviço.
+
 Em 22/10/2026, após o GitHub informar que o plano não permitia Pages privado, o responsável autorizou explicitamente tornar [Ygorfrc/kiryoshi-translations](https://github.com/Ygorfrc/kiryoshi-translations) público e publicar o site. O endereço esperado, após concluir a publicação, é `https://ygorfrc.github.io/kiryoshi-translations/`. A existência de um workflow ou deste endereço na documentação não confirma um deploy: consulte o resultado da execução e o ambiente `github-pages`.
 
 O workflow `.github/workflows/pages.yml` é **exclusivamente manual**, via `workflow_dispatch`, e executa apenas na branch `main`. Um push dispara somente qualidade, sem deploy. Para atualizar a publicação autorizada:
@@ -314,7 +316,7 @@ Referências: [Astro no Pages](https://docs.astro.build/en/guides/deploy/github/
 
 ## Pendências editoriais e externas
 
-- Domínio público, conta Cloudflare e eventual automação de deploy.
+- Ativação DNS/HTTPS do domínio adquirido `kiryoshitranslations.com.br`, conta Cloudflare se houver migração futura e eventual automação de deploy.
 - Canais públicos, e-mail, redes sociais e plataformas de apoio.
 - Screenshots das traduções com permissão, vídeos reais e eventuais patches autorizados; as cinco capas do catálogo já foram fornecidas.
 - Desenvolvedora, publicadora, gênero, progresso e datas editoriais confirmadas de cada projeto.

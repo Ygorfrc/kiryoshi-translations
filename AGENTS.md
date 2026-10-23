@@ -41,6 +41,7 @@
 ## SEO, privacidade e configuração
 
 - Origem pública em `PUBLIC_SITE_URL`, validada por `src/config/url.mjs`. Sem origem real: noindex, robots bloqueado, sitemap vazio, RSS inativo. Nunca inserir domínio fictício como fallback indexável.
+- Em 23/10/2026, o usuário informou a compra de `kiryoshitranslations.com.br` e solicitou vinculá-lo ao site no GitHub Pages. O domínio próprio usa base `/`; mantenha o workflow manual lendo a origem/base de `configure-pages`, sem forçar o subdiretório de github.io. Consulte `docs/domain.md` e confirme DNS, vínculo e certificado separadamente. Não afirmar ativação com base apenas na alteração de arquivos; não liberar indexação ou remover flags editoriais automaticamente.
 - Metadados compartilhados em SEOHead e layout base; breadcrumbs, headings e HTML estático legível.
 - Canais, apoio, contato e vídeos em `src/config/site.ts`; vazios são estados válidos.
 - Não adicionar tracking, cookies, pagamentos ou serviços externos sem escopo autorizado. Atualize privacidade e CSP antes de integrar terceiros.
