@@ -37,6 +37,9 @@ const imageUrl = Astro.site
 <meta name="color-scheme" content="light" />
 <title>{title} | {site.name}</title>
 <meta name="description" content={description} />
+{Astro.site && site.googleSiteVerification && (
+  <meta name="google-site-verification" content={site.googleSiteVerification} />
+)}
 <meta
   name="robots"
   content={

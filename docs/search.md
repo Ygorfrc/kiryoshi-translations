@@ -22,6 +22,10 @@ Em 23/10/2026, o responsável aprovou a preparação e publicação do site para
 
 Não é necessário instalar Analytics, pixels ou scripts Google no site para usar a verificação DNS do Search Console. Não há novos cookies, coleta de visitas ou alteração no contador de cliques por causa desse cadastro. Credenciais e códigos de login não entram no repositório. O TXT de verificação fica na zona DNS.
 
+### Alternativa enquanto o verificador DNS propaga
+
+O TXT foi salvo na raiz e conferido nos resolvedores públicos do Google e Cloudflare, mas o verificador do Search Console ainda retornou ausência do registro nas primeiras tentativas. Foi adicionada também a propriedade de prefixo `https://kiryoshitranslations.com.br/`, usando a alternativa **Tag HTML** fornecida pelo próprio Google. O token público real fica em `site.googleSiteVerification`, validado por schema e renderizado como metatag pelo SEOHead. Ele não é script, cookie, senha ou chave de API e deve ser preservado após a verificação. Não foi criado arquivo HTML de verificação ou página adicional; a metatag mantém o site inteiramente estático. A propriedade de domínio pode ser confirmada pelo TXT quando o verificador reconhecer a propagação.
+
 ## Links nos posts existentes
 
 Texto sugerido para o responsável acrescentar aos próprios posts públicos, onde as regras da comunidade permitirem:
