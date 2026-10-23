@@ -1,5 +1,9 @@
 # Validação local
 
+## Metadados de Soul Hackers — 23/10/2026
+
+Por solicitação do responsável, o projeto recebeu desenvolvedora Atlus, publicadora Atlus, gênero “RPG / Dungeon Crawler” e atualização editorial `2026-10-23`. A formatação foi aprovada e o build gerou 23 páginas com sucesso. A inspeção do HTML confirmou os quatro campos, com a data de 23 de outubro de 2026 preservada em UTC. Nenhum percentual, status ou data de lançamento foi alterado. Log: `.qa/build-soul-metadata.log`.
+
 ## Validação para publicação autorizada — 23/10/2026
 
 O responsável solicitou o envio das alterações pendentes ao GitHub. A versão reúne os downloads Soul Hackers v38 para Azahar/Luma3DS com Drive principal e MediaFire alternativo, contador de cliques GoatCounter, guia após “Antes de instalar” e remoção do SHA-256 da interface.
