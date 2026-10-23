@@ -1,5 +1,11 @@
 # Validação local
 
+## Remoção da seção de estatísticas — 23/10/2026
+
+O responsável solicitou expressamente retirar o título “Estatísticas de uso” e todo o texto sobre o GoatCounter da página de privacidade. A seção e seus imports foram removidos, e a descrição SEO foi ajustada ao conteúdo restante. Os contadores continuam ativos; a documentação técnica foi preservada e não foi adicionada uma alegação de ausência de métricas.
+
+Formatação, build de 23 páginas, 759 referências internas e segurança com 79 referências a scripts locais foram aprovados. Os dois E2E existentes da página passaram em desktop e mobile em 7,1s, incluindo acessibilidade e largura. Logs ignorados: `.qa/build-privacy-remove-stats.log` e `.qa/e2e-privacy-remove-stats.log`.
+
 ## Privacidade resumida — 23/10/2026
 
 O responsável aprovou retirar o excesso de detalhes técnicos da página pública. O texto foi reduzido a navegação, estatísticas de uso, hospedagem e links externos/contato, preservando finalidade das métricas, GoatCounter, informações da conexão, sessões de até oito horas, DNT/GPC e ausência de cookies. O funcionamento dos contadores e a documentação técnica foram preservados.

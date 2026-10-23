@@ -1,19 +1,13 @@
 ---
 import { withBase } from '../lib/paths';
 import { hosting } from '../config/publication';
-import { downloadCounterEndpoint } from '../config/download-counter';
-import { visitCounterEnabled } from '../config/visit-counter';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
 ---
 
 <BaseLayout
   title="Política de privacidade"
-  description={
-    downloadCounterEndpoint
-      ? 'Entenda as métricas de visitas e cliques em downloads, as preferências de privacidade e os serviços usados pelo site.'
-      : 'Saiba quais recursos estão presentes no site: navegação estática, sem analytics, cookies de rastreamento ou formulário de coleta de dados.'
-  }
+  description="Saiba sobre navegação, hospedagem, links externos e informações de contato do Kiryoshi Translations."
 >
   <PageIntro
     title="Sua privacidade"
@@ -29,43 +23,6 @@ import PageIntro from '../components/PageIntro.astro';
       aparecer nos registros da hospedagem. Evite incluir informações pessoais
       na busca.
     </p>
-    {downloadCounterEndpoint ? (
-      <>
-        <h2>Estatísticas de uso</h2>
-        {visitCounterEnabled && (
-          <p>
-            Usamos o GoatCounter para acompanhar páginas acessadas e estimar
-            visitantes, enviando o caminho e o título da página. Não enviamos
-            termos de busca, parâmetros do endereço ou site de origem.
-          </p>
-        )}
-        <p>
-          Ao clicar em “Baixar patch”, registramos a tradução e a versão no
-          GoatCounter. Isso conta cliques, não downloads concluídos.
-        </p>
-        <p>
-          A integração não grava cookies ou identificadores no navegador e
-          respeita Do Not Track e Global Privacy Control. Bloqueadores ou falhas
-          podem impedir o registro, sem afetar a navegação ou os downloads.
-        </p>
-        <p>
-          O GoatCounter recebe o endereço IP e informações do navegador pela
-          conexão.{' '}
-          {visitCounterEnabled &&
-            'Para estimar visitantes, agrupa acessos por até oito horas; os números não representam uma contagem exata de pessoas. '}
-          Consulte a{' '}
-          <a
-            href="https://www.goatcounter.com/help/privacy"
-            rel="noopener noreferrer"
-          >
-            política de privacidade do GoatCounter
-          </a>
-          .
-        </p>
-      </>
-    ) : (
-      <p>A coleta de estatísticas está desativada nesta versão.</p>
-    )}
     <h2>Hospedagem</h2>
     {hosting === 'github-pages' ? (
       <p>
