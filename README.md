@@ -95,6 +95,7 @@ Em 23/10/2026, o responsável aprovou a liberação nos buscadores. A publicaç�
 Em `src/config/site.ts`, configure apenas informações fornecidas e confirmadas:
 
 - `channels`: lista de `{ label, url }` com HTTPS para GitHub, YouTube, Discord e outros canais.
+- `googleSiteVerification`: token público da metatag fornecida pelo Search Console; preserve após a verificação, sem adicionar scripts Google.
 - `contactEmail`: endereço público opcional; quando ausente não há botão de e-mail.
 - `support`: `{ label, url, description }` para plataformas externas autorizadas; não inclui checkout nem cobrança no site.
 - `videos`: veja a seção de YouTube.
