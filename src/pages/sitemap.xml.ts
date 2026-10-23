@@ -7,19 +7,23 @@ import { categorySlug } from '../lib/categories';
 import { withBase } from '../lib/paths';
 import { previewOnly } from '../config/publication';
 export const GET: APIRoute = async ({ site }) => {
-  const routes = [...publicRoutes];
+  const posts = (await getPosts()).filter((post) => !post.data.demo);
+  const routes = publicRoutes.filter(
+    (route) => route !== '/devlog/' || posts.length > 0,
+  );
   const projects = await getCollection('translations');
-  const posts = await getPosts();
   routes.push(
     ...projects
       .filter((p) => !p.data.example)
       .map((p) => `/traducoes/${p.id}/`),
   );
+  routes.push(...posts.map((p) => `/devlog/${p.id}/`));
   routes.push(
-    ...posts.filter((p) => !p.data.demo).map((p) => `/devlog/${p.id}/`),
-  );
-  routes.push(
-    ...categories.map((c) => `/devlog/categoria/${categorySlug(c)}/`),
+    ...categories
+      .filter((category) =>
+        posts.some((post) => post.data.category === category),
+      )
+      .map((category) => `/devlog/categoria/${categorySlug(category)}/`),
   );
   const urls =
     site && !previewOnly

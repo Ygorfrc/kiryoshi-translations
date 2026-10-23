@@ -1,7 +1,7 @@
 ---
 title: 'Shin Megami Tensei: Devil Summoner – Soul Hackers'
 shortTitle: Soul Hackers
-description: 'Uma conexão com Amami City. O primeiro projeto de tradução de Kiryoshi leva o universo de Soul Hackers ao português brasileiro.'
+description: 'Tradução PT-BR de Soul Hackers para Nintendo 3DS. Baixe a prévia para Azahar ou Luma3DS, acompanhe o progresso e veja como instalar.'
 platform: Nintendo 3DS
 developer: Atlus
 publisher: Atlus
@@ -14,7 +14,7 @@ progress:
 status: Em desenvolvimento
 displayOrder: 1
 featured: true
-example: true
+example: false
 accent: purple
 cover:
   asset: SoulHackerscapa.jpeg

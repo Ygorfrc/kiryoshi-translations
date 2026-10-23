@@ -22,6 +22,8 @@ O conteúdo de `LEIA-ME.txt` e `V38_CHANGELOG.md` fundamenta a descrição e as 
 
 A data de upload do serviço não foi usada como lançamento. `release.date` permanece ausente, apresentado como não informado. O status do projeto continua **Em desenvolvimento** e a flag `example: true` foi preservada. Não foram inseridos percentuais gerais ou de etapas com base na contagem de fragmentos conhecida.
 
+Na liberação editorial para buscadores, também em 23/10/2026, o responsável aprovou retirar a marcação de exemplo somente de Soul Hackers. O cadastro agora usa `example: false`, preservando status, limitações, progresso informado e natureza parcial das duas versões. Essa mudança editorial não equivale à conclusão da tradução.
+
 Posteriormente, em 23/10/2026, o responsável informou diretamente os valores das barras: extração 100%, tradução 79,59% e reinserção 79,59%. Esses valores foram cadastrados por solicitação expressa; revisão fina e testes completos permanecem sem valor informado. Eles não são uma média ou um percentual geral de conclusão do jogo.
 
 O contador usa a conta `https://kiryoshi.goatcounter.com` e agrega os dois provedores por versão e variante. A configuração e seus limites estão em [cliques em downloads](download-clicks.md). Testes interceptam as navegações e a coleta; não enviam eventos reais ao painel.

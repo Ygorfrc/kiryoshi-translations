@@ -26,7 +26,7 @@ O CNAME não inclui protocolo, barra ou nome do repositório. Não troque os ser
 
 Como o Pages usa GitHub Actions, um arquivo `CNAME` no build não é necessário e não substitui a configuração do domínio no serviço. A origem do deploy é lida do próprio GitHub, evitando duplicar configurações no workflow. `.env.example` contém os valores do domínio real para builds locais; não altera o serviço por si só.
 
-`PUBLIC_NOINDEX=true` e as flags editoriais de exemplo continuam preservadas. A compra do domínio não transforma conteúdo demonstrativo em conteúdo aprovado para indexação. O contador GoatCounter permanece na mesma conta e os eventos não dependem do domínio do site; não há necessidade de trocar sua URL de coleta.
+A ativação inicial manteve `PUBLIC_NOINDEX=true` e as flags editoriais. Posteriormente, em 23/10/2026, o responsável aprovou explicitamente liberar as páginas reais para os buscadores: a publicação Pages passou a `PUBLIC_NOINDEX=false` e apenas Soul Hackers passou a `example: false`. Os demais exemplos continuam fora da indexação. Consulte `search.md`. O contador GoatCounter permanece na mesma conta e os eventos não dependem do domínio do site; não há necessidade de trocar sua URL de coleta.
 
 ## Ativação e verificações
 

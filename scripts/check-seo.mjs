@@ -11,7 +11,12 @@ await new Promise((resolve, reject) => {
     ['scripts/astro.mjs', 'build', '--outDir', '.qa/seo'],
     {
       stdio: 'inherit',
-      env: { ...process.env, PUBLIC_SITE_URL: origin },
+      env: {
+        ...process.env,
+        PUBLIC_SITE_URL: origin,
+        PUBLIC_BASE_PATH: '/',
+        PUBLIC_NOINDEX: 'false',
+      },
     },
   );
   child.on('error', reject);
@@ -74,7 +79,42 @@ assert.ok(!demo.includes('"@type":"BlogPosting"'));
 const sitemap = await readFile(path.join(root, 'sitemap.xml'), 'utf8');
 assert.ok(sitemap.includes(`${origin}/traducoes/`));
 assert.ok(!sitemap.includes('/devlog/01-boas-vindas/'));
-assert.ok(!sitemap.includes('/traducoes/soul-hackers/'));
+assert.ok(sitemap.includes(`${origin}/traducoes/soul-hackers/`));
+const soulHackers = await readFile(
+  path.join(root, 'traducoes/soul-hackers/index.html'),
+  'utf8',
+);
+assert.ok(soulHackers.includes('content="index, follow"'));
+assert.ok(
+  soulHackers.includes('Soul Hackers: tradução PT-BR para Nintendo 3DS'),
+);
+assert.ok(soulHackers.includes('Baixe a prévia para Azahar ou Luma3DS'));
+assert.ok(soulHackers.includes('Em desenvolvimento'));
+assert.ok(!soulHackers.includes('Cadastro inicial configurável'));
+for (const slug of [
+  'devil-survivor-overclocked',
+  'devil-survivor-2-record-breaker',
+  'strange-journey-redux',
+  'smt-iv-apocalypse',
+]) {
+  const html = await readFile(
+    path.join(root, `traducoes/${slug}/index.html`),
+    'utf8',
+  );
+  assert.ok(html.includes('content="noindex, nofollow"'));
+  assert.ok(!sitemap.includes(`/traducoes/${slug}/`));
+}
+const devlog = await readFile(path.join(root, 'devlog/index.html'), 'utf8');
+assert.ok(devlog.includes('content="noindex, nofollow"'));
+assert.ok(!sitemap.includes(`${origin}/devlog/</loc>`));
+assert.ok(!sitemap.includes('/devlog/categoria/'));
+for (const slug of ['comunidade', 'ferramentas']) {
+  const html = await readFile(
+    path.join(root, `devlog/categoria/${slug}/index.html`),
+    'utf8',
+  );
+  assert.ok(html.includes('content="noindex, nofollow"'));
+}
 const rss = await readFile(path.join(root, 'rss.xml'), 'utf8');
 assert.ok(!rss.includes('<item>'));
 const robots = await readFile(path.join(root, 'robots.txt'), 'utf8');

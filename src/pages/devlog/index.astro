@@ -9,6 +9,7 @@ const posts = await getPosts();
 <BaseLayout
   title="Devlog — bastidores das traduções"
   description="Acompanhe os bastidores de Kiryoshi Translations: desenvolvimento, tradução, engenharia reversa, ferramentas e comunidade."
+  noindex={!posts.some((post) => !post.data.demo)}
 >
   <PageIntro
     title="Cada palavra tem uma história"

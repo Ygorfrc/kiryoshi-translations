@@ -34,14 +34,14 @@ jobs:
       - name: Ler configuração existente do Pages
         id: pages
         uses: actions/configure-pages@v5
-      - name: Gerar prévia pública sem indexação
+      - name: Gerar publicação com conteúdo aprovado para indexação
         run: node scripts/astro.mjs build --outDir dist-pages
         env:
           # Pages may report http while provisioning a new domain certificate.
           # Keep canonical metadata HTTPS without changing certificate validation.
           PUBLIC_SITE_URL: https://${{ steps.pages.outputs.host }}
           PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
-          PUBLIC_NOINDEX: 'true'
+          PUBLIC_NOINDEX: 'false'
           PUBLIC_HOSTING: github-pages
       - name: Validar pacote do Pages
         run: |

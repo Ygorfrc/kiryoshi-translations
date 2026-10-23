@@ -1,5 +1,11 @@
 # Validação local
 
+## Liberação editorial para buscadores — 23/10/2026
+
+O responsável aprovou liberar as páginas reais para indexação e cadastrar o domínio no Search Console. Soul Hackers passou a `example: false`, com título que inclui PT-BR e Nintendo 3DS e descrição da prévia Azahar/Luma3DS. Status, progresso, limitações, downloads e créditos foram preservados. O workflow manual passou a `PUBLIC_NOINDEX=false`. Os quatro planejados, os três devlogs demonstrativos e os arquivos de devlog sem artigos reais continuam com noindex e fora do sitemap. RSS permanece sem itens inventados.
+
+`npm run validate` concluiu com código 0: 74 arquivos sem erros de tipos; 30 testes unitários em cinco arquivos; 23 páginas; 736 referências internas; segurança em 23 páginas e 56 referências a scripts locais; SEO aprovado com novas asserções de inclusão/exclusão; QA Pages com 782 referências e quatro E2E em 8,4s; 51 E2E principais aprovados em 45,8s e uma repetição de viewport ignorada. O QA de SEO força origem reservada, base raiz e indexação habilitada, sem depender das variáveis do shell. O QA Pages continua em modo prévia, cobrindo o subdiretório. Log ignorado: `.qa/validate-indexing.log`. Resultados de publicação e Search Console são documentados separadamente em `docs/search.md`; esses testes não comprovam indexação pelo Google.
+
 ## Barras de progresso de Soul Hackers — 23/10/2026
 
 O responsável informou extração 100%, tradução 79,59% e reinserção 79,59%. Os valores foram cadastrados por etapa, mantendo revisão fina e testes completos sem valor informado e sem calcular conclusão geral. Home e barras exibem percentuais em pt-BR; os elementos nativos preservam `79.59` numericamente e oferecem `79,59%` como texto acessível. Os metadados Atlus, gênero e data solicitados anteriormente foram preservados.

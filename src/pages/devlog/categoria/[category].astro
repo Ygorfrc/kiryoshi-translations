@@ -21,6 +21,7 @@ const posts = (await getPosts()).filter((p) => p.data.category === category);
 <BaseLayout
   title={`${category} — Devlog`}
   description={`Publicações de ${category.toLocaleLowerCase('pt-BR')} no diário de desenvolvimento de Kiryoshi Translations.`}
+  noindex={!posts.some((post) => !post.data.demo)}
 >
   <PageIntro
     title={category}

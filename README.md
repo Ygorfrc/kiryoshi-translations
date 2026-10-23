@@ -90,6 +90,8 @@ Sem essa variável, o site funciona em prévia: **todas as páginas recebem `noi
 
 Artigos `demo: true` e projetos `example: true` continuam com `noindex` e fora do sitemap mesmo após configurar o domínio. Retire essas flags somente depois de revisão editorial dos respectivos dados. Exemplos nunca entram no RSS.
 
+Em 23/10/2026, o responsável aprovou a liberação nos buscadores. A publicação Pages usa `PUBLIC_NOINDEX=false`, e Soul Hackers foi aprovado como conteúdo real (`example: false`), mantendo o status em desenvolvimento e os downloads parciais. Os quatro planejados e os três devlogs continuam demonstrativos. Devlog e categorias sem artigos reais também ficam com noindex e fora do sitemap. Consulte [indexação e Search Console](docs/search.md).
+
 Em `src/config/site.ts`, configure apenas informações fornecidas e confirmadas:
 
 - `channels`: lista de `{ label, url }` com HTTPS para GitHub, YouTube, Discord e outros canais.
@@ -297,7 +299,7 @@ O workflow `.github/workflows/pages.yml` é **exclusivamente manual**, via `work
 
 1. Em **Settings → Pages**, habilite a origem **GitHub Actions**; não mude a visibilidade do repositório sem decisão explícita do responsável.
 2. Em **Actions → GitHub Pages (manual)**, selecione `main` e execute **Run workflow**.
-3. O workflow valida a aplicação, lê a URL/base real da configuração do Pages, gera `dist-pages/` com `noindex`, valida links e segurança e envia somente esse diretório ao serviço.
+3. O workflow valida a aplicação, lê o host/base real da configuração do Pages, gera `dist-pages/` com indexação liberada apenas para conteúdo aprovado, valida links e segurança e envia somente esse diretório ao serviço.
 4. Confirme a URL retornada pela etapa de deploy. Um site Pages pode ser público mesmo com fontes privados; `noindex` não é controle de acesso.
 
 O workflow usa as ações oficiais `configure-pages@v5`, `upload-pages-artifact@v3` e `deploy-pages@v5`, com Node 24. As permissões de publicar e emitir o token OIDC ficam restritas ao job `deploy`. Não exige PAT, secrets de deploy ou conexão com Cloudflare.
