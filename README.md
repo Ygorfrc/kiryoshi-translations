@@ -4,7 +4,7 @@
 
 Portal brasileiro independente de traduções gratuitas de JRPGs. O primeiro projeto é **Shin Megami Tensei: Devil Summoner – Soul Hackers**, para Nintendo 3DS. O site reúne catálogo, acompanhamento por etapa, devlog, informações do projeto e canais configuráveis.
 
-O MVP funciona inteiramente como site estático. Não há autenticação, banco de dados, pagamentos ou serviços pagos obrigatórios. Não contém jogos, patches não autorizados, analytics nem embeds automáticos.
+O MVP funciona inteiramente como site estático. Não há autenticação, banco de dados, pagamentos ou serviços pagos obrigatórios. Não contém jogos, patches não autorizados ou embeds automáticos. A conta GoatCounter fornecida pelo responsável está configurada apenas para cliques em downloads; não há coleta automática de visitas.
 
 ## Stack e decisões
 
@@ -13,7 +13,7 @@ O MVP funciona inteiramente como site estático. Não há autenticação, banco 
 - Astro Content Collections com schemas Zod; Markdown e MDX para publicações.
 - Lucide para ícones; Space Grotesk variável auto-hospedada, com `font-display: swap` e subsets Unicode.
 - Identidade de clube de fãs: azul noturno, creme e coral; Header pixelado com Silkscreen local e elementos de UI inspirados abstratamente em JRPGs. Cursores SVG originais via CSS em dispositivos com mouse, sem JavaScript adicional.
-- TypeScript no cliente apenas para menu, filtros, carrossel acessível e compartilhamento. React não foi instalado porque nenhuma interação precisa de hidratação de framework.
+- TypeScript no cliente para menu, filtros, carrossel acessível, compartilhamento e contagem opcional de cliques em downloads. React não foi instalado porque nenhuma interação precisa de hidratação de framework.
 - Vitest, Playwright com Edge/Chromium e axe para validação proporcional ao projeto.
 - Cloudflare Workers **Static Assets** com Wrangler. Sem adaptador Cloudflare, SSR ou Worker JavaScript próprio.
 
@@ -209,21 +209,27 @@ Sem thumbnail, aparece uma área de reprodução gráfica original. Nenhum embed
 
 ## Configurar downloads
 
+O contador registra cliques por tradução e versão, sem verificar a transferência do arquivo. Funciona com links do Drive e MediaFire, usando o painel externo do GoatCounter. A conta `https://kiryoshi.goatcounter.com` está cadastrada em `src/config/site.ts`, com a origem exata permitida na CSP. Não há coleta automática de visitas. Consulte [configuração e limites](docs/download-clicks.md).
+
 Cadastre um item em `releases` somente quando o patch tiver sido fornecido e sua distribuição autorizada. Campos obrigatórios:
 
 - `version`: identificador real da versão.
-- `date`: data real de lançamento.
+- `date`: opcional; data real de lançamento, somente se conhecida. A data de upload no provedor não é presumida como lançamento.
 - `format`: formato real do patch.
 - `sizeBytes`: tamanho real em bytes.
 - `url`: link HTTPS confiável para o arquivo autorizado.
 - `authorized: true`: declaração editorial, que não substitui a verificação humana.
 - `changelog`: lista não vazia das mudanças.
 - `tutorial`: rota interna real com instruções específicas.
-- `sha256`: opcional; 64 caracteres hexadecimais quando conhecido.
+- `sha256`: opcional; 64 caracteres hexadecimais quando conhecido. Mantido nos dados e na documentação para conferência; não é exibido na página, por preferência do responsável.
+
+`target` identifica a variante (por exemplo, Azahar ou Luma3DS); `prerelease: true` sinaliza uma prévia parcial sem alterar o status do projeto. `provider` nomeia o download principal e `mirrors` aceita alternativas no formato `{ label, url }`, com HTTPS obrigatório. Google Drive é o principal dos dois pacotes Soul Hackers v38 e MediaFire é o alternativo. Os dois botões contam cliques no mesmo evento daquela versão e variante. A autorização, os tamanhos, hashes e instruções verificados estão em [downloads cadastrados](docs/downloads.md).
 
 Você pode usar a âncora `/traducoes/slug/#instalacao` se as instruções completas estiverem nessa seção, ou publicar um tutorial em Markdown. Não basta vincular a uma página com “instruções ainda não fornecidas”. Informe região, versão compatível, requisitos e procedimento antes de liberar o download.
 
-`status: Disponível` exige ao menos uma release válida. O site lista todas as versões em ordem decrescente de lançamento e não inventa tamanho ou hash. Para obter o hash de um patch autorizado no PowerShell, use `Get-FileHash -Algorithm SHA256 -LiteralPath caminho-do-patch`.
+Para manter o tutorial depois de “Antes de instalar”, crie `src/content/installation-guides/slug.md` com frontmatter `title` e o corpo começando em `##`. No projeto, defina `installationGuide: slug`. O guia é renderizado em HTML dentro da seção de instalação, sem criar outra página ou duplicar instruções no texto de apresentação. Preserve as âncoras referenciadas pelos downloads. Um guia referenciado ausente interrompe o build.
+
+`status: Disponível` exige ao menos uma release válida. Ter uma prévia parcial para download não exige marcar o projeto como concluído: Soul Hackers continua em desenvolvimento. O site lista versões datadas em ordem decrescente de lançamento, seguidas das sem data na ordem editorial, e não inventa tamanho ou hash. Para obter o hash de um patch autorizado no PowerShell, use `Get-FileHash -Algorithm SHA256 -LiteralPath caminho-do-patch`.
 
 Nunca inclua ROMs, CIAs, ISOs, chaves de descriptografia ou arquivos proprietários completos. Armazene patches autorizados separadamente do site quando apropriado. Atualize a documentação legal e de privacidade se integrar terceiros.
 

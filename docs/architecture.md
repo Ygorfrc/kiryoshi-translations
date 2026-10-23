@@ -4,6 +4,8 @@
 
 O conteúdo é renderizado em HTML no build. Não há runtime Node de produção. Os scripts de interface são menu acessível, filtros com ordenação e URL sincronizada, carrossel com controles e pausa e compartilhamento por API do navegador com fallback. Não existe motivo para instalar React neste MVP.
 
+Uma integração opcional registra apenas cliques em downloads no GoatCounter, sem SDK, dependências novas ou backend próprio. A conta pública fornecida pelo responsável está em `site.downloadCounterUrl`, com sua origem exata permitida em `connect-src`. `PUBLIC_DOWNLOAD_COUNTER_URL` permite substituir a conta; um valor explicitamente vazio desativa a coleta. O código local envia o evento por tradução/versão sem cookies, referrer ou endereço do arquivo, respeitando DNT/GPC. A política de privacidade acompanha a configuração. Não há coleta de visitas e a falha de rede não interfere no download. Veja [configuração e limites](download-clicks.md).
+
 Busca e filtros operam sobre um índice JSON pequeno, serializado em atributo HTML escapado pelo Astro. Os cards já estão no HTML, de forma que ausência de JavaScript não remove conteúdo. A busca trata acentos e todos os termos, combina filtros e desempata ordenações por nome. Datas desconhecidas ficam ao final. Resultados e estado vazio têm anúncio acessível.
 
 Menu móvel é disclosure, sem comportamento de modal ou armadilha de foco. Abre pelo botão, fecha por Escape ou clique externo e devolve foco ao botão ao usar Escape. Sem JavaScript, a navegação permanece visível.
@@ -11,6 +13,8 @@ Menu móvel é disclosure, sem comportamento de modal ou armadilha de foco. Abre
 ## Conteúdo
 
 Loaders glob descobrem novos arquivos no build. Zod valida enums, dados opcionais, imagens, links HTTPS e releases. `example` e `demo` separam dados editoriais iniciais de material aprovado para indexação. Rascunhos não geram rotas. Tutoriais pertencem ao devlog com categoria própria.
+
+Guias de instalação vinculados a projetos usam a collection `installationGuides`, em `src/content/installation-guides/`. O campo opcional `installationGuide` seleciona o Markdown renderizado após os requisitos de “Antes de instalar”, dentro de `#instalacao`. Esses guias não criam rotas próprias; uma referência ausente falha no build. O texto de apresentação permanece no corpo do projeto.
 
 Não há percentual geral: extração, tradução, revisão, reinserção e testes são valores independentes opcionais. Exibição de “Não informado” preserva a diferença entre desconhecido e zero. `Disponível` exige release autorizada válida.
 

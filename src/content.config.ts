@@ -1,6 +1,10 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { translationSchema, devlogSchema } from './lib/schemas';
+import {
+  translationSchema,
+  devlogSchema,
+  installationGuideSchema,
+} from './lib/schemas';
 
 export const collections = {
   translations: defineCollection({
@@ -10,5 +14,12 @@ export const collections = {
   devlogs: defineCollection({
     loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/devlogs' }),
     schema: devlogSchema,
+  }),
+  installationGuides: defineCollection({
+    loader: glob({
+      pattern: '**/*.md',
+      base: './src/content/installation-guides',
+    }),
+    schema: installationGuideSchema,
   }),
 };

@@ -84,9 +84,8 @@ test('navegação principal por teclado e menu móvel', async ({
   await expect(page.getByRole('heading', { level: 1 })).toContainText(
     'Soul Hackers',
   );
-  await expect(page.locator('#downloads')).toContainText(
-    'Nenhum patch disponível',
-  );
+  await expect(page.locator('#downloads')).toContainText('Patch v38 · Azahar');
+  await expect(page.locator('#downloads .release-card')).toHaveCount(2);
   await expect(page.locator('#progresso')).toContainText('Não informado');
   await expect(page.locator('progress')).toHaveCount(0);
   await page.locator('#perguntas summary').first().click();

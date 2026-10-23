@@ -1,16 +1,18 @@
 ---
 import { withBase } from '../../lib/paths';
-import { getCollection, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { Download, ArrowUpRight, Info } from '@lucide/astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import GameCover from '../../components/GameCover.astro';
+import DownloadClickCounter from '../../components/DownloadClickCounter.astro';
+import ReleaseCard from '../../components/ReleaseCard.astro';
 import PlatformText from '../../components/PlatformText.astro';
 import ProjectStatus from '../../components/ProjectStatus.astro';
 import ProgressIndicator from '../../components/ProgressIndicator.astro';
 import DevlogCard from '../../components/DevlogCard.astro';
-import { formatDate, formatBytes } from '../../lib/format';
+import { formatDate } from '../../lib/format';
 import { getPosts } from '../../lib/content';
 export async function getStaticPaths() {
   return (await getCollection('translations')).map((project) => ({
@@ -24,11 +26,23 @@ interface Props {
 const { project } = Astro.props;
 const { data } = project;
 const { Content } = await render(project);
+const installationGuide = data.installationGuide
+  ? await getEntry('installationGuides', data.installationGuide)
+  : undefined;
+if (data.installationGuide && !installationGuide) {
+  throw new Error(
+    `Guia de instalação não encontrado: ${data.installationGuide}`,
+  );
+}
+const installation = installationGuide
+  ? await render(installationGuide)
+  : undefined;
+const InstallationContent = installation?.Content;
 const related = (await getPosts())
   .filter((p) => p.data.translation === project.id)
   .slice(0, 3);
 const releases = [...data.releases].sort(
-  (a, b) => b.date.getTime() - a.date.getTime(),
+  (a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0),
 );
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -175,42 +189,7 @@ const jsonLd = {
           </h2>
           {releases.length ? (
             releases.map((release) => (
-              <article class="release-card">
-                <h3>Patch {release.version}</h3>
-                <p class="fine-print">
-                  <time datetime={release.date.toISOString()}>
-                    {formatDate(release.date)}
-                  </time>{' '}
-                  · {release.format} · {formatBytes(release.sizeBytes)}
-                </p>
-                <ul class="list-disc pl-5">
-                  {release.changelog.map((change) => (
-                    <li>{change}</li>
-                  ))}
-                </ul>
-                {release.sha256 && (
-                  <p>
-                    <span class="eyebrow">SHA-256</span>
-                    <code class="hash">{release.sha256}</code>
-                  </p>
-                )}
-                <div class="button-row">
-                  <a
-                    class="button button-primary"
-                    href={release.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Baixar patch {release.version} <Download size={16} />
-                  </a>
-                  <a
-                    class="button button-outline"
-                    href={withBase(release.tutorial)}
-                  >
-                    Tutorial de instalação
-                  </a>
-                </div>
-              </article>
+              <ReleaseCard projectId={project.id} release={release} />
             ))
           ) : (
             <div class="notice">
@@ -247,6 +226,11 @@ const jsonLd = {
           <a class="text-link" href={withBase('/aviso-legal/')}>
             Leia o aviso legal <ArrowUpRight size={16} />
           </a>
+          {InstallationContent && (
+            <div class="prose installation-guide mt-8">
+              <InstallationContent />
+            </div>
+          )}
         </section>
         <section id="creditos">
           <h2>
@@ -339,4 +323,5 @@ const jsonLd = {
       </div>
     </section>
   )}
+  <DownloadClickCounter />
 </BaseLayout>

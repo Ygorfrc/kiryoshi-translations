@@ -1,0 +1,63 @@
+---
+import { downloadCounterEndpoint } from '../config/download-counter';
+---
+
+<span
+  hidden
+  data-download-counter
+  data-endpoint={downloadCounterEndpoint ?? ''}
+></span>
+
+<script>
+  import { downloadEventUrl } from '../lib/download-counter';
+
+  const endpoint = document.querySelector<HTMLElement>(
+    '[data-download-counter]',
+  )?.dataset.endpoint;
+  // No request at page load. Collection is optional, and respects browser signals.
+  const privacy = navigator as Navigator & { globalPrivacyControl?: boolean };
+  if (
+    endpoint &&
+    navigator.doNotTrack !== '1' &&
+    !privacy.globalPrivacyControl
+  ) {
+    const record = (event: MouseEvent) => {
+      if (
+        !event.isTrusted ||
+        (event.type === 'click' && event.button !== 0) ||
+        (event.type === 'auxclick' && event.button !== 1)
+      )
+        return;
+      const link =
+        event.target instanceof Element
+          ? event.target.closest<HTMLAnchorElement>(
+              'a[data-download-project][data-download-version]',
+            )
+          : null;
+      if (!link?.dataset.downloadProject || !link.dataset.downloadVersion)
+        return;
+      // Fire and forget: a failed counter never delays or cancels the link.
+      try {
+        void fetch(
+          downloadEventUrl(
+            endpoint,
+            link.dataset.downloadProject,
+            link.dataset.downloadVersion,
+            crypto.randomUUID(),
+          ),
+          {
+            mode: 'no-cors',
+            credentials: 'omit',
+            cache: 'no-store',
+            keepalive: true,
+            referrerPolicy: 'no-referrer',
+          },
+        ).catch(() => {});
+      } catch {
+        /* The normal anchor remains functional. */
+      }
+    };
+    document.addEventListener('click', record);
+    document.addEventListener('auxclick', record);
+  }
+</script>

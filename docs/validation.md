@@ -1,4 +1,52 @@
-# Validação local — 22/10/2026
+# Validação local
+
+## Validação para publicação autorizada — 23/10/2026
+
+O responsável solicitou o envio das alterações pendentes ao GitHub. A versão reúne os downloads Soul Hackers v38 para Azahar/Luma3DS com Drive principal e MediaFire alternativo, contador de cliques GoatCounter, guia após “Antes de instalar” e remoção do SHA-256 da interface.
+
+`npm run validate` terminou com código 0: formatação aprovada; Astro/TypeScript em 74 arquivos sem diagnósticos; 29 testes unitários; 23 páginas geradas; 736 referências internas válidas; segurança e SEO aprovados; Pages com 782 referências e quatro E2E em 17,5s; suíte principal com 51 E2E aprovados em 1,0min e uma repetição de viewport ignorada. Log: `.qa/validate-v38-publish.log`. O envio deve incluir somente fontes e documentação, sem ZIPs, `.qa/`, builds ou credenciais. O workflow Pages permanece manual; seu resultado e a versão servida devem ser conferidos no GitHub antes de afirmar que a atualização está publicada.
+
+## Verificação de comunicação real — 23/10/2026
+
+Ao relatar o painel vazio, o responsável confirmou ter apenas aberto a página, sem clicar em downloads. Isso não dispara eventos pela especificação da integração. Nenhuma contagem automática de visitas foi adicionada.
+
+Foi feito um único clique de diagnóstico em Edge headless sobre a prévia local, com a navegação ao Drive interceptada e o evento substituído por `diagnostico:contador`, título “Diagnóstico de integração — não é download”. A requisição real à conta GoatCounter respondeu HTTP 200 com `image/gif`, sem erros de navegador ou CSP. Os quatro botões e o endpoint correto estavam presentes. Esse resultado confirma a comunicação, não o armazenamento ou a exibição no painel privado; o serviço pode filtrar navegadores automatizados. O evento não foi enviado com o identificador dos downloads. Nenhum patch foi baixado nessa verificação e nenhum deploy foi realizado.
+
+## Remoção do SHA-256 da interface — 23/10/2026
+
+Por solicitação do responsável, o SHA-256 saiu dos cards e da menção no guia público; os hashes verificados permanecem nos metadados e na documentação interna do repositório. A configuração GoatCounter e os quatro botões foram preservados. O contador registra eventos para consulta no painel externo, sem número público na interface.
+
+Formatação, build de 23 páginas, 736 referências locais, segurança e dez E2E de downloads/contador (19,3s) passaram. A inspeção do HTML confirmou ausência de “SHA-256”, quatro botões e o endpoint da conta configurada. Os testes interceptaram a coleta e não confirmam a recepção no painel real. Não houve publicação. Log do build: `.qa/build-hide-checksum.log`.
+
+## Ordem do guia de instalação — 23/10/2026
+
+O guia de Soul Hackers foi movido para a collection `installationGuides` e vinculado pelo campo `installationGuide`. O HTML segue a ordem “Antes de instalar” → “Aplicação do patch” → “Instalar no Azahar” → “Instalar no Luma3DS” → “Remover ou voltar à versão anterior”. As âncoras dos downloads foram preservadas. Não há duplicação dos passos na apresentação do projeto.
+
+Foram aprovados: Prettier; Astro/TypeScript em 74 arquivos sem diagnósticos; 29 testes unitários; build de 23 páginas; 736 referências locais; segurança com 56 referências a scripts locais; dez E2E de downloads/contador em 17,2s, incluindo a ordem dos títulos e sua localização dentro de `#instalacao`; quatro testes Pages em 9,8s. A suíte completa não foi repetida nesta reorganização. Os testes não enviam cliques reais e nenhum deploy foi realizado. Logs de check/build e Pages estão em `.qa/*-installation-order.log`.
+
+## Downloads Soul Hackers v38 — 23/10/2026
+
+Foram cadastrados os dois pacotes fornecidos pelo usuário, Azahar e Luma3DS, com Google Drive principal, MediaFire alternativo e contagem em todos os quatro botões. `LEIA-ME.txt` e `V38_CHANGELOG.md` fundamentam os requisitos USA/Title ID e os tutoriais específicos. Cada par de provedores foi baixado e comparado por tamanho e SHA-256, com identidade confirmada; detalhes em [downloads cadastrados](downloads.md). Nenhum arquivo dos ZIPs foi executado ou incluído no Git/build. A data de upload não foi convertida em data de lançamento; o projeto continua em desenvolvimento e os pacotes são identificados como prévias parciais.
+
+`npm run validate` concluiu com código 0: Prettier aprovado; 74 arquivos sem erros, avisos ou hints de Astro/TypeScript; 29 testes unitários; 23 páginas geradas; 736 referências internas válidas; segurança e SEO aprovados; build Pages com 782 referências e quatro testes aprovados em 13,1s; suíte principal com 51 E2E aprovados em 1,1min e uma repetição de viewport ignorada. Log: `.qa/validate-v38-downloads.log`.
+
+Os testes de downloads abrem os quatro botões em destinos interceptados localmente, confirmam a prioridade dos provedores, a contagem por versão/variante e as âncoras de instalação. Não geram eventos reais no GoatCounter. A suíte também verifica falha de rede sem bloquear navegação, GPC, responsividade, teclado, WCAG A/AA e conteúdo sem JavaScript. A inspeção visual adicional confirmou dois cards sem overflow em 320px e 1440px; capturas em `.qa/v38-downloads-{mobile,desktop}.png`. A prévia local foi reiniciada em `127.0.0.1:4321` para essa inspeção. Nenhum commit, push ou deploy foi executado; a recepção no painel real e o funcionamento do patch no jogo não foram medidos.
+
+## Conta GoatCounter fornecida pelo responsável
+
+O usuário forneceu `https://kiryoshi.goatcounter.com`, agora configurada em `site.downloadCounterUrl`. O build usa essa conta quando não há override de ambiente; um override explicitamente vazio continua desativando a coleta. A CSP libera somente essa origem em `connect-src`, preservando scripts locais, e a privacidade passa a descrever a integração. Os testes simulam o provedor sem registrar eventos reais. Ainda não há patches ou botões reais de download; não houve commit, envio ou publicação nesta alteração. A recepção no painel real e as permissões de acesso a ele não foram verificadas.
+
+`npm run validate` foi repetido com a conta configurada e concluiu com código 0: formatação aprovada; 73 arquivos sem diagnósticos Astro/TypeScript; 28 testes unitários; 23 páginas geradas; 733 referências locais válidas; segurança e SEO aprovados; Pages com 779 referências e quatro testes em 9,9s; suíte principal com 49 E2E aprovados em 51,3s e uma repetição de viewport ignorada. A inspeção do HTML confirmou o endpoint `/count` da conta fornecida e a seção de privacidade ativa. Log local: `.qa/validate-goatcounter-account.log`.
+
+## Contador opcional de cliques em downloads
+
+Na primeira preparação, anterior ao fornecimento da conta acima, a integração GoatCounter estava desativada: nenhuma conta conectada e nenhum patch cadastrado. Não houve publicação nessa etapa. Consulte [configuração e limites](download-clicks.md).
+
+`npm run validate` terminou com código 0: Prettier aprovado; Astro/TypeScript sem erros, avisos ou hints em 73 arquivos; 28 testes unitários em cinco arquivos; build de 23 páginas; 733 referências internas válidas; segurança com 56 referências a scripts locais; SEO aprovado. O build de QA Pages validou 779 referências e quatro testes de navegador em 9,4s. A suíte principal aprovou 49 E2E em 57,9s, com uma repetição de viewport ignorada. Log local: `.qa/validate-download-counter.log`.
+
+O provedor foi simulado somente nas respostas dos testes, sem enviar eventos reais. A cobertura verifica ausência de coleta automática, configuração desativada, clique com navegação preservada, ausência de cookies/referrer, falha de rede e Global Privacy Control, em desktop e mobile. A recepção e os totais no painel real ainda dependem da conta e deverão ser conferidos após ativação. Nenhuma medição Lighthouse nova foi feita nesta alteração.
+
+Após ajustar o parâmetro de eventos sem sessão para contar cliques repetidos separadamente, os 28 testes unitários, o build e os oito testes específicos do contador foram executados novamente e passaram (E2E em 9,0s). O teste confirma dois eventos com identificadores de requisição diferentes ao clicar duas vezes, sem armazenamento persistente.
 
 ## Validação completa para publicar os rótulos
 

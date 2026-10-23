@@ -6,6 +6,7 @@ const settings = z.object({
   name: z.string(),
   slogan: z.string(),
   description: z.string(),
+  downloadCounterUrl: httpsUrl.optional(),
   channels: z.array(z.object({ label: z.string(), url: httpsUrl })),
   contactEmail: z.email().optional(),
   support: z.array(
@@ -19,6 +20,8 @@ export const site = settings.parse({
   slogan: 'Traduzindo mundos. Conectando jogadores.',
   description:
     'Traduções independentes e gratuitas de JRPGs para português brasileiro. Acompanhe os projetos, o processo e as novidades de Kiryoshi.',
+  // Conta pública fornecida pelo responsável; registra somente cliques em downloads.
+  downloadCounterUrl: 'https://kiryoshi.goatcounter.com',
   channels: [],
   support: [],
   videos: [],

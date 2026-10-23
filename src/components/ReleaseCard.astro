@@ -1,0 +1,65 @@
+---
+import type { z } from 'zod';
+import type { releaseSchema } from '../lib/schemas';
+import { Download } from '@lucide/astro';
+import { formatDate, formatBytes } from '../lib/format';
+import { withBase } from '../lib/paths';
+import PlatformText from './PlatformText.astro';
+
+interface Props {
+  projectId: string;
+  release: z.infer<typeof releaseSchema>;
+}
+const { projectId, release } = Astro.props;
+const label = [release.version, release.target].filter(Boolean).join(' · ');
+const links = [
+  { label: release.provider ?? 'Download principal', url: release.url },
+  ...release.mirrors,
+];
+---
+
+<article class="release-card" aria-label={`Patch ${label}`}>
+  {release.prerelease && <p class="eyebrow">PRÉVIA PARCIAL</p>}
+  <h3>
+    Patch <PlatformText text={label} />
+  </h3>
+  <p class="fine-print">
+    {release.date ? (
+      <time datetime={release.date.toISOString()}>
+        {formatDate(release.date)}
+      </time>
+    ) : (
+      <span>Data de lançamento não informada</span>
+    )}{' '}
+    · {release.format} · {formatBytes(release.sizeBytes)}
+  </p>
+  <ul class="list-disc pl-5">
+    {release.changelog.map((change) => (
+      <li>{change}</li>
+    ))}
+  </ul>
+  <div class="button-row">
+    {links.map((link, index) => (
+      <a
+        class={`button ${index === 0 ? 'button-primary' : 'button-outline'}`}
+        href={link.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Baixar patch ${label} pelo ${link.label}${index > 0 ? ' (alternativo)' : ''}`}
+        data-download-project={projectId}
+        data-download-version={label}
+      >
+        Baixar — {link.label}
+        {index > 0 ? ' (alternativo)' : ''}
+        <Download size={16} />
+      </a>
+    ))}
+  </div>
+  <p class="mt-4">
+    <a class="text-link" href={withBase(release.tutorial)}>
+      <PlatformText
+        text={`Como instalar${release.target ? ` no ${release.target}` : ''}`}
+      />
+    </a>
+  </p>
+</article>

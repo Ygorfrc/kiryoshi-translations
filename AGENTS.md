@@ -11,11 +11,14 @@
 ## Conteúdo e direitos
 
 - Projetos são `src/content/translations/*.md`; devlogs e tutoriais são `src/content/devlogs/*.{md,mdx}`. Schemas ficam em `src/lib/schemas.ts`.
+- Guias de instalação específicos ficam em `src/content/installation-guides/*.md`, vinculados por `installationGuide` no projeto. São renderizados após “Antes de instalar”, dentro de `#instalacao`; preserve as âncoras dos downloads e não duplique os passos no texto de apresentação.
 - Não inventar progresso, datas, versões, perfis, vídeos, assets, colaboradores ou links.
+- O usuário pediu retirar o SHA-256 da interface de downloads. Preserve os hashes verificados nos metadados/documentação, sem voltar a exibi-los nos cards ou no guia público.
 - O usuário confirmou que as traduções são feitas com auxílio de IA e revisadas por humanos. Preserve essa transparência na Home, em Sobre e nas páginas de tradução, sem presumir que a revisão de um projeto já foi concluída ou inventar ferramentas/modelos usados.
 - Valor ausente não equivale a zero. Preserve as cinco etapas de progresso sem percentual geral calculado.
 - `example: true` e `demo: true` indicam conteúdo demonstrativo e impedem indexação individual. Exemplos não entram no RSS. Não remova essas flags sem confirmação editorial.
 - Nunca adicionar ROMs/ISOs/CIAs, arquivos proprietários completos ou patches sem autorização. Downloads exigem metadados reais, autorização e tutorial específico.
+- Em 23/10/2026, o responsável forneceu e autorizou os dois pacotes LayeredFS Soul Hackers v38, Azahar e Luma3DS. Preserve Google Drive como principal, MediaFire como alternativo e contagem de cliques nos dois. São prévias parciais sem acentos; Soul Hackers continua em desenvolvimento e `example: true` permanece até confirmação editorial específica. `release.date` é opcional: não usar data de upload como lançamento. Consulte `docs/downloads.md` para hashes, evidência e instruções. ZIPs locais de QA não entram no Git ou no build.
 - Imagens reais exigem dimensões, alt, crédito e permissão. Preserve evidências em `docs/assets.md`. Placeholders sempre identificados.
 - Markdown/MDX é confiável somente após revisão; MDX pode executar código no build.
 
@@ -41,6 +44,7 @@
 - Metadados compartilhados em SEOHead e layout base; breadcrumbs, headings e HTML estático legível.
 - Canais, apoio, contato e vídeos em `src/config/site.ts`; vazios são estados válidos.
 - Não adicionar tracking, cookies, pagamentos ou serviços externos sem escopo autorizado. Atualize privacidade e CSP antes de integrar terceiros.
+- O usuário autorizou contar somente cliques em downloads externos, por tradução e versão, e forneceu `https://kiryoshi.goatcounter.com` em 22/10/2026. A conta está em `site.downloadCounterUrl`; `PUBLIC_DOWNLOAD_COUNTER_URL` substitui o valor e, quando explicitamente vazio, desativa a coleta. Exige a origem exata da conta em `connect-src` de `_headers`. Preserve scripts locais, ausência de pageviews/identificadores persistentes e respeito a DNT/GPC. Falha no contador nunca pode bloquear o link. Consulte `docs/download-clicks.md`; não chamar cliques de downloads concluídos ou pessoas únicas. Não criar contas ou publicar sem autorização.
 - `_headers` deve acompanhar serviços efetivamente usados. Não alegar proteção validada em produção quando só houve teste local.
 - Em 22/10/2026, o usuário autorizou explicitamente tornar `Ygorfrc/kiryoshi-translations` público e publicar o site no GitHub Pages, substituindo a decisão anterior de manter tudo privado. Preserve o workflow `pages.yml` exclusivamente manual; não adicione publicação automática por push sem solicitação. Confirme o estado real no GitHub antes de afirmar que há deploy ativo.
 - Use `withBase` para links e imagens locais; `PUBLIC_BASE_PATH` controla o subdiretório. O plugin nativo Sätteri cuida de URLs do Markdown/MDX. Preserve o padrão `/` do Cloudflare e não reescreva URLs externas ou âncoras.

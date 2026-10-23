@@ -50,6 +50,40 @@ describe('validação editorial', () => {
     expect(releaseSchema.safeParse({ authorized: false }).success).toBe(false);
     expect(releaseSchema.shape.sha256.safeParse('abcd').success).toBe(false);
   });
+  it('valida variantes e espelhos HTTPS sem inventar data de lançamento', () => {
+    const release = {
+      version: 'v38',
+      target: 'Azahar',
+      prerelease: true,
+      format: 'ZIP · LayeredFS',
+      sizeBytes: 58499296,
+      url: 'https://drive.google.com/file/d/fixture/view',
+      provider: 'Google Drive',
+      mirrors: [
+        {
+          label: 'MediaFire',
+          url: 'https://www.mediafire.com/file/fixture/file',
+        },
+      ],
+      authorized: true,
+      changelog: ['Prévia parcial de teste.'],
+      tutorial: '/traducoes/soul-hackers/#instalar-no-azahar',
+    };
+    const parsed = releaseSchema.parse(release);
+    expect(parsed.date).toBeUndefined();
+    expect(parsed.target).toBe('Azahar');
+    expect(parsed.mirrors).toHaveLength(1);
+    expect(parsed.prerelease).toBe(true);
+    expect(
+      releaseSchema.safeParse({ ...release, authorized: false }).success,
+    ).toBe(false);
+    expect(
+      releaseSchema.safeParse({
+        ...release,
+        mirrors: [{ label: 'MediaFire', url: 'javascript:alert(1)' }],
+      }).success,
+    ).toBe(false);
+  });
   it('exige data de publicações reais, mas permite exemplo sem data', () => {
     const post = {
       title: 'Teste',

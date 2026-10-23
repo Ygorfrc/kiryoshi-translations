@@ -64,7 +64,9 @@ export const videoSchema = z.object({
 });
 export const releaseSchema = z.object({
   version: z.string().min(1),
-  date: z.coerce.date(),
+  date: z.coerce.date().optional(),
+  target: z.string().min(1).optional(),
+  prerelease: z.boolean().default(false),
   format: z.string().min(1),
   sizeBytes: z.number().int().positive(),
   sha256: z
@@ -72,6 +74,10 @@ export const releaseSchema = z.object({
     .regex(/^[a-fA-F0-9]{64}$/)
     .optional(),
   url: httpsUrl,
+  provider: z.string().min(1).optional(),
+  mirrors: z
+    .array(z.object({ label: z.string().min(1), url: httpsUrl }))
+    .default([]),
   authorized: z.literal(true),
   changelog: z.array(z.string()).min(1),
   tutorial: z.string().regex(/^\/(?!\/)/),
@@ -113,6 +119,10 @@ export const translationSchema = z
       .array(z.object({ question: z.string(), answer: z.string() }))
       .default([]),
     requirements: z.array(z.string()).default([]),
+    installationGuide: z
+      .string()
+      .regex(/^[a-z0-9-]+$/)
+      .optional(),
   })
   .superRefine((data, ctx) => {
     if (data.status === 'Disponível' && data.releases.length === 0) {
@@ -123,6 +133,8 @@ export const translationSchema = z
       });
     }
   });
+export const installationGuideSchema = z.object({ title: z.string().min(1) });
+
 export const devlogSchema = z
   .object({
     title: z.string(),

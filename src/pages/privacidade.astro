@@ -1,13 +1,18 @@
 ---
 import { withBase } from '../lib/paths';
 import { hosting } from '../config/publication';
+import { downloadCounterEndpoint } from '../config/download-counter';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
 ---
 
 <BaseLayout
   title="Política de privacidade"
-  description="Saiba quais recursos estão presentes no site: navegação estática, sem analytics, cookies de rastreamento ou formulário de coleta de dados."
+  description={
+    downloadCounterEndpoint
+      ? 'Saiba como funciona a navegação do site e a contagem opcional de cliques em downloads, sem cookies de rastreamento.'
+      : 'Saiba quais recursos estão presentes no site: navegação estática, sem analytics, cookies de rastreamento ou formulário de coleta de dados.'
+  }
 >
   <PageIntro
     title="Sua privacidade"
@@ -20,7 +25,10 @@ import PageIntro from '../components/PageIntro.astro';
     <p>
       O site é estático. Não possui cadastro, autenticação, banco de dados,
       comentários, formulário de contato ou pagamentos integrados. Não utiliza
-      analytics, anúncios, pixels ou cookies de rastreamento.
+      anúncios ou cookies de rastreamento.{' '}
+      {downloadCounterEndpoint
+        ? 'Há somente uma contagem opcional de cliques nos links de download, descrita abaixo.'
+        : 'A contagem de cliques em downloads está desativada; não há coleta de analytics ou pixels externos.'}
     </p>
     <h2>Busca e preferências</h2>
     <p>
@@ -66,6 +74,33 @@ import PageIntro from '../components/PageIntro.astro';
       privacidade. O botão de compartilhamento usa os recursos do seu navegador
       ou copia o endereço; não inclui scripts de redes sociais.
     </p>
+    {downloadCounterEndpoint && (
+      <>
+        <h2>Cliques em downloads</h2>
+        <p>
+          Ao acionar “Baixar patch”, o navegador envia ao GoatCounter o
+          identificador público da tradução e sua versão para contar cliques.
+          Não enviamos o endereço do arquivo, parâmetros do link, página de
+          origem ou dados de formulário. A integração não grava cookies ou
+          identificadores no navegador e respeita Do Not Track e Global Privacy
+          Control quando sinalizados. Não há coleta automática ao abrir a
+          página.
+        </p>
+        <p>
+          O serviço recebe informações técnicas da conexão, como endereço IP e
+          agente do navegador, e as processa segundo sua{' '}
+          <a
+            href="https://www.goatcounter.com/help/privacy"
+            rel="noopener noreferrer"
+          >
+            política de privacidade
+          </a>
+          . A contagem representa cliques registrados, não downloads concluídos
+          ou pessoas únicas. Falhas de rede e bloqueadores podem impedir o
+          registro sem impedir o download.
+        </p>
+      </>
+    )}
     <h2>Contato e futuras integrações</h2>
     <p>
       Não há canal de contato confirmado nesta versão. A{' '}

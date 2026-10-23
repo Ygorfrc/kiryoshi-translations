@@ -1241,12 +1241,6 @@ progress::-moz-progress-bar {
   padding: 1.5rem;
   margin-bottom: 1rem;
 }
-.release-card .hash {
-  word-break: break-all;
-  display: block;
-  color: var(--muted);
-  font-size: 0.7rem;
-}
 .release-card li,
 .requirements li {
   font-size: 0.87rem;

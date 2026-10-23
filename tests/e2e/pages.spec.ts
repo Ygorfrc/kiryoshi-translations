@@ -62,6 +62,18 @@ test('Pages: caminhos, recursos e interações funcionam no subdiretório', asyn
       .locator('.game-cover-image')
       .evaluate((image: HTMLImageElement) => image.naturalWidth),
   ).toBeGreaterThan(0);
+  await expect(page.locator('#downloads .release-card')).toHaveCount(2);
+  await expect(page.locator('#downloads a[data-download-project]')).toHaveCount(
+    4,
+  );
+  for (const target of ['azahar', 'luma3ds']) {
+    await expect(
+      page.locator(`#downloads a[href$="#instalar-no-${target}"]`),
+    ).toHaveAttribute(
+      'href',
+      `/kiryoshi-translations/traducoes/soul-hackers/#instalar-no-${target}`,
+    );
+  }
   await page.goto('devlog/01-boas-vindas/');
   await page
     .getByRole('link', { name: 'princípios do projeto', exact: true })
