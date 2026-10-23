@@ -10,17 +10,14 @@ import { downloadCounterEndpoint } from '../config/download-counter';
 
 <script>
   import { downloadEventUrl } from '../lib/download-counter';
+  import { collectionAllowed } from '../lib/visit-counter';
 
   const endpoint = document.querySelector<HTMLElement>(
     '[data-download-counter]',
   )?.dataset.endpoint;
   // No request at page load. Collection is optional, and respects browser signals.
   const privacy = navigator as Navigator & { globalPrivacyControl?: boolean };
-  if (
-    endpoint &&
-    navigator.doNotTrack !== '1' &&
-    !privacy.globalPrivacyControl
-  ) {
+  if (endpoint && collectionAllowed(privacy)) {
     const record = (event: MouseEvent) => {
       if (
         !event.isTrusted ||

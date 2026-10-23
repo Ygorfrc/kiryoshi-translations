@@ -15,6 +15,10 @@ test('Pages: caminhos, recursos e interações funcionam no subdiretório', asyn
       failures.push(message.text());
   });
   await page.goto('./');
+  await expect(page.locator('[data-visit-counter]')).toHaveAttribute(
+    'data-visit-endpoint',
+    '',
+  );
   await expect(page.locator('html')).toHaveClass(/js-menu/);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     'content',

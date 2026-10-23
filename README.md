@@ -4,7 +4,7 @@
 
 Portal brasileiro independente de traduções gratuitas de JRPGs. O primeiro projeto é **Shin Megami Tensei: Devil Summoner – Soul Hackers**, para Nintendo 3DS. O site reúne catálogo, acompanhamento por etapa, devlog, informações do projeto e canais configuráveis.
 
-O MVP funciona inteiramente como site estático. Não há autenticação, banco de dados, pagamentos ou serviços pagos obrigatórios. Não contém jogos, patches não autorizados ou embeds automáticos. A conta GoatCounter fornecida pelo responsável está configurada apenas para cliques em downloads; não há coleta automática de visitas.
+O MVP funciona inteiramente como site estático. Não há autenticação, banco de dados, pagamentos ou serviços pagos obrigatórios. Não contém jogos, patches não autorizados ou embeds automáticos. O GoatCounter registra visitas no domínio publicado e cliques em downloads como eventos separados, sem cookies ou armazenamento no navegador e respeitando DNT/GPC.
 
 ## Stack e decisões
 
@@ -13,7 +13,7 @@ O MVP funciona inteiramente como site estático. Não há autenticação, banco 
 - Astro Content Collections com schemas Zod; Markdown e MDX para publicações.
 - Lucide para ícones; Space Grotesk variável auto-hospedada, com `font-display: swap` e subsets Unicode.
 - Identidade de clube de fãs: azul noturno, creme e coral; Header pixelado com Silkscreen local e elementos de UI inspirados abstratamente em JRPGs. Cursores SVG originais via CSS em dispositivos com mouse, sem JavaScript adicional.
-- TypeScript no cliente para menu, filtros, carrossel acessível, compartilhamento e contagem opcional de cliques em downloads. React não foi instalado porque nenhuma interação precisa de hidratação de framework.
+- TypeScript no cliente para menu, filtros, carrossel acessível, compartilhamento e métricas opcionais de visitas/cliques. React não foi instalado porque nenhuma interação precisa de hidratação de framework.
 - Vitest, Playwright com Edge/Chromium e axe para validação proporcional ao projeto.
 - Cloudflare Workers **Static Assets** com Wrangler. Sem adaptador Cloudflare, SSR ou Worker JavaScript próprio.
 
@@ -212,7 +212,9 @@ Sem thumbnail, aparece uma área de reprodução gráfica original. Nenhum embed
 
 ## Configurar downloads
 
-O contador registra cliques por tradução e versão, sem verificar a transferência do arquivo. Funciona com links do Drive e MediaFire, usando o painel externo do GoatCounter. A conta `https://kiryoshi.goatcounter.com` está cadastrada em `src/config/site.ts`, com a origem exata permitida na CSP. Não há coleta automática de visitas. Consulte [configuração e limites](docs/download-clicks.md).
+O contador registra cliques por tradução e versão, sem verificar a transferência do arquivo. Funciona com links do Drive e MediaFire, usando o painel externo do GoatCounter. A conta `https://kiryoshi.goatcounter.com` está cadastrada em `src/config/site.ts`, com a origem exata permitida na CSP. Consulte [configuração e limites dos cliques](docs/download-clicks.md).
+
+O mesmo painel registra visitas às páginas, separadamente dos eventos `download:`. `site.visitCounterEnabled` ativa essa integração; `PUBLIC_VISIT_COUNTER_ENABLED=false` desativa somente visitas. A coleta automática só ocorre em build de produção fora do modo prévia, com origem pública configurada e igual à acessada. Não envia query, hash, referrer ou identificador persistente do navegador. `PUBLIC_DOWNLOAD_COUNTER_URL=` desativa ambas as integrações. Consulte [visitas e leitura do painel](docs/visits.md).
 
 Cadastre um item em `releases` somente quando o patch tiver sido fornecido e sua distribuição autorizada. Campos obrigatórios:
 

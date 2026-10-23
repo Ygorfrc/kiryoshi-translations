@@ -1,0 +1,61 @@
+---
+import { downloadCounterEndpoint } from '../config/download-counter';
+import { visitCounterEnabled } from '../config/visit-counter';
+import { previewOnly } from '../config/publication';
+interface Props {
+  title: string;
+}
+const enabled =
+  import.meta.env.PROD && Astro.site && !previewOnly && visitCounterEnabled;
+---
+
+<span
+  hidden
+  data-visit-counter
+  data-visit-endpoint={enabled ? downloadCounterEndpoint : ''}
+  data-visit-origin={enabled ? Astro.site?.origin : ''}
+  data-visit-path={Astro.url.pathname}
+  data-visit-title={Astro.props.title}
+></span>
+<script>
+  import { collectionAllowed, visitEventUrl } from '../lib/visit-counter';
+  const config = document.querySelector<HTMLElement>(
+    '[data-visit-counter]',
+  )?.dataset;
+  const privacy = navigator as Navigator & { globalPrivacyControl?: boolean };
+  if (
+    config?.visitEndpoint &&
+    config.visitOrigin === location.origin &&
+    collectionAllowed(privacy)
+  ) {
+    let sent = false;
+    const record = () => {
+      if (sent || document.visibilityState !== 'visible') return;
+      sent = true;
+      document.removeEventListener('visibilitychange', record);
+      if (!collectionAllowed(privacy)) return;
+      try {
+        void fetch(
+          visitEventUrl(
+            config.visitEndpoint!,
+            config.visitPath || '/',
+            config.visitTitle || '',
+            crypto.randomUUID(),
+            navigator.webdriver,
+          ),
+          {
+            mode: 'no-cors',
+            credentials: 'omit',
+            cache: 'no-store',
+            keepalive: true,
+            referrerPolicy: 'no-referrer',
+          },
+        ).catch(() => {});
+      } catch {
+        // Analytics failure must never interfere with content or navigation.
+      }
+    };
+    document.addEventListener('visibilitychange', record);
+    record();
+  }
+</script>

@@ -1,5 +1,13 @@
 # Validação local
 
+## Visitas no GoatCounter — 23/10/2026
+
+O responsável ampliou o escopo de cliques para visitas às páginas. A integração usa script local, metadados estáticos e o endpoint existente, respeita DNT/GPC e omite cookies, referrer, query e hash. Origem exata, build de produção e ausência de modo prévia são obrigatórios. O painel autenticado confirmou sessões ativas, histórico de um clique Azahar e um Luma3DS, acesso privado e exportação de pageviews individuais desativada. Somente o endereço do site foi atualizado para o domínio próprio, com confirmação “Saved!”. Isso não comprova recepção das novas visitas antes da publicação.
+
+A primeira validação restrita encontrou EPERM nos arquivos locais do Wrangler e a prévia de QA não encerrou automaticamente; apenas os processos de QA foram finalizados e a suíte foi repetida com as permissões locais necessárias. Os testes iniciais detectaram um erro no fixture: o Astro serializa atributos vazios sem `=""`, impedindo a ativação simulada. Corrigido o fixture, os 14 E2E específicos passaram em desktop e mobile, sem enviar coleta real. A implementação de produção não exigiu mudança para essa correção.
+
+`npm run validate` concluiu com código 0: formatação aprovada, 79 arquivos sem diagnósticos de tipos, 33 testes unitários em seis arquivos, build de 23 páginas, 759 referências internas, segurança com 79 referências a scripts locais e SEO aprovados. O pacote Pages validou 805 referências e quatro E2E em 8,2s; a suíte principal passou 65 E2E em 1,3min, com uma repetição de viewport ignorada. Os 14 testes específicos também passaram isoladamente em 23,6s. Logs ignorados: `.qa/validate-visits-approved.log` e `.qa/e2e-visits-fixed.log`. Esses resultados são locais; publicação e recepção no painel são verificações separadas. Consulte [configuração e limites](visits.md).
+
 ## Liberação editorial para buscadores — 23/10/2026
 
 A publicação manual [40015420424](https://github.com/Ygorfrc/kiryoshi-translations/actions/runs/40015420424), commit `3f809ce9d0eab1f73250a3715ae8a23daa141593`, concluiu com sucesso. A checagem HTTP do domínio real confirmou Home e Soul Hackers com `index, follow`, as quatro páginas planejadas e arquivos demonstrativos conferidos com `noindex, nofollow`, canonicals corretos, robots liberado e sitemap com oito URLs aprovadas. Os quatro links de download e o endpoint GoatCounter foram preservados. O TXT de propriedade do Google foi salvo no DNS e encontrado nos resolvedores públicos Google/Cloudflare; o verificador do Search Console ainda não o reconheceu nas tentativas iniciais, motivando a alternativa de metatag para a propriedade HTTPS.

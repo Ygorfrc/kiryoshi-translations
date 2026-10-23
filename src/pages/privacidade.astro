@@ -2,6 +2,7 @@
 import { withBase } from '../lib/paths';
 import { hosting } from '../config/publication';
 import { downloadCounterEndpoint } from '../config/download-counter';
+import { visitCounterEnabled } from '../config/visit-counter';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
 ---
@@ -10,7 +11,7 @@ import PageIntro from '../components/PageIntro.astro';
   title="Política de privacidade"
   description={
     downloadCounterEndpoint
-      ? 'Saiba como funciona a navegação do site e a contagem opcional de cliques em downloads, sem cookies de rastreamento.'
+      ? 'Entenda as métricas de visitas e cliques em downloads, as preferências de privacidade e os serviços usados pelo site.'
       : 'Saiba quais recursos estão presentes no site: navegação estática, sem analytics, cookies de rastreamento ou formulário de coleta de dados.'
   }
 >
@@ -27,7 +28,7 @@ import PageIntro from '../components/PageIntro.astro';
       comentários, formulário de contato ou pagamentos integrados. Não utiliza
       anúncios ou cookies de rastreamento.{' '}
       {downloadCounterEndpoint
-        ? 'Há somente uma contagem opcional de cliques nos links de download, descrita abaixo.'
+        ? 'As métricas GoatCounter configuradas nesta versão são descritas abaixo.'
         : 'A contagem de cliques em downloads está desativada; não há coleta de analytics ou pixels externos.'}
     </p>
     <h2>Busca e preferências</h2>
@@ -48,7 +49,7 @@ import PageIntro from '../components/PageIntro.astro';
     <h2>Hospedagem</h2>
     {hosting === 'github-pages' ? (
       <p>
-        Esta prévia é hospedada no GitHub Pages. O GitHub registra e armazena
+        Este site é hospedado no GitHub Pages. O GitHub registra e armazena
         endereços IP dos visitantes para fins de segurança. Consulte a{' '}
         <a
           href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
@@ -74,6 +75,49 @@ import PageIntro from '../components/PageIntro.astro';
       privacidade. O botão de compartilhamento usa os recursos do seu navegador
       ou copia o endereço; não inclui scripts de redes sociais.
     </p>
+    {visitCounterEnabled && (
+      <>
+        <h2>Visitas às páginas</h2>
+        <p>
+          Na publicação do domínio configurado, ao abrir uma página visível, o
+          navegador envia ao GoatCounter o caminho e o título público dessa
+          página. Isso permite acompanhar páginas acessadas e estimar
+          visitantes. Não enviamos termos de busca, parâmetros do endereço,
+          fragmentos após “#”, site de origem, dados de formulário ou tamanho de
+          tela. Prévias de desenvolvimento e testes não registram visitas na
+          conta real.
+        </p>
+        <p>
+          A integração usa um script local, sem cookies, armazenamento local ou
+          identificadores persistentes no navegador. Respeita Do Not Track e
+          Global Privacy Control. Sem JavaScript, com bloqueadores ou em falhas
+          de rede, o registro pode não ocorrer; a navegação continua
+          funcionando.
+        </p>
+        <p>
+          O provedor recebe IP e agente do navegador pela conexão e pode derivar
+          informações como navegador, sistema e país. Para agrupar visitas, o
+          GoatCounter descreve sessões temporárias em memória por até oito
+          horas, sem gravar o IP ou o agente original em disco ou no banco. Os
+          números são estimativas, não uma identificação ou contagem exata de
+          pessoas, e não recuperam acessos anteriores à ativação. Consulte a{' '}
+          <a
+            href="https://www.goatcounter.com/help/privacy"
+            rel="noopener noreferrer"
+          >
+            política do GoatCounter
+          </a>{' '}
+          e a{' '}
+          <a
+            href="https://www.goatcounter.com/help/sessions"
+            rel="noopener noreferrer"
+          >
+            documentação de sessões
+          </a>
+          .
+        </p>
+      </>
+    )}
     {downloadCounterEndpoint && (
       <>
         <h2>Cliques em downloads</h2>
@@ -83,8 +127,8 @@ import PageIntro from '../components/PageIntro.astro';
           Não enviamos o endereço do arquivo, parâmetros do link, página de
           origem ou dados de formulário. A integração não grava cookies ou
           identificadores no navegador e respeita Do Not Track e Global Privacy
-          Control quando sinalizados. Não há coleta automática ao abrir a
-          página.
+          Control quando sinalizados. Esses eventos só são enviados após um
+          clique e ficam separados das visitas às páginas.
         </p>
         <p>
           O serviço recebe informações técnicas da conexão, como endereço IP e
@@ -106,8 +150,8 @@ import PageIntro from '../components/PageIntro.astro';
       Não há canal de contato confirmado nesta versão. A{' '}
       <a href={withBase('/contato/')}>página de contato</a> será atualizada com
       os dados públicos fornecidos pelo responsável. Caso serviços de apoio,
-      formulários ou métricas sejam adicionados, esta política deve ser revisada
-      antes de ativá-los.
+      formulários ou novas métricas sejam adicionados, esta política deve ser
+      revisada antes de ativá-los.
     </p>
   </div>
 </BaseLayout>

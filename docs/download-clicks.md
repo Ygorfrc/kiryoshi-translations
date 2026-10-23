@@ -2,7 +2,7 @@
 
 O site pode registrar cliques em “Baixar patch” no GoatCounter. O arquivo continua no Drive, MediaFire ou outro endereço HTTPS cadastrado na release. Não há banco, servidor ou painel próprio: os números são consultados no painel do serviço.
 
-A conta **https://kiryoshi.goatcounter.com**, fornecida pelo responsável em 22/10/2026, está configurada em `site.downloadCounterUrl` de `src/config/site.ts`. Nenhum patch de exemplo foi publicado. Não há requisição ao serviço ao abrir uma página, nem contagem de visitas ou navegação. A configuração local não significa que esta versão já foi publicada no GitHub Pages.
+A conta **https://kiryoshi.goatcounter.com**, fornecida pelo responsável em 22/10/2026, está configurada em `site.downloadCounterUrl` de `src/config/site.ts`. Nenhum patch de exemplo foi publicado. Em 23/10/2026, o responsável também autorizou [contagem de visitas](visits.md): abrir uma página publicada passa a registrar uma visita normal; os eventos de download continuam exigindo um clique. A configuração local não comprova publicação.
 
 ## Configurar ou trocar a conta
 
@@ -33,10 +33,10 @@ Quando existe `target`, o rótulo do evento inclui a variante: `download:soul-ha
 
 ## Painel sem dados
 
-Abrir a página não envia nenhum evento. Em 23/10/2026, o responsável confirmou que apenas havia aberto a página ao ver “No data received”; isso é esperado para esta integração de cliques. Para verificar, clique em um botão “Baixar” da versão atualizada e atualize o painel após alguns segundos. O serviço informa atualização das estatísticas a cada dez segundos na [FAQ](https://www.goatcounter.com/help/faq). A versão publicada só contará esses cliques depois que a atualização for publicada; builds locais e serviços de hospedagem são instâncias distintas.
+Abrir a página não envia um evento de download. Antes da ampliação para visitas, isso explicava o painel vazio relatado pelo responsável em 23/10/2026. Agora, visitas publicadas aparecem por caminho (`/`, `/traducoes/soul-hackers/`) e cliques pelo prefixo `download:`. Para verificar cliques, use um botão “Baixar” e atualize o painel após alguns segundos. O serviço informa atualização das estatísticas a cada dez segundos na [FAQ](https://www.goatcounter.com/help/faq). Não confunda o total combinado do painel com quantidade de pessoas; consulte [leitura das visitas](visits.md).
 
 Se o painel continuar vazio após clicar, verifique a configuração do endpoint/CSP e as preferências de privacidade do navegador. Não contorne bloqueadores, DNT ou GPC. Confirme o e-mail quando solicitado pelo painel, sem presumir que esse aviso explique sozinho a ausência de dados.
 
-O evento usa uma requisição independente que não bloqueia a navegação. Não há tentativas de contornar bloqueadores ou rastrear a pessoa. Os testes simulam o provedor localmente; não fazem requisições de contagem reais. A recepção no painel deverá ser conferida após configurar uma conta real.
+O evento usa uma requisição independente que não bloqueia a navegação. Não há tentativas de contornar bloqueadores. Os testes simulam o provedor localmente, sem requisições reais. Na inspeção autenticada de 23/10/2026, o painel exibiu um evento Azahar e um Luma3DS; essa evidência comprova os cliques anteriores, não visitas ainda não publicadas.
 
 Referências: [endpoint de coleta](https://www.goatcounter.com/help/pixel), [eventos](https://www.goatcounter.com/help/events), [implementação oficial do parâmetro de eventos sem sessão](https://github.com/arp242/goatcounter/blob/main/public/count.js) e [privacidade do provedor](https://www.goatcounter.com/help/privacy).

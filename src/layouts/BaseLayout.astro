@@ -9,6 +9,7 @@ import displayFont from '@fontsource-variable/space-grotesk/files/space-grotesk-
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SEOHead from '../components/SEOHead.astro';
+import VisitCounter from '../components/VisitCounter.astro';
 interface Props {
   title: string;
   description: string;
@@ -52,5 +53,6 @@ const { bodyClass, ...headProps } = Astro.props;
       <slot />
     </main>
     <Footer />
+    <VisitCounter title={headProps.title} />
   </body>
 </html>
