@@ -37,6 +37,6 @@ Abrir a página não envia um evento de download. Antes da ampliação para visi
 
 Se o painel continuar vazio após clicar, verifique a configuração do endpoint/CSP e as preferências de privacidade do navegador. Não contorne bloqueadores, DNT ou GPC. Confirme o e-mail quando solicitado pelo painel, sem presumir que esse aviso explique sozinho a ausência de dados.
 
-O evento usa uma requisição independente que não bloqueia a navegação. Não há tentativas de contornar bloqueadores. Os testes simulam o provedor localmente, sem requisições reais. Na inspeção autenticada de 23/10/2026, o painel exibiu um evento Azahar e um Luma3DS; essa evidência comprova os cliques anteriores, não visitas ainda não publicadas.
+O evento usa uma requisição independente que não bloqueia a navegação. Não há tentativas de contornar bloqueadores. Os testes simulam o provedor localmente, sem requisições reais. Na inspeção autenticada de 23/10/2026, anterior à publicação das visitas, o painel exibiu um evento Azahar e um Luma3DS. Essa evidência comprova os cliques anteriores; a validação da integração de visitas está registrada em [validação](validation.md).
 
 Referências: [endpoint de coleta](https://www.goatcounter.com/help/pixel), [eventos](https://www.goatcounter.com/help/events), [implementação oficial do parâmetro de eventos sem sessão](https://github.com/arp242/goatcounter/blob/main/public/count.js) e [privacidade do provedor](https://www.goatcounter.com/help/privacy).
