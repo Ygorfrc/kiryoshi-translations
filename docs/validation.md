@@ -184,7 +184,7 @@ Os quatro testes adicionais passaram em desktop e mobile: navegação, carrossel
 
 O Pages não aplica o arquivo `_headers`. A CSP meta deriva dele, excetuando `frame-ancestors`, que exige header HTTP; não foi alegada equivalência com todos os headers do Cloudflare. A política de privacidade do build Pages identifica o GitHub como hospedagem. A autorização explícita para habilitar o serviço, tornar o repositório público e publicar foi recebida; futuras alterações de automação continuam fora desse escopo.
 
-## Atualização da capa e publicação autorizada
+## Validações adicionais e publicações autorizadas
 
 ### Preparação do domínio próprio — 23/10/2026
 
@@ -192,8 +192,12 @@ O build isolado `.qa/custom-domain/` foi gerado com `PUBLIC_SITE_URL=https://kir
 
 Na prévia local desse pacote, o Edge headless validou Home, catálogo, Soul Hackers e 404 nas larguras de 1440px e 360px. Não foram encontrados erros de página, recursos internos com falha, imagens quebradas ou overflow horizontal nessas rotas. Os canonicals e os quatro links de download também foram conferidos sem enviar eventos reais ao contador. Uma primeira execução do script de QA usou um seletor inexistente; o seletor foi corrigido para o atributo real do componente e a execução completa passou.
 
-### Publicação anterior da capa
+### Publicação no domínio próprio
 
 Na ativação externa, o DNS público confirmou os quatro registros A e o CNAME após gravação no Registro.br. O Pages aceitou o domínio personalizado. Como a API inicialmente informa a origem HTTP durante o provisionamento do certificado, o workflow passou a compor a origem HTTPS com o `host` real retornado por `configure-pages`; a base continua lida do serviço e a publicação continua exclusivamente manual. O parser da aplicação continua rejeitando origens HTTP. Essa adaptação não habilita nem comprova o certificado, verificado separadamente.
+
+O workflow manual [40011550895](https://github.com/Ygorfrc/kiryoshi-translations/actions/runs/40011550895) concluiu build e deploy com sucesso no commit `fe1f76d403ceb4bd785639385ca17f7c768d7cc0`. A execução remota aprovou `npm run validate`, incluindo tipos, testes unitários, build, links, segurança, SEO e testes de navegador, além da validação do pacote com base raiz. Na primeira checagem pública, o domínio retornou HTTP 200 e github.io redirecionou para ele, mas HTTPS ainda apresentou `ERR_TLS_CERT_ALTNAME_INVALID`. O teste público em HTTP não foi considerado aprovado: a CSP atualiza recursos para HTTPS e as imagens aguardavam o certificado. Após reinício do vínculo autorizado explicitamente, a checagem oficial do GitHub aprovou o DNS dos dois nomes. A validação HTTPS é independente do sucesso do deploy e deve ser confirmada ao vivo.
+
+### Publicação anterior da capa
 
 Em 22/10/2026, `images/Desu2.jpg` (1334×1334) substituiu a capa anterior por solicitação do usuário. A autorização também incluiu tornar público todo o repositório e publicar no GitHub Pages. A validação completa foi repetida com a nova imagem: 67 arquivos sem erros de tipos, 24 testes unitários, quatro testes de Pages e 41 testes da aplicação aprovados, com uma repetição de viewport ignorada conforme documentado. O primeiro teste do Pages encontrou o lock da prévia local aberta; a suíte passou a usar uma instância isolada com `--ignore-lock`, sem parar a prévia da pessoa usuária. A execução completa posterior terminou com código 0. Nenhum segredo foi identificado nos arquivos revisados; `.env`, caches, builds e relatórios continuam ignorados. O estado e a URL efetiva do deploy devem ser conferidos na execução manual do GitHub, sem alegar publicação com base apenas no commit.
