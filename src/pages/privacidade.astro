@@ -18,34 +18,54 @@ import PageIntro from '../components/PageIntro.astro';
   <PageIntro
     title="Sua privacidade"
     eyebrow="TRANSPARÊNCIA"
-    description="Esta página descreve os recursos efetivamente implementados nesta versão do site."
+    description="Como usamos as informações de navegação e respeitamos suas preferências."
     breadcrumb="Privacidade"
   />
   <div class="container prose">
-    <h2>Navegação do site</h2>
+    <h2>Navegação</h2>
     <p>
-      O site é estático. Não possui cadastro, autenticação, banco de dados,
-      comentários, formulário de contato ou pagamentos integrados. Não utiliza
-      anúncios ou cookies de rastreamento.{' '}
-      {downloadCounterEndpoint
-        ? 'As métricas GoatCounter configuradas nesta versão são descritas abaixo.'
-        : 'A contagem de cliques em downloads está desativada; não há coleta de analytics ou pixels externos.'}
+      Não usamos anúncios ou cookies de rastreamento e não exigimos cadastro. A
+      busca funciona no seu navegador; como os filtros ficam no endereço, podem
+      aparecer nos registros da hospedagem. Evite incluir informações pessoais
+      na busca.
     </p>
-    <h2>Busca e preferências</h2>
-    <p>
-      A busca e os filtros são processados no seu navegador. Os filtros ficam no
-      endereço da página para permitir compartilhar uma seleção. Não são
-      enviados a uma API de busca nem gravados em armazenamento local. Como
-      parte do endereço, podem constar nas requisições e nos registros técnicos
-      da hospedagem; evite digitar informações pessoais na busca.
-    </p>
-    <h2>Fontes, imagens e vídeos</h2>
-    <p>
-      Fontes e imagens são servidas pelo próprio site. Não há embeds automáticos
-      de YouTube ou conexões a redes sociais ao abrir a página. Vídeos e canais,
-      quando configurados, usam links: a navegação ao serviço externo só ocorre
-      após o clique.
-    </p>
+    {downloadCounterEndpoint ? (
+      <>
+        <h2>Estatísticas de uso</h2>
+        {visitCounterEnabled && (
+          <p>
+            Usamos o GoatCounter para acompanhar páginas acessadas e estimar
+            visitantes, enviando o caminho e o título da página. Não enviamos
+            termos de busca, parâmetros do endereço ou site de origem.
+          </p>
+        )}
+        <p>
+          Ao clicar em “Baixar patch”, registramos a tradução e a versão no
+          GoatCounter. Isso conta cliques, não downloads concluídos.
+        </p>
+        <p>
+          A integração não grava cookies ou identificadores no navegador e
+          respeita Do Not Track e Global Privacy Control. Bloqueadores ou falhas
+          podem impedir o registro, sem afetar a navegação ou os downloads.
+        </p>
+        <p>
+          O GoatCounter recebe o endereço IP e informações do navegador pela
+          conexão.{' '}
+          {visitCounterEnabled &&
+            'Para estimar visitantes, agrupa acessos por até oito horas; os números não representam uma contagem exata de pessoas. '}
+          Consulte a{' '}
+          <a
+            href="https://www.goatcounter.com/help/privacy"
+            rel="noopener noreferrer"
+          >
+            política de privacidade do GoatCounter
+          </a>
+          .
+        </p>
+      </>
+    ) : (
+      <p>A coleta de estatísticas está desativada nesta versão.</p>
+    )}
     <h2>Hospedagem</h2>
     {hosting === 'github-pages' ? (
       <p>
@@ -57,101 +77,32 @@ import PageIntro from '../components/PageIntro.astro';
         >
           política de privacidade do GitHub
         </a>{' '}
-        para conhecer o tratamento de dados pela hospedagem.
+        para mais informações.
       </p>
     ) : (
       <p>
-        O projeto está preparado para Cloudflare Workers Static Assets. Quando
-        publicado nesse serviço, requisições poderão ser processadas pela
-        Cloudflare para entrega de arquivos, segurança e operação da
-        infraestrutura, incluindo informações técnicas como endereço IP e agente
-        do navegador. A configuração da conta e a retenção desses registros
-        devem ser confirmadas pelo responsável antes da publicação.
+        O projeto está preparado para hospedagem na Cloudflare. Se publicado
+        nesse serviço, ela poderá processar informações da conexão, como IP e
+        navegador, para entregar o site e manter sua segurança. Consulte a{' '}
+        <a
+          href="https://www.cloudflare.com/privacypolicy/"
+          rel="noopener noreferrer"
+        >
+          política de privacidade da Cloudflare
+        </a>
+        .
       </p>
     )}
-    <h2>Links externos e compartilhamento</h2>
+    <h2>Links externos e contato</h2>
     <p>
-      Ao acessar outro serviço, aplicam-se suas próprias práticas de
-      privacidade. O botão de compartilhamento usa os recursos do seu navegador
-      ou copia o endereço; não inclui scripts de redes sociais.
+      Ao abrir downloads, vídeos ou outros links externos, valem as políticas do
+      serviço de destino. Não carregamos vídeos ou redes sociais
+      automaticamente.
     </p>
-    {visitCounterEnabled && (
-      <>
-        <h2>Visitas às páginas</h2>
-        <p>
-          Na publicação do domínio configurado, ao abrir uma página visível, o
-          navegador envia ao GoatCounter o caminho e o título público dessa
-          página. Isso permite acompanhar páginas acessadas e estimar
-          visitantes. Não enviamos termos de busca, parâmetros do endereço,
-          fragmentos após “#”, site de origem, dados de formulário ou tamanho de
-          tela. Prévias de desenvolvimento e testes não registram visitas na
-          conta real.
-        </p>
-        <p>
-          A integração usa um script local, sem cookies, armazenamento local ou
-          identificadores persistentes no navegador. Respeita Do Not Track e
-          Global Privacy Control. Sem JavaScript, com bloqueadores ou em falhas
-          de rede, o registro pode não ocorrer; a navegação continua
-          funcionando.
-        </p>
-        <p>
-          O provedor recebe IP e agente do navegador pela conexão e pode derivar
-          informações como navegador, sistema e país. Para agrupar visitas, o
-          GoatCounter descreve sessões temporárias em memória por até oito
-          horas, sem gravar o IP ou o agente original em disco ou no banco. Os
-          números são estimativas, não uma identificação ou contagem exata de
-          pessoas, e não recuperam acessos anteriores à ativação. Consulte a{' '}
-          <a
-            href="https://www.goatcounter.com/help/privacy"
-            rel="noopener noreferrer"
-          >
-            política do GoatCounter
-          </a>{' '}
-          e a{' '}
-          <a
-            href="https://www.goatcounter.com/help/sessions"
-            rel="noopener noreferrer"
-          >
-            documentação de sessões
-          </a>
-          .
-        </p>
-      </>
-    )}
-    {downloadCounterEndpoint && (
-      <>
-        <h2>Cliques em downloads</h2>
-        <p>
-          Ao acionar “Baixar patch”, o navegador envia ao GoatCounter o
-          identificador público da tradução e sua versão para contar cliques.
-          Não enviamos o endereço do arquivo, parâmetros do link, página de
-          origem ou dados de formulário. A integração não grava cookies ou
-          identificadores no navegador e respeita Do Not Track e Global Privacy
-          Control quando sinalizados. Esses eventos só são enviados após um
-          clique e ficam separados das visitas às páginas.
-        </p>
-        <p>
-          O serviço recebe informações técnicas da conexão, como endereço IP e
-          agente do navegador, e as processa segundo sua{' '}
-          <a
-            href="https://www.goatcounter.com/help/privacy"
-            rel="noopener noreferrer"
-          >
-            política de privacidade
-          </a>
-          . A contagem representa cliques registrados, não downloads concluídos
-          ou pessoas únicas. Falhas de rede e bloqueadores podem impedir o
-          registro sem impedir o download.
-        </p>
-      </>
-    )}
-    <h2>Contato e futuras integrações</h2>
     <p>
       Não há canal de contato confirmado nesta versão. A{' '}
       <a href={withBase('/contato/')}>página de contato</a> será atualizada com
-      os dados públicos fornecidos pelo responsável. Caso serviços de apoio,
-      formulários ou novas métricas sejam adicionados, esta política deve ser
-      revisada antes de ativá-los.
+      os canais públicos do projeto.
     </p>
   </div>
 </BaseLayout>

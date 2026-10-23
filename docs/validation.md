@@ -1,5 +1,11 @@
 # Validação local
 
+## Privacidade resumida — 23/10/2026
+
+O responsável aprovou retirar o excesso de detalhes técnicos da página pública. O texto foi reduzido a navegação, estatísticas de uso, hospedagem e links externos/contato, preservando finalidade das métricas, GoatCounter, informações da conexão, sessões de até oito horas, DNT/GPC e ausência de cookies. O funcionamento dos contadores e a documentação técnica foram preservados.
+
+Prettier, tipos (79 arquivos sem diagnósticos), build de 23 páginas, 759 referências internas e segurança com 79 referências a scripts locais foram aprovados. Os dois E2E existentes da página passaram em desktop e mobile em 7,2s, incluindo acessibilidade e largura. Logs ignorados: `.qa/check-privacy-short.log`, `.qa/build-privacy-short.log` e `.qa/e2e-privacy-short.log`. A publicação é conferida separadamente no workflow manual.
+
 ## Visitas no GoatCounter — 23/10/2026
 
 O responsável ampliou o escopo de cliques para visitas às páginas. A integração usa script local, metadados estáticos e o endpoint existente, respeita DNT/GPC e omite cookies, referrer, query e hash. Origem exata, build de produção e ausência de modo prévia são obrigatórios. O painel autenticado confirmou sessões ativas, histórico de um clique Azahar e um Luma3DS, acesso privado e exportação de pageviews individuais desativada. Somente o endereço do site foi atualizado para o domínio próprio, com confirmação “Saved!”. Isso não comprova recepção das novas visitas antes da publicação.
